@@ -1,0 +1,2020 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Non-Parametric Techniques.pdf</title><style type="text/css" media="print">
+        .hide{display:none}
+      </style></head><body style="margin:0;padding:0"><div class="hide"><div style="background:#ffffcc;padding:4 8; border-bottom:thin solid #eeeeee;font-family:Arial,sans-serif"><b>If there are images in this attachment, they will not be displayed.</b>&nbsp;&nbsp; <a href="https://mail-attachment.googleusercontent.com/attachment/?view=att&amp;th=1480cc9cfea1ec82&amp;attid=0.1&amp;disp=attd&amp;realattid=f_hz9oltt80&amp;saduie=AG9B_P_ksnjcM_qIDOa1e2TzblwL&amp;zw">Download the original attachment</a></div></div><div style="margin:1ex">
+
+
+
+
+<div bgcolor="#ffffff" vlink="blue" link="blue">
+<table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_1"><b>Page 1</b></a></font></td></tr></tbody></table><font face="Times" size="4"><span style="font-size:24px;font-family:Times">
+<div style="position:absolute;top:259;left:74"><b>Chapter 11 Non-Parametric Techniques</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:18px;font-family:Times">
+<div style="position:absolute;top:445;left:74"><b>11.1 Introduction</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:490;left:74">In maximum likelihood and Bayesian parameter estimation, we treated supervised learning under the</div>
+<div style="position:absolute;top:513;left:74">assumption that the forms of the underlying density functions were known. In most pattern recognition</div>
+<div style="position:absolute;top:535;left:74">applications, the common parametric forms rarely fit the densities actually encountered in practice. In</div>
+<div style="position:absolute;top:557;left:74">particular, all of the classical parametric densities are unimodal (have a single local maximum), whereas</div>
+<div style="position:absolute;top:580;left:74">many practical problems involve multimodal densities. In this chapter, we shall examine nonparametric</div>
+<div style="position:absolute;top:602;left:74">procedures <i>that can be used with arbitrary distributions </i>and <i>without the assumption that the forms of the</i></div>
+<div style="position:absolute;top:624;left:74"><i>underlying densities are known</i>.</div>
+<div style="position:absolute;top:882;left:168">Figure 11.1: The classification of non-parametric methods in pattern recognition.</div>
+<div style="position:absolute;top:922;left:74">There are several types of nonparametric methods of interest in pattern recognition (Figure 11.1 and Figure</div>
+<div style="position:absolute;top:945;left:74">11.2). One consists of procedures for estimating the density functions <i>p</i>(<b>x</b>|<i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:955;left:614"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:945;left:618">) from sample patterns. If these</div>
+<div style="position:absolute;top:974;left:74">estimates are satisfactory, they can be substituted for the true densities when designing the classifier.</div>
+<div style="position:absolute;top:996;left:74">Another consists of procedures for directly estimating the posterior probabilities <i>P</i>(<i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:1006;left:680"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:996;left:684"><i>|</i><b>x</b>). This is closely</div>
+<div style="position:absolute;top:1025;left:74">related to nonparametric design procedures such as the nearest-neighbor rule, which bypass probability</div>
+<div style="position:absolute;top:1047;left:74">estimation and go directly to decision functions</div>
+<div style="position:absolute;top:1309;left:286">Figure 11.2: Non-parametric density estimation.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:178;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:178;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:1424;left:0">1 of 25</div>
+<div style="position:absolute;top:1424;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:1438;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_2"><b>Page 2</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:18px;font-family:Times">
+<div style="position:absolute;top:1498;left:74"><b>11.2 Density Estimation</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:1544;left:74">The basic ideas behind many of the methods of estimating an unknown probability density function are</div>
+<div style="position:absolute;top:1566;left:74">very simple, and rely on the fact that the probability <i>P </i>that a vector <b>x </b>will fall in a region </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:1565;left:712"><i>R </i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:1566;left:731">is given by</div>
+<div style="position:absolute;top:1707;left:297">(11.1)</div>
+<div style="position:absolute;top:1747;left:74">Thus <i>P </i>is a smoothed or averaged version of the density function <i>p</i>(<b>x</b>), and we can estimate this smoothed</div>
+<div style="position:absolute;top:1769;left:74">value of <i>p </i>by estimating the probability <i>P. </i>Suppose that <i>n </i>samples <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:1779;left:558">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:1769;left:567">,….,<b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:1779;left:607"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:1769;left:618">are drawn independently and</div>
+<div style="position:absolute;top:1799;left:74">identically distributed (i.i.d.) according to the probability law <i>p</i>(<b>x</b>). Clearly, the probability that <i>k </i>of these <i>n</i></div>
+<div style="position:absolute;top:1821;left:74">fall in </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:1820;left:121"><i>R</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:1821;left:138">is given by the binomial law</div>
+<div style="position:absolute;top:1962;left:288">(11.2)</div>
+<div style="position:absolute;top:2002;left:74">where</div>
+<div style="position:absolute;top:2141;left:342">(11.3)</div>
+<div style="position:absolute;top:2181;left:74">and the expected value for <i>k </i>is</div>
+<div style="position:absolute;top:2320;left:360">(11.4)</div>
+<div style="position:absolute;top:2359;left:74">Moreover, this binomial distribution for <i>k </i>peaks very sharply about the mean, so that we expect that the</div>
+<div style="position:absolute;top:2382;left:74">ratio <i>k/n </i>will be a very good estimate for the probability <i>P, </i>and hence for the smoothed density function.</div>
+<div style="position:absolute;top:2404;left:74">This estimate is especially accurate when <i>n </i>is very large. If we now assume that <i>p</i>(<b>x</b>) is continuous and that</div>
+<div style="position:absolute;top:2427;left:74">the region </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:2425;left:150"><i>R</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:2427;left:163"><i>. </i>is so small that p does not vary appreciably within it, we can write</div>
+<div style="position:absolute;top:2514;left:297">(11.5)</div>
+<div style="position:absolute;top:2554;left:74">where <b>x </b>is a point within </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:2553;left:256"><i>R</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:2554;left:269">, <i>n </i>is the total number of samples, <i>k </i>is the number of samples whose probability</div>
+<div style="position:absolute;top:2579;left:74">density function is to be estimated, and <i>V </i>is the volume enclosed by </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:2577;left:563"><i>R</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:2579;left:581">Combining eqs.11.1,11.4, and 11.5,</div>
+<div style="position:absolute;top:2603;left:74">we arrive at the following obvious estimate for <i>p</i>(<b>x</b>),</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:1441;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:1441;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:2687;left:0">2 of 25</div>
+<div style="position:absolute;top:2687;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:2701;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_3"><b>Page 3</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:2803;left:297">(11.6)</div>
+<div style="position:absolute;top:2843;left:74">There are several problems that remain-some practical and some theoretical. If we fix the volume <i>V </i>and</div>
+<div style="position:absolute;top:2866;left:74">take more and more training samples, the ratio <i>k/n </i>will converge (in probability) as desired, but then we</div>
+<div style="position:absolute;top:2888;left:74">have only obtained an estimate of the space-averaged value of <i>p</i>(<b>x</b>),</div>
+<div style="position:absolute;top:3027;left:306">(11.7)</div>
+<div style="position:absolute;top:3067;left:74">If we want to obtain <i>p</i>(<b>x</b>) rather than just an averaged version of it, we must be prepared to let <i>V </i>approach</div>
+<div style="position:absolute;top:3089;left:74">zero. However, if we fix the number <i>n </i>of samples and let <i>V </i>approach zero, the region will eventually</div>
+<div style="position:absolute;top:3113;left:74">become so small that it will enclose no samples, and our estimate <i>p</i>(<b>x</b>)@0 will be useless. Or if by chance</div>
+<div style="position:absolute;top:3135;left:74">one or more of the training samples coincide at <b>x</b>, the estimate diverges to infinity, which is equally</div>
+<div style="position:absolute;top:3158;left:74">useless.</div>
+<div style="position:absolute;top:3198;left:74">From a practical standpoint, we note that the number of samples is always limited. Thus, the volume <i>V</i></div>
+<div style="position:absolute;top:3220;left:74">cannot be allowed to become arbitrarily small. If this kind of estimate is to be used, one will have to accept</div>
+<div style="position:absolute;top:3243;left:74">a certain amount of variance in the ratio <i>k/n </i>and a certain amount of averaging of the density <i>p</i>(<b>x</b>).</div>
+<div style="position:absolute;top:3283;left:74">From a theoretical standpoint, it is interesting to ask how these limitations can be circumvented if an</div>
+<div style="position:absolute;top:3305;left:74">unlimited number of samples is available. Suppose we use the following procedure. To estimate the</div>
+<div style="position:absolute;top:3328;left:74">density at <b>x</b>, we form a sequence of regions</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:3326;left:388"><i>R</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3338;left:402">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:3328;left:409">,</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:3326;left:419"><i>R</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3338;left:432">2</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:3328;left:439">,…, containing <b>x</b>-the first region to be used with one</div>
+<div style="position:absolute;top:3357;left:74">sample, the second with two, and so on. Let <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3368;left:402"><i>n  </i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:3357;left:417">be the volume of</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:3356;left:542"><i>R</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3368;left:555"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:3357;left:562">, <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3368;left:579"><i>n </i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:3357;left:590">be the number of samples falling</div>
+<div style="position:absolute;top:3391;left:74">in</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:3390;left:93"><i>R</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3401;left:105"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:3391;left:117">and <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3401;left:157"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:3391;left:164">(<b>x</b>) be the <i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3385;left:246">th</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:3391;left:261">estimate for <i>p</i>(<b>x</b>):</div>
+<div style="position:absolute;top:3536;left:297">(11.8)</div>
+<div style="position:absolute;top:3576;left:74">where</div>
+<div style="position:absolute;top:3801;left:74">If <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3811;left:99"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:3801;left:107">(<b>x</b>) is to converge to <i>p</i>(<b>x</b>), three conditions appear to be required:</div>
+<div style="position:absolute;top:3854;left:74"><b>1.</b></div>
+<div style="position:absolute;top:3854;left:165">: assures that the space averaged <i>P</i>/<i>V </i>will converge to <i>p</i>(<b>x</b>), if the size of the regions reduced</div>
+<div style="position:absolute;top:3878;left:161">uniformly and that <i>p</i>(.) is continuous at <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:2704;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:2704;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:3950;left:0">3 of 25</div>
+<div style="position:absolute;top:3950;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:3964;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_4"><b>Page 4</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4029;left:163">: only makes sense if <i>p</i>(<b>x</b>)¹0, and assures that the frequency ratio will converge (in probability)</div>
+<div style="position:absolute;top:4054;left:161">to the probability <i>P.</i></div>
+<div style="position:absolute;top:4095;left:172">: necessary if <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4105;left:280"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4095;left:287">(<b>x</b>) is to converge at all. It also says that although a huge number of samples</div>
+<div style="position:absolute;top:4124;left:161">will eventually fall within the small region </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:4123;left:470"><i>R</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4134;left:483"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4124;left:491"><i>, </i>they will form a negligibly small fraction of the</div>
+<div style="position:absolute;top:4153;left:161">total number of samples</div>
+<div style="position:absolute;top:4442;left:447"><b>(a)</b></div>
+<div style="position:absolute;top:4710;left:447"><b>(b)</b></div>
+<div style="position:absolute;top:4750;left:321">Figure 11.3: Non-parametric methods.</div>
+<div style="position:absolute;top:4790;left:74">There are two common ways of obtaining sequences of regions that satisfy these conditions (Figure 11.3).</div>
+<div style="position:absolute;top:4813;left:74">One is to shrink an initial region by specifying the volume <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4824;left:506"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4813;left:518">as some function of <i>n, </i>such as <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4824;left:748"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4813;left:755">=</div>
+<div style="position:absolute;top:4813;left:807">. It</div>
+<div style="position:absolute;top:4842;left:74">then must be shown that the random variables <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4852;left:414"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4842;left:426">and <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4852;left:464"><i>n </i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4842;left:475">/ <i>n </i>behave properly or, more to the point, that <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4852;left:813"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4842;left:820">(<b>x</b>)</div>
+<div style="position:absolute;top:4871;left:74">converges to <i>p</i>(<b>x</b>). This is basically, the Parzen-window method. The second method is to specify <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4881;left:780"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4871;left:787"><i>, </i>as</div>
+<div style="position:absolute;top:4901;left:74">some function of <i>n, </i>such as <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4911;left:282"><i>n </i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4901;left:293">=</div>
+<div style="position:absolute;top:4901;left:330">. Here the volume <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4911;left:473"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4901;left:480"><i>, </i>is grown until it encloses <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4911;left:680"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4901;left:692">neighbors of <b>x</b>. This</div>
+<div style="position:absolute;top:4930;left:74">is the <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4940;left:125"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:4930;left:132">-nearest-neighbor estimation method. Both of these methods do in fact converge.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:18px;font-family:Times">
+<div style="position:absolute;top:5021;left:74"><b>11.3 Parzen Windows</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:5067;left:74">The Parzen-window approach to estimating densities can be introduced by temporarily assuming that. the</div>
+<div style="position:absolute;top:5090;left:74">region </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:5088;left:124"><i>R</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:5100;left:137"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:5090;left:149">is a <i>d</i>-dimensional hypercube which encloses <i>k </i>samples. If <i>h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:5100;left:581"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:5090;left:592">is the length of an edge of that</div>
+<div style="position:absolute;top:5118;left:74">hypercube, then its volume is given by</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:3967;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:3967;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:5213;left:0">4 of 25</div>
+<div style="position:absolute;top:5213;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:5227;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_5"><b>Page 5</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:5384;left:342">(11.9)</div>
+<div style="position:absolute;top:5425;left:74">as shown in Figure 11.4.</div>
+<div style="position:absolute;top:5619;left:270">Figure 11.4: The hypercube defined by the region </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:11px;font-family:Times">
+<div style="position:absolute;top:5620;left:629"><i>R.</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:5699;left:74">We can obtain an analytic expression for <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:5709;left:377"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:5699;left:384">, the number of samples falling in the hypercube, by defining</div>
+<div style="position:absolute;top:5728;left:74">the following <i>window function </i>(kernel function):</div>
+<div style="position:absolute;top:5823;left:190">(11.10)</div>
+<div style="position:absolute;top:5863;left:74">as shown in Figure 11.5.</div>
+<div style="position:absolute;top:6095;left:272">Figure 11.5: The kernel function in two dimensions</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:11px;font-family:Times">
+<div style="position:absolute;top:6096;left:639"><i>.</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:6175;left:74">Thus,</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:6177;left:119"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:6175;left:123">(<b>u</b>) defines a unit hypercube centered at the origin. It follows that</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:6177;left:594"><i>j</i>(</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:6175;left:604">(<b>x - x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6186;left:643"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:6175;left:647">)/ <i>h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6186;left:671"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:6175;left:678">) is equal to unity if <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6186;left:832"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:6204;left:74">falls within the hypercube of volume <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6214;left:353"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:6204;left:360">, centered at <b>x</b>, and is zero otherwise. The number of samples in</div>
+<div style="position:absolute;top:6233;left:74">this hypercube is therefore given by</div>
+<div style="position:absolute;top:6326;left:351">(11.11)</div>
+<div style="position:absolute;top:6366;left:74">as shown in Figure 11.6, and when we substitute this into eq.11.8 we obtain the estimate</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:5230;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:5230;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:6476;left:0">5 of 25</div>
+<div style="position:absolute;top:6476;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:6490;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_6"><b>Page 6</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:6601;left:351">(11.12)</div>
+<div style="position:absolute;top:7029;left:212">Figure 11.6: The calculation of number of samples within the kernel</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:11px;font-family:Times">
+<div style="position:absolute;top:7030;left:699"><i>.</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7109;left:74">Equation 11.12 suggests a more general approach to estimating density functions. Rather than limiting</div>
+<div style="position:absolute;top:7131;left:74">ourselves to the hypercube window function of eq.11.10, suppose we allow a more general class of</div>
+<div style="position:absolute;top:7154;left:74">window functions. In such a case, eq.11.12 expresses our estimate for <i>p</i>(<b>x</b>) as an average of functions of <b>x</b></div>
+<div style="position:absolute;top:7176;left:74">and the samples <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7186;left:202"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7176;left:206">. In essence, the window function is being used for <i>interpolation—</i>each sample</div>
+<div style="position:absolute;top:7205;left:74">contributing to the estimate in accordance with its distance from <b>x</b>.</div>
+<div style="position:absolute;top:7245;left:74">It is natural to ask that the estimate <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7255;left:337"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7245;left:344">(<b>x</b>) be a legitimate density function, that is, that it be nonnegative and</div>
+<div style="position:absolute;top:7274;left:74">integrate to one. This can be assured by requiring the window function itself be a density function. To be</div>
+<div style="position:absolute;top:7296;left:74">more precise, if we require that</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:7339;left:74"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7338;left:78">(<b>u</b>) ³ 0</div>
+<div style="position:absolute;top:7360;left:449">(11.13)</div>
+<div style="position:absolute;top:7400;left:74">and</div>
+<div style="position:absolute;top:7475;left:351">(11.14)</div>
+<div style="position:absolute;top:7517;left:74">and if we maintain the relation <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7528;left:308"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7518;left:320"><b>=</b><i>h </i>, then it follows at once that <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7528;left:564"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7517;left:571">(<b>x</b>) also satisfies these conditions.</div>
+<div style="position:absolute;top:7564;left:74">Let us examine the effect that the <i>window width h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7575;left:429"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7564;left:441">has on <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7575;left:501"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7564;left:508">(<b>x</b>). If we define the function </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:7565;left:719"><i>d</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7575;left:727"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7564;left:734">(<b>x</b>) by</div>
+<div style="position:absolute;top:7663;left:297">(11.15)</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:6493;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:6493;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:7739;left:0">6 of 25</div>
+<div style="position:absolute;top:7739;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:7753;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_7"><b>Page 7</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7812;left:74">then we can write <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7822;left:214"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7812;left:221">(<b>x</b>) as the average</div>
+<div style="position:absolute;top:7909;left:244">(11.16)</div>
+<div style="position:absolute;top:7951;left:74">Because <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7961;left:149"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7951;left:161"><b>=</b><i>h , h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7961;left:210"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7951;left:222">clearly affects both the amplitude and the width of</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:7952;left:586"><i>d</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7961;left:594"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:7951;left:601">(<b>x</b>) as shown in Figure 11.7.</div>
+<div style="position:absolute;top:8510;left:240">Figure 11.7: The effect of Parzen-Window width <i>h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8520;left:602"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8510;left:613">on <i>d </i>(x).</div>
+<div style="position:absolute;top:8557;left:74"><i>If h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8567;left:98"><i>n </i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8557;left:109"><i>is very large</i>, then the amplitude of</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:8558;left:364"><i>d</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8567;left:372"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8557;left:383">is small, and <b>x </b>must be far from <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8567;left:624"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8557;left:632">before</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:8558;left:682"><i>d</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8567;left:690"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8557;left:697">(<b>x</b>- <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8567;left:732"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8557;left:735">) changes</div>
+<div style="position:absolute;top:8586;left:74">much from</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:8587;left:157"><i>d</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8596;left:166"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8586;left:173">(<b>0</b>). In this case, <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8596;left:301"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8586;left:308">(<b>x</b>) is the superposition of <i>n </i>broad, slowly changing functions and is a</div>
+<div style="position:absolute;top:8615;left:74">very smooth “out-of-focus” estimate of <i>p</i>(<b>x</b>). On the other hand, <i>if h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8625;left:559"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8615;left:571"><i>is very small</i>, then the peak value of</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:8645;left:74"><i>d</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8654;left:82"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8644;left:90">(<b>x</b>- <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8654;left:124"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8644;left:128">) is large and occurs near <b>x </b>= <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8654;left:348"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8644;left:352">. In this case, <i>p</i>(<b>x</b>) is the superposition of <i>n </i>sharp pulses centered at</div>
+<div style="position:absolute;top:8673;left:74">the samples—a “noisy” estimate (Figure 11.9). For any value of <i>h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8683;left:545"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8673;left:552"><i>, </i>the distribution is normalized, that is,</div>
+<div style="position:absolute;top:8772;left:244">(11.17)</div>
+<div style="position:absolute;top:8812;left:74">Thus, as <i>h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8822;left:147"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8812;left:159">approaches zero,</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:8813;left:283"><i>d</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8822;left:291"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8812;left:299">(<b>x</b>- <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8822;left:333"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8812;left:337">) approaches a Dirac delta function centered at <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8822;left:683"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8812;left:687">, and <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8822;left:735"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8812;left:742">(<b>x</b>)</div>
+<div style="position:absolute;top:8841;left:74">approaches a superposition of delta functions centered at the samples.</div>
+<div style="position:absolute;top:8881;left:74">The choice of <i>h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8891;left:186"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8881;left:197">(or <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8891;left:234"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8881;left:241">) has an important effect on <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8891;left:451"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8881;left:458">(<b>x</b>) (Figure 11.8 and Figure 11.12). If <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8891;left:738"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8881;left:750">is too large,</div>
+<div style="position:absolute;top:8910;left:74">the estimate will suffer from too little resolution; if <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8920;left:453"><i>n </i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:8910;left:464">is too small, the estimate will suffer from too much</div>
+<div style="position:absolute;top:8939;left:74">statistical variability. With a limited number of samples, the best we can do is to seek some acceptable</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:7756;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:7756;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:9002;left:0">7 of 25</div>
+<div style="position:absolute;top:9002;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:9016;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_8"><b>Page 8</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:9075;left:74">compromise. However, with an unlimited number of samples, it is possible to let <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9085;left:666"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:9075;left:678">slowly approach zero</div>
+<div style="position:absolute;top:9104;left:74">as <i>n </i>increases and have <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9114;left:254"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:9104;left:261">(<b>x</b>) converge to the unknown density <i>p</i>(<b>x</b>).</div>
+<div style="position:absolute;top:9502;left:194">Figure 11.8: The effect of window width on the density function estimate.</div>
+<div style="position:absolute;top:9583;left:74">In discussing convergence, we must recognize that we are talking about the convergence of a sequence of</div>
+<div style="position:absolute;top:9605;left:74">random variables, because for any fixed <b>x </b>the value of <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9615;left:475"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:9605;left:482">(<b>x</b>) depends on the random samples <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:9614;left:750">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:9605;left:758">,….,<b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9615;left:798"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:9605;left:805"><i>.</i></div>
+<div style="position:absolute;top:9635;left:74">Thus, <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9646;left:128"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:9635;left:135">(<b>x</b>) has some mean  (<b>x</b>) and variance</div>
+<div style="position:absolute;top:9635;left:462">. We shall say that the estimate <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9646;left:696"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:9635;left:703">(<b>x</b>) converges to</div>
+<div style="position:absolute;top:9665;left:74"><i>p</i>(<b>x</b>) if</div>
+<div style="position:absolute;top:9736;left:297">(11.18)</div>
+<div style="position:absolute;top:9776;left:74">and</div>
+<div style="position:absolute;top:9851;left:610">(11.19)</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:9019;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:9019;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:10265;left:0">8 of 25</div>
+<div style="position:absolute;top:10265;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:10279;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_9"><b>Page 9</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:10891;left:184">Figure 11.9: The effect of Parzen-window width <i>h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10902;left:543"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:10891;left:554">on the estimated density.</div>
+<div style="position:absolute;top:10978;left:74">To prove convergence we must place conditions on the unknown density <i>p</i>(<b>x</b>), on the window function</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:11002;left:74"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:11001;left:78">(<b>u</b>), and on the window width <i>h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11011;left:304"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:11001;left:312"><i>. </i>In general, continuity of <i>p</i>(.) at <b>x </b>is required, and the conditions imposed</div>
+<div style="position:absolute;top:11029;left:74">by eqs.11.12 and 11.13 are customarily invoked. Below we show that the following additional conditions</div>
+<div style="position:absolute;top:11052;left:74">assure convergence:</div>
+<div style="position:absolute;top:11127;left:636">(11.20)</div>
+<div style="position:absolute;top:11217;left:636">(11.21)</div>
+<div style="position:absolute;top:11288;left:297">(11.22)</div>
+<div style="position:absolute;top:11329;left:74">and</div>
+<div style="position:absolute;top:11400;left:297">(11.23)</div>
+<div style="position:absolute;top:11440;left:74">Equations 11.20 and 11.21 keep </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:11441;left:306"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:11440;left:311">(.) well behaved, and they are satisfied by most density functions that one</div>
+<div style="position:absolute;top:11463;left:74">might think of using for window functions. Equations 11.22 and 11.23 state that the volume <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11473;left:744"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:11463;left:756">must</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:10282;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:10282;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:11528;left:0">9 of 25</div>
+<div style="position:absolute;top:11528;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:11542;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_10"><b>Page 10</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:11601;left:74">approach zero, but at a rate slower than 1 / <i>n</i>.</div>
+<div style="position:absolute;top:11976;left:206">Figure 11.10: A simulation of how the Parzen-Window method works.</div>
+<div style="position:absolute;top:12056;left:74">The Parzen window estimate can be considered as a sum of boxes centered at the observations, the smooth</div>
+<div style="position:absolute;top:12079;left:74">kernel estimate is a sum of boxes placed at the data points (Figure 11.10). The kernel function determines</div>
+<div style="position:absolute;top:12101;left:74">the shape of the boxes. The parameter <i>h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:12111;left:359"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:12101;left:366">, also called the <i>smoothing parameter </i>or <i>bandwidth</i>, determines</div>
+<div style="position:absolute;top:12130;left:74">their width.</div>
+<div style="position:absolute;top:12170;left:74">The problem of choosing the window width is crucial in density estimation. A large window width will</div>
+<div style="position:absolute;top:12192;left:74">over-smooth the density and mask the structure in the data. A small bandwidth will yield a density estimate</div>
+<div style="position:absolute;top:12214;left:74">that is spiky and very hard to interpret (Figure 11.11). We would like to find a value of the smoothing</div>
+<div style="position:absolute;top:12237;left:74">parameter that minimizes the error between the estimated density and the true density. A natural measure is</div>
+<div style="position:absolute;top:12259;left:74">the mean square error at the estimation point <b>x</b>. This expression is an example of the bias-variance</div>
+<div style="position:absolute;top:12281;left:74">tradeoff; the bias can be reduced at the expense of the variance, and vice versa. The bias of an estimate is</div>
+<div style="position:absolute;top:12304;left:74">the systematic error incurred in the estimation. The variance of an estimate is the random error incurred in</div>
+<div style="position:absolute;top:12326;left:74">the estimation. The bias-variance dilemma applied to window width selection simply means that; a large</div>
+<div style="position:absolute;top:12348;left:74">window width will reduce the differences among the estimates of density function for different data sets</div>
+<div style="position:absolute;top:12371;left:74">(the variance). A small window width will reduce the bias of density function, at the expense of a larger</div>
+<div style="position:absolute;top:12393;left:74">variance in the estimates of density function (Figure 11.12).</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:11545;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:11545;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:12791;left:0">10 of 25</div>
+<div style="position:absolute;top:12791;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:12805;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_11"><b>Page 11</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:13401;left:194">Figure 11.11: A simulation of the problem of choosing the window width.</div>
+<div style="position:absolute;top:13767;left:311">Figure 11.12: The bias-variance tradeoff.</div>
+<div style="position:absolute;top:13813;left:74"><b>11.3.1 Convergence of the Mean</b></div>
+<div style="position:absolute;top:13859;left:74">Consider first</div>
+<div style="position:absolute;top:13859;left:221">, the mean of</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:13860;left:319"><i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:13869;left:327"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:13859;left:334">(<b>x</b>). Because the samples <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:13869;left:525"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:13859;left:533">are independently drawn and identically</div>
+<div style="position:absolute;top:13888;left:74">distributed according to the (unknown) density </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:13889;left:413"><i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:13888;left:422">(<b>x</b>)<i>, </i>we have</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:12808;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:12808;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:14054;left:0">11 of 25</div>
+<div style="position:absolute;top:14054;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:14068;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_12"><b>Page 12</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:14304;left:244">(11.24)</div>
+<div style="position:absolute;top:14344;left:74">This equation shows that the expected value of the estimate is an averaged value of the unknown density-a</div>
+<div style="position:absolute;top:14367;left:74"><i>convolution </i>of the unknown density and the window function. Thus,</div>
+<div style="position:absolute;top:14367;left:616">is a blurred version of <i>p</i>(<b>x</b>) as</div>
+<div style="position:absolute;top:14393;left:74">seen through the averaging window. But as <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:14403;left:397"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:14393;left:409">approaches zero, <i>d</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:14403;left:547"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:14393;left:554">(<b>x</b>-<b>v</b>) approaches a delta function</div>
+<div style="position:absolute;top:14422;left:74">centered at <b>x</b>. Thus, if <i>p </i>is continuous at <b>x</b>, eq.11.22 ensures that</div>
+<div style="position:absolute;top:14422;left:581">will approach <i>p</i>(<b>x</b>) as <i>n </i>approaches</div>
+<div style="position:absolute;top:14447;left:74">infinity.</div>
+<div style="position:absolute;top:14534;left:74"><b>11.3.2 Convergence of the Variance</b></div>
+<div style="position:absolute;top:14580;left:74">Equation 11.24 shows that there is no need for an infinite number of samples to make</div>
+<div style="position:absolute;top:14580;left:738">approach</div>
+<div style="position:absolute;top:14605;left:74"><i>p</i>(<b>x</b>); one can achieve this for any <i>n </i>merely by letting <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:14615;left:468"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:14605;left:480">approach zero. Of course, for a particular set of <i>n</i></div>
+<div style="position:absolute;top:14634;left:74">samples the resulting “spiky” estimate is useless; this fact highlights the need for us to consider the</div>
+<div style="position:absolute;top:14656;left:74">variance of the estimate. Because</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:14657;left:317"><i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:14666;left:325"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:14656;left:333">(<b>x</b>) is the sum of functions of statistically independent random</div>
+<div style="position:absolute;top:14685;left:74">variables, its variance is the sum of the variances of the separate terms, and hence</div>
+<div style="position:absolute;top:14934;left:136">(11.25)</div>
+<div style="position:absolute;top:14974;left:74">By dropping the second term, bounding </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:14975;left:362"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:14974;left:371">(.) and using eq.11.24, we obtain</div>
+<div style="position:absolute;top:15073;left:297">(11.26)</div>
+<div style="position:absolute;top:15113;left:74">Clearly, to obtain a small variance we want a large value for <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15123;left:518"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15113;left:530">not a small one a large <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15123;left:706"><i>n </i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15113;left:717">smoothes out the</div>
+<div style="position:absolute;top:15142;left:74">local variations in density. However, because the numerator stays finite as <i>n </i>approaches infinity, we can let</div>
+<div style="position:absolute;top:15164;left:74"><i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15175;left:85"><i>n  </i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15164;left:99">approach zero and still obtain zero variance, provided that <i>nV</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15175;left:539"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15164;left:550">approaches infinity. For example, we</div>
+<div style="position:absolute;top:15195;left:74">can let <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15205;left:136"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15195;left:144">=</div>
+<div style="position:absolute;top:15195;left:211">or</div>
+<div style="position:absolute;top:15195;left:289">inn or any other function satisfying eqs.11.22 and 11.23.</div>
+<div style="position:absolute;top:15242;left:74">This is the principal theoretical result. Unfortunately, it does not tell us how to choose</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:15243;left:692"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15242;left:700">(.) and <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15252;left:762"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15242;left:774">to obtain</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:14071;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:14071;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:15317;left:0">12 of 25</div>
+<div style="position:absolute;top:15317;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:15331;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_13"><b>Page 13</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15390;left:74">good results in the finite sample case. Indeed, unless we have more knowledge about</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:15391;left:685"><i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15390;left:693">(<b>x</b>) than the mere</div>
+<div style="position:absolute;top:15412;left:74">fact that it is continuous, we have no direct basis for optimizing finite sample results.</div>
+<div style="position:absolute;top:15499;left:74"><b>11.3.3 Probabilistic Neural Networks (PNNs)</b></div>
+<div style="position:absolute;top:15544;left:74">To show how the Parzen-window method can be implemented as a multilayer neural network known as a</div>
+<div style="position:absolute;top:15567;left:74">Probabilistic Neural Network is given in (Figure 11.13). The PNN is trained in the following way. First,</div>
+<div style="position:absolute;top:15591;left:74">each pattern <b>x </b>of the training set is normalized to have unit length, that is, scaled so that <b>S </b><i>x </i><b>=</b>1. The</div>
+<div style="position:absolute;top:15616;left:74">first normalized training pattern is placed on the input units. The modifiable weights linking the input units</div>
+<div style="position:absolute;top:15638;left:74">and the first hidden unit are set such that <b>w</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:15647;left:381">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15638;left:389">= <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:15647;left:413">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15638;left:421">. (Note that because of the normalization of <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15649;left:745">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15638;left:752">, <b>w</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15649;left:774">1 </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15638;left:785">is</div>
+<div style="position:absolute;top:15667;left:74">normalized too.) Then, a single connection from the first hidden unit is made to the output unit</div>
+<div style="position:absolute;top:15690;left:74">corresponding to the known class of that pattern. The process is repeated with each of the remaining</div>
+<div style="position:absolute;top:15712;left:74">training patterns, setting the weights to the successive hidden units such that <b>w</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15722;left:636"><i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15712;left:643">= <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15722;left:666"><i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15712;left:677">for <i>k </i>= 1, 2…<i>n</i>. After</div>
+<div style="position:absolute;top:15741;left:74">such training, we have a network that is fully connected between input and hidden units, and sparsely</div>
+<div style="position:absolute;top:15768;left:74">connected from hidden to output units. If we denote the components of the <i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15763;left:617">th</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15768;left:633">pattern as <i>x</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15778;left:714"><i>jk</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15768;left:729">and the weights</div>
+<div style="position:absolute;top:15801;left:74">to the <i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15796;left:124">th</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15801;left:139">hidden unit <i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15812;left:237"><i>jk</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:15801;left:247">, for <i>j </i>= 1, 2…<i>n </i>and <i>k </i>= 1, 2…<i>d</i>, then our algorithm is as follows:</div>
+<div style="position:absolute;top:16190;left:225">Figure 11.13: PNN implementation as multilayer neural network.</div>
+<div style="position:absolute;top:16270;left:93">Algorithm (PNN Training)</div>
+<div style="position:absolute;top:16312;left:114"><b>begin initialize </b><i>j </i>¬ 0, <i>n, a</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:16322;left:299"><i>ji</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:16312;left:311">¬ 0<i>, </i>for <i>j</i>=1,…., <i>n</i>; <i>i</i>=1,…., <i>c</i></div>
+<div style="position:absolute;top:16360;left:217"><b>do</b></div>
+<div style="position:absolute;top:16360;left:428"><i>j </i>¬ <i>j </i>+ 1 </div>
+<div style="position:absolute;top:16414;left:449"><i>x</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:16425;left:457"><i>jk</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:16414;left:475">¬</div>
+<div style="position:absolute;top:16414;left:608">(normalize)</div>
+<div style="position:absolute;top:16463;left:480"><i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:16473;left:492"><i>jk</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:16463;left:510">¬ <i>x</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:16473;left:537"><i>jk</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:16463;left:649">(train)</div>
+<div style="position:absolute;top:16511;left:342"><b>if x Î</b><i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:16521;left:390"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:16511;left:398"><b>then </b><i>a</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:16521;left:450"><i>ji</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:16511;left:462">¬ 1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:15334;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:15334;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:16580;left:0">13 of 25</div>
+<div style="position:absolute;top:16580;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:16594;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_14"><b>Page 14</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:16653;left:145"><b>until</b></div>
+<div style="position:absolute;top:16653;left:275"><i>j </i>= <i>n</i></div>
+<div style="position:absolute;top:16676;left:89"><b>end</b></div>
+<div style="position:absolute;top:16768;left:74">The trained network is then used for classification in the following way. A normalized test pattern <b>x </b>is</div>
+<div style="position:absolute;top:16790;left:74">placed at the input units. Each hidden unit computes the inner product to yield the <i>net activation </i>or simply</div>
+<div style="position:absolute;top:16813;left:74"><i>net,</i></div>
+<div style="position:absolute;top:16880;left:351">(11.27)</div>
+<div style="position:absolute;top:16920;left:74">and emits a nonlinear function of <i>net</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:16930;left:337"><i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:16920;left:348">each output unit sums the contributions from all pattern units</div>
+<div style="position:absolute;top:16951;left:74">connected to it. The nonlinear function is</div>
+<div style="position:absolute;top:16951;left:444">, where</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:16952;left:501"><i>s </i>i</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:16951;left:516">s a parameter set by the user and determines</div>
+<div style="position:absolute;top:16975;left:74">the width of the effective Gaussian window. This <i>activation function </i>or transfer function, here must be an</div>
+<div style="position:absolute;top:16998;left:74">exponential to implement the Parzen windows algorithm. To see this, consider an (unnormalized) Gaussian</div>
+<div style="position:absolute;top:17020;left:74">window centered on the position of one of the training patterns <b>w</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17031;left:541"><i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:17020;left:547">. We work backwards from the desired</div>
+<div style="position:absolute;top:17049;left:74">Gaussian window function to infer the nonlinear activation function that should be employed by the</div>
+<div style="position:absolute;top:17072;left:74">pattern units. That is, if we let our effective width <i>h</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17082;left:442"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:17072;left:454">be a constant, the window function is</div>
+<div style="position:absolute;top:17181;left:74">(11.28)</div>
+<div style="position:absolute;top:17227;left:74">where we have used our normalization conditions <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:17220;left:442">T</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:17227;left:453"><b>x</b>=<b>w w</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:17236;left:510"><i><b>k</b></i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:17227;left:518">=1. Thus, each pattern unit contributes to its</div>
+<div style="position:absolute;top:17256;left:74">associated category unit a signal equal to the probability the test point was generated by a Gaussian</div>
+<div style="position:absolute;top:17278;left:74">centered on the associated training point. The sum of these local estimates (computed at the corresponding</div>
+<div style="position:absolute;top:17301;left:74">category unit) gives the discriminant function </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:17302;left:405"><i>g</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:10px;font-family:Times">
+<div style="position:absolute;top:17311;left:413"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:17302;left:416">(<b>x</b>)</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:17301;left:440">the Parzen-window estimate of the underlying</div>
+<div style="position:absolute;top:17334;left:74">distribution. The</div>
+<div style="position:absolute;top:17334;left:270">operation gives the desired category for the test point.</div>
+<div style="position:absolute;top:17458;left:93">Algorithm (PNN Classification)</div>
+<div style="position:absolute;top:17500;left:114"><b>begin initialize </b><i>k </i>¬ 0, <i>n, </i><b>x </b>¬ test pattern</div>
+<div style="position:absolute;top:17541;left:217"><b>do</b></div>
+<div style="position:absolute;top:17541;left:428"><i>k </i>¬ <i>k </i>+ 1 (increment epoch)</div>
+<div style="position:absolute;top:17627;left:480"><i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17637;left:492"><i>jk</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:17627;left:510">¬ <i>x</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17637;left:537"><i>jk</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:17676;left:342"><b>if </b><i>a</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17686;left:366"><i>ki</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:17676;left:381">= 1 <b>then </b><i>g</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17686;left:461"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:17676;left:469">¬ <i>g</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17686;left:493"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:17676;left:501">+</div>
+<div style="position:absolute;top:17723;left:145"><b>until</b></div>
+<div style="position:absolute;top:17722;left:275"><i>k </i>= <i>n</i></div>
+<div style="position:absolute;top:17769;left:172"><b>return</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:16597;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:16597;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:17843;left:0">14 of 25</div>
+<div style="position:absolute;top:17843;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:17857;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_15"><b>Page 15</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:17916;left:89"><b>end</b></div>
+<div style="position:absolute;top:18036;left:74">One of the benefits of PNNs is their speed of learning, because the learning rule (i.e., setting <b>w</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:18047;left:751"><i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18036;left:757">= <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:18047;left:781"><i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18036;left:787">) is</div>
+<div style="position:absolute;top:18065;left:74">simple and requires only a single pass through the training data. The space complexity (amount of</div>
+<div style="position:absolute;top:18088;left:74">memory) for the PNN is easy to determine by counting the number of connections<i>. </i>This can be quite se-</div>
+<div style="position:absolute;top:18110;left:74">vere for instance in a hardware application, because both <i>n </i>and <i>d </i>can be quite large. The time complexity</div>
+<div style="position:absolute;top:18132;left:74">for classification by the parallel implementation of Figure 11.13 is very low, since the <i>n </i>inner products of</div>
+<div style="position:absolute;top:18155;left:74">eq.11.29 can be done in parallel. Thus, this PNN architecture could find uses where recognition speed is</div>
+<div style="position:absolute;top:18177;left:74">important and storage is not a severe limitation. Another benefit is that new training patterns can be</div>
+<div style="position:absolute;top:18199;left:74">incorporated into a previously trained classifier quite easily; this might be important for a particular on-line</div>
+<div style="position:absolute;top:18222;left:74">application.</div>
+<div style="position:absolute;top:18308;left:74"><b>11.3.4 Choosing the Window Function</b></div>
+<div style="position:absolute;top:18354;left:74">As we have seen, one of the problems encountered in the Parzen-window/PNN approach concerns the</div>
+<div style="position:absolute;top:18376;left:74">choice of the sequence of cell-volume sizes <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:18385;left:400">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18376;left:408">,<i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:18385;left:423">2</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18376;left:432">…- or overall window size (or indeed other window</div>
+<div style="position:absolute;top:18407;left:74">parameters, such as shape or orientation). For example, if we take <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:18417;left:559"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18407;left:566">=</div>
+<div style="position:absolute;top:18407;left:629">, the results for any finite <i>n</i></div>
+<div style="position:absolute;top:18436;left:74">will be very sensitive to the choice for the initial volume <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:18445;left:493">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18436;left:501"><i>. </i>If <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:18445;left:537">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18436;left:550">is too small, most of the volumes will be</div>
+<div style="position:absolute;top:18465;left:74">empty, and the estimate <i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:18475;left:256"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18465;left:263">(<b>x</b>) will be very erratic. On the other hand, if <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:18476;left:597">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18465;left:608">is too large, important spatial</div>
+<div style="position:absolute;top:18494;left:74">variations in <i>p</i>(<b>x</b>) may be lost due to averaging over the cell volume. Furthermore, it may well be the case</div>
+<div style="position:absolute;top:18517;left:74">that a cell volume appropriate for one region of the feature space might be entirely unsuitable in a different</div>
+<div style="position:absolute;top:18539;left:74">region. General methods, including cross-validation, are often used in conjunction with Parzen windows.</div>
+<div style="position:absolute;top:18561;left:74">In brief, cross-validation requires taking some small portion of the data to form a <i>validation set. </i>The</div>
+<div style="position:absolute;top:18584;left:74">classifier is trained on the remaining patterns in the training set, but the window width is adjusted to give</div>
+<div style="position:absolute;top:18606;left:74">the smallest error on the validation set.</div>
+<div style="position:absolute;top:18692;left:74"><b>11.3.5 Estimation of Posterior Probabilities</b></div>
+<div style="position:absolute;top:18738;left:74">These techniques can be used to estimate the posterior probabilities <i>P</i>(<i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:18748;left:589"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18738;left:593"><i>|</i><b>x</b>) from a set of <i>n </i>labeled samples</div>
+<div style="position:absolute;top:18767;left:74">by using the samples to estimate the densities involved. Suppose that we place a cell of volume <i>V </i>around <b>x</b></div>
+<div style="position:absolute;top:18789;left:74">and capture <i>k </i>samples, <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:18800;left:248"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18789;left:256">of which turn out to be labeled <i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:18800;left:491"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18789;left:495">. Then the obvious estimate for the joint</div>
+<div style="position:absolute;top:18818;left:74">probability <i>p</i>(<b>x </b><i>,w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:18828;left:202"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18818;left:206">) is</div>
+<div style="position:absolute;top:18908;left:297">(11.29)</div>
+<div style="position:absolute;top:18949;left:74">and thus a reasonable estimate for <i>P</i>(<i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:18959;left:350"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:18949;left:354"><i>|</i><b>x</b>) is</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:17860;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:17860;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:19106;left:0">15 of 25</div>
+<div style="position:absolute;top:19106;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:19120;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_16"><b>Page 16</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19179;left:244">(11.30)</div>
+<div style="position:absolute;top:19219;left:74">That is, the estimate of the posterior probability that <i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19229;left:462"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19219;left:471">is the state of nature is merely the fraction of the</div>
+<div style="position:absolute;top:19248;left:74">samples within the cell that are labeled <i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19258;left:368"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19248;left:372">. Consequently, for minimum error rate we select the category</div>
+<div style="position:absolute;top:19277;left:74">most frequently represented within the cell. If there are enough samples and if the cell is sufficiently small,</div>
+<div style="position:absolute;top:19299;left:74">it can be shown that, this will yield performance approaching the best possible.</div>
+<div style="position:absolute;top:19339;left:74">When it comes to choosing the size of the cell, it is clear that we can use either the Parzen-window</div>
+<div style="position:absolute;top:19361;left:74">approach or the <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19372;left:198"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19361;left:205">-nearest-neighbor approach. In the first case, <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19372;left:539"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19361;left:551">would be some specified function of <i>n,</i></div>
+<div style="position:absolute;top:19391;left:74">such as <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19401;left:141"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19391;left:149">=l /</div>
+<div style="position:absolute;top:19391;left:200"><i>. </i>In the second case, <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19401;left:359"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19391;left:371">would be expanded until some specified number of samples were</div>
+<div style="position:absolute;top:19421;left:74">captured, such as <i>k </i>=</div>
+<div style="position:absolute;top:19421;left:250"><i>. </i>In either case, as <i>n </i>goes to infinity an infinite number of samples will fall within</div>
+<div style="position:absolute;top:19446;left:74">the infinitely small cell. The fact that the cell volume could become arbitrarily small and yet contain an</div>
+<div style="position:absolute;top:19468;left:74">arbitrarily large number of samples would allow us to learn the unknown probabilities with virtual</div>
+<div style="position:absolute;top:19491;left:74">certainty and thus eventually obtain optimum performance.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:18px;font-family:Times">
+<div style="position:absolute;top:19575;left:74"><b>11.4 <i>k</i></b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19586;left:125"><i><b>n</b></i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:18px;font-family:Times">
+<div style="position:absolute;top:19575;left:140"><b>– Nearest Neighbor Estimation</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19629;left:74">There are two overarching approaches to nonparametric estimation for pattern classification: In one the</div>
+<div style="position:absolute;top:19652;left:74">densities are estimated (and then used for classification), while in the other the category is chosen directly.</div>
+<div style="position:absolute;top:19674;left:74">Parzen windows and their hardware implementation, probabilistic neural networks, exemplify the former</div>
+<div style="position:absolute;top:19696;left:74">approach. The latter is exemplified by <i>k</i>-nearest-neighbor and several forms of relaxation networks.</div>
+<div style="position:absolute;top:19737;left:74">A potential solution for the problem of the unknown <i>best window function </i>is to let the cell volume be a</div>
+<div style="position:absolute;top:19759;left:74">function of the training data<i>, </i>rather than some arbitrary function of the overall number of samples. For</div>
+<div style="position:absolute;top:19781;left:74">example, to estimate</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:19782;left:226"><i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19781;left:234">(<b>x</b>) from training samples or <i>prototypes </i>we can center a cell about <b>x </b>and let it grow</div>
+<div style="position:absolute;top:19804;left:74">until it captures <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19814;left:198"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19804;left:209">samples, where <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19814;left:332"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19804;left:343">is some specified function of <i>n</i>. These samples are the <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19814;left:742"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:19804;left:753"><i>nearest-</i></div>
+<div style="position:absolute;top:19832;left:74"><i>neighbors </i>of <b>x </b>(Figure 11.14 and Figure 11.15).</div>
+<div style="position:absolute;top:20102;left:266">Figure 11.14: <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20113;left:374"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:20102;left:382">-Nearest Neighbor estimation (kNN).</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:19123;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:19123;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:20369;left:0">16 of 25</div>
+<div style="position:absolute;top:20369;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:20383;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_17"><b>Page 17</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:20731;left:176">Figure 11.15: The difference between estimation methods for density function.</div>
+<div style="position:absolute;top:20811;left:74">If the density is high near <b>x </b>(Figure 11.14), the cell will be relatively small, which leads to good resolution.</div>
+<div style="position:absolute;top:20834;left:74">If the density is low, it is true that the cell will grow large, but it will stop soon after it enters regions of</div>
+<div style="position:absolute;top:20856;left:74">higher density. In either case, if we take</div>
+<div style="position:absolute;top:20944;left:297">(11.31)</div>
+<div style="position:absolute;top:20984;left:74">we want <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20994;left:147"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:20984;left:158">to go to infinity as <i>n </i>goes to infinity, since this assures us that <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20994;left:610"><i>n </i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:20984;left:621">/ <i>n </i>will be a good estimate of</div>
+<div style="position:absolute;top:21013;left:74">the probability that a point will fall in the cell of volume <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21023;left:492"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21013;left:499">. However, we also want <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21023;left:687"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21013;left:699">to grow sufficiently</div>
+<div style="position:absolute;top:21042;left:74">slowly that the size of the cell needed to capture <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21052;left:430"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21042;left:442">training samples will shrink to zero. Thus, it is clear</div>
+<div style="position:absolute;top:21071;left:74">from eq.11.31 that the ratio <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21081;left:281"><i>n </i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21071;left:292">/ <i>n </i>must go to zero. It can be shown that the conditions lim</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21081;left:712">n®¥</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21071;left:742"><i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21081;left:750"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21071;left:761">=</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:21072;left:771">¥</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21071;left:784">and</div>
+<div style="position:absolute;top:21100;left:74">lim</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21110;left:98">n®¥</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21100;left:128"><i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21110;left:136"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21100;left:143">/<i>n</i>=0 are necessary and sufficient for</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:21101;left:408"><i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21110;left:416"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21100;left:423">(<b>x</b>) to converge to </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:21101;left:555"><i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21100;left:563">(<b>x</b>) in probability at all points where</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:21131;left:74"><i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21130;left:82">(<b>x</b>) is continuous. If we take <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21140;left:295"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21130;left:302"><i>=</i></div>
+<div style="position:absolute;top:21130;left:341">and assume that</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:21131;left:460"><i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21140;left:468"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21130;left:475">(<b>x</b>) is a reasonably good approximation to</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:21131;left:778"><i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21130;left:787">(<b>x</b>), we</div>
+<div style="position:absolute;top:21161;left:74">then see from eq.11.31 that</div>
+<div style="position:absolute;top:21161;left:385">. Thus, <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21171;left:450"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21161;left:461">again has the form <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:21170;left:609">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21161;left:617">/</div>
+<div style="position:absolute;top:21161;left:649">, but the initial volume <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:21170;left:827">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21190;left:74">is determined by the nature of the data rather than by some arbitrary choice on our part. Since</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:21191;left:747"><i>p</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21200;left:755"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21190;left:762">(<b>x</b>) is</div>
+<div style="position:absolute;top:21219;left:74">continuous, its slope is not, and the points of discontinuity are rarely the same as the data points (Figure</div>
+<div style="position:absolute;top:21241;left:74">11.16).</div>
+<div style="position:absolute;top:21281;left:74">If we base our decision solely on the label of the single nearest neighbor of <b>x </b>we can obtain comparable</div>
+<div style="position:absolute;top:21308;left:74">performance. We begin by letting </div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:21307;left:318"><i>D</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21303;left:332"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21308;left:339">={<b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:21317;left:366">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21308;left:375">,….,<b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21318;left:415"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21308;left:422">} denote a set of <i>n </i>labeled prototypes (data point whose</div>
+<div style="position:absolute;top:21342;left:74">classes are known) and letting <b>x</b>¢Î</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:21340;left:323"><i>D</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21336;left:337"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21342;left:349">be the prototype nearest to a test point <b>x</b>. Then the <i>nearest-neighbor</i></div>
+<div style="position:absolute;top:21367;left:74"><i>rule </i>for classifying <b>x </b>is to assign it the label associated with <b>x</b>¢. The nearest-neighbor rule is a suboptimal</div>
+<div style="position:absolute;top:21389;left:74">procedure; its use will usually lead to an error rate greater than the minimum possible, the Bayes rate. With</div>
+<div style="position:absolute;top:21412;left:74">an unlimited number of prototypes, the error rate is never worse than twice the Bayes rate.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:20386;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:20386;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:21632;left:0">17 of 25</div>
+<div style="position:absolute;top:21632;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:21646;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_18"><b>Page 18</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:21958;left:221">Figure 11.16: Eight points in one dimension and the k-nearest-</div>
+<div style="position:absolute;top:21980;left:221">neighbor density estimates, for <i>k</i>=3 and 5. The discontinuities in the</div>
+<div style="position:absolute;top:22003;left:221">slopes in the estimates generally lie away from the positions of the</div>
+<div style="position:absolute;top:22025;left:221">prototype points.</div>
+<div style="position:absolute;top:22106;left:74">An extension of the nearest-neighbor rule is the <i>k-nearest-neighbor rule. </i>In the <i>k</i>NN method we grow the</div>
+<div style="position:absolute;top:22128;left:74">volume surrounding the estimation point <b>x </b>until it encloses a total of <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:22138;left:575"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:22128;left:587">data points. This rule classifies <b>x</b></div>
+<div style="position:absolute;top:22157;left:74">by assigning it the label most frequently represented among the <i>k </i>nearest samples; in other words, a deci-</div>
+<div style="position:absolute;top:22179;left:74">sion is made by examining the labels on the <i>k </i>nearest neighbors and taking a vote. The kNN query starts at</div>
+<div style="position:absolute;top:22201;left:74">the test point <b>x </b>and grows a spherical region until it encloses <i>k </i>training samples and it labels the test point</div>
+<div style="position:absolute;top:22224;left:74">by a majority vote of these samples. The density estimate then becomes;</div>
+<div style="position:absolute;top:22312;left:297">(11.32)</div>
+<div style="position:absolute;top:22352;left:74">Since the volume is chosen to be spherical, the volume <i>V</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:22362;left:481"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:22352;left:493">can be written in terms of the volume of a unit</div>
+<div style="position:absolute;top:22381;left:74">sphere times the distance between the point <b>x </b>under estimate and the <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:22391;left:576"><i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:22381;left:588">nearest neighbor such as</div>
+<div style="position:absolute;top:22454;left:351">(11.33)</div>
+<div style="position:absolute;top:22495;left:74">Combining eq. 11.32 and 11.33, the density estimation becomes</div>
+<div style="position:absolute;top:22584;left:297">(11.34)</div>
+<div style="position:absolute;top:22624;left:74">where</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:21649;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:21649;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:22895;left:0">18 of 25</div>
+<div style="position:absolute;top:22895;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:22909;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_19"><b>Page 19</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:22968;left:74">The volume of the unit sphere <i>c</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:22978;left:301"><i>d</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:22968;left:313">is given by</div>
+<div style="position:absolute;top:23065;left:297">(11.35)</div>
+<div style="position:absolute;top:23107;left:74">where <i>c</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:23116;left:130">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:23107;left:138">=2, <i>c</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:23116;left:174">2</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:23107;left:182">=p, <i>c</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:23116;left:218">3</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:23107;left:226">=4p/3 and so on (Figure 11.17).</div>
+<div style="position:absolute;top:23481;left:251"><b>(a)</b></div>
+<div style="position:absolute;top:23481;left:642"><b>(b)</b></div>
+<div style="position:absolute;top:23521;left:105">Figure 11.17: a. The simulation of the <i>k</i>-nearest neighbor method, and b. <i>k</i>=5 case. In this case, the</div>
+<div style="position:absolute;top:23543;left:238">test point x would be labeled the category of the black points.</div>
+<div style="position:absolute;top:23623;left:74">In general, the estimates that can be obtained with the kNN method are not very satisfactory. The estimates</div>
+<div style="position:absolute;top:23646;left:74">are prone to local noise. The method produces estimates with very heavy tails. Since the function <i>R</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:23656;left:783"><i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:23646;left:790">(<b>x</b>) is</div>
+<div style="position:absolute;top:23675;left:74">not differentiable, the density estimate will have discontinuities. The resulting density is not a true</div>
+<div style="position:absolute;top:23697;left:74">probability density since its integral over all the sample space diverges. These properties are illustrated in </div>
+<div style="position:absolute;top:23719;left:74">Figure 11.18 and Figure 11.19.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:22912;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:22912;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:24158;left:0">19 of 25</div>
+<div style="position:absolute;top:24158;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:24172;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_20"><b>Page 20</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:24606;left:447"><b>(a)</b></div>
+<div style="position:absolute;top:25020;left:447"><b>(b)</b></div>
+<div style="position:absolute;top:25060;left:154">Figure 11.18: An illustration of the performance of <i>k</i>-nearest neighbor method. a. The</div>
+<div style="position:absolute;top:25082;left:154">true density which is a mixture of two bivariate Gaussians, and b. the density estimate</div>
+<div style="position:absolute;top:25105;left:154">for <i>k</i>=10 and <i>n</i>=200 examples.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:24175;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:24175;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:25421;left:0">20 of 25</div>
+<div style="position:absolute;top:25421;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:25435;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_21"><b>Page 21</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:25958;left:264"><b>(a)</b></div>
+<div style="position:absolute;top:25958;left:629"><b>(b)</b></div>
+<div style="position:absolute;top:25998;left:113">Figure 11.19: Contour plot of Figure 11.18. a. The true density, and b. the kNN density estimate.</div>
+<div style="position:absolute;top:26085;left:74">The main advantage of the kNN method is that it leads to a very simple approximation of the (optimal)</div>
+<div style="position:absolute;top:26107;left:74">Bayes classifier. Assume that we have a dataset with <i>n </i>examples, <i>n</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26117;left:553"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:26107;left:561">from class <i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26117;left:652"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:26107;left:656">, and that we are</div>
+<div style="position:absolute;top:26136;left:74">interested in classifying an unknown sample <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26146;left:405"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:26136;left:409">. We draw a hyper-sphere of volume <i>V </i>around <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26146;left:751"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:26136;left:755">. Assume</div>
+<div style="position:absolute;top:26165;left:74">this volume contains a total of <i>k </i>examples, <i>k</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26175;left:391"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:26165;left:400">from class <i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26175;left:490"><i>i</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:26165;left:494">. We can then approximate the likelihood</div>
+<div style="position:absolute;top:26193;left:74">functions using the kNN method by:</div>
+<div style="position:absolute;top:26277;left:297">(11.36)</div>
+<div style="position:absolute;top:26358;left:74">Similarly, the unconditional density is estimated by</div>
+<div style="position:absolute;top:26441;left:297">(11.37)</div>
+<div style="position:absolute;top:26481;left:74">and the priors are approximated by</div>
+<div style="position:absolute;top:26565;left:297">(11.38)</div>
+<div style="position:absolute;top:26606;left:74">Putting everything together, the Bayes classifier becomes</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:25438;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:25438;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:26684;left:0">21 of 25</div>
+<div style="position:absolute;top:26684;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:26698;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_22"><b>Page 22</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:26852;left:190">(11.39)</div>
+<div style="position:absolute;top:26892;left:74">The <i>k-</i>Nearest Neighbor Rule (kNN) is a very intuitive method that classifies unlabeled examples based on</div>
+<div style="position:absolute;top:26914;left:74">their similarity to examples in the training set. For a given unlabeled example <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26924;left:642"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:26914;left:645">, find the <i>k </i>“closest”</div>
+<div style="position:absolute;top:26943;left:74">labeled examples in the training data set and assign <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26953;left:454"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:26943;left:462">to the class that appears most frequently within the</div>
+<div style="position:absolute;top:26972;left:74"><i>k</i>-subset. The kNN only requires;</div>
+<div style="position:absolute;top:27014;left:74">· An integer <i>k</i>,</div>
+<div style="position:absolute;top:27037;left:74">· A set of labeled examples (training data)</div>
+<div style="position:absolute;top:27061;left:74">· A metric to measure “closeness”</div>
+<div style="position:absolute;top:27141;left:74">In the example in Figure 11.20, we have three classes and the goal is to find a class label for the unknown</div>
+<div style="position:absolute;top:27164;left:74">example <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:27174;left:148"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:27164;left:157">. In this case we use the Euclidean distance and a value of <i>k</i>=5 neighbors. Of the 5 closest</div>
+<div style="position:absolute;top:27193;left:74">neighbors, 4 belong to <i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:27203;left:250">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:27193;left:262">and 1 belongs to <i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:27203;left:396">3</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:27193;left:403">, so <b>x</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:27203;left:441"><i>j</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:27193;left:450">is assigned to <i>w</i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:27203;left:562">1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:27193;left:570">, the predominant class.</div>
+<div style="position:absolute;top:27521;left:306">Figure 11.20: kNN classification example.</div>
+<div style="position:absolute;top:27601;left:74"><i>k</i>NN is considered as a <i>lazy </i>learning algorithm. It <i>defers </i>data processing until it receives a request to</div>
+<div style="position:absolute;top:27624;left:74">classify an unlabelled example, <i>replies </i>to a request for information by combining its stored training data,</div>
+<div style="position:absolute;top:27646;left:74">and <i>discards </i>the constructed answer and any intermediate results.</div>
+<div style="position:absolute;top:27686;left:74">Advantages:</div>
+<div style="position:absolute;top:27728;left:74">· Analytically tractable,</div>
+<div style="position:absolute;top:27752;left:74">· Simple implementation,</div>
+<div style="position:absolute;top:27776;left:74">· Nearly optimal in the large sample limit (<i>n </i></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:14px;font-family:Times">
+<div style="position:absolute;top:27777;left:410">® ¥</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:27776;left:435">)</div>
+<div style="position:absolute;top:27799;left:74">· Uses local information, which can yield highly adaptive behavior, and</div>
+<div style="position:absolute;top:27823;left:74">· Lends itself very easily to parallel implementations.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:26701;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:26701;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:27947;left:0">22 of 25</div>
+<div style="position:absolute;top:27947;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:27961;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_23"><b>Page 23</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:28020;left:74">Disadvantages:</div>
+<div style="position:absolute;top:28061;left:74">· Large storage requirements,</div>
+<div style="position:absolute;top:28085;left:74">· Computationally intensive recall,</div>
+<div style="position:absolute;top:28109;left:74">· Highly susceptible to the curse of dimensionality.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:18px;font-family:Times">
+<div style="position:absolute;top:28200;left:74"><b>11.5 MATLAB Implementation</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:28245;left:74">The probabilistic neural network and the classification algorithm is simulated using MATLAB. The</div>
+<div style="position:absolute;top:28268;left:74">network used for this demonstration is shown in Figure 11.21. Given the samples of three different classes</div>
+<div style="position:absolute;top:28290;left:74">as shown in Figure 11.22, the training is implemented, and then, a new sample is presented to the network</div>
+<div style="position:absolute;top:28312;left:74">for classification as shown in Figure 11.23. The PNN actually divides the input space into three classes as</div>
+<div style="position:absolute;top:28335;left:74">shown in Figure 11.24.</div>
+</span></font>
+<font color="#0000ff" face="Times" size="3"><span style="font-size:16px;font-family:Times;color:#0000ff">
+<div style="position:absolute;top:28375;left:74">Matlab script: ccPnn.m</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:28703;left:212">Figure 11.21: The PNN structure used for the classification example.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:27964;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:27964;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:29210;left:0">23 of 25</div>
+<div style="position:absolute;top:29210;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:29224;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_24"><b>Page 24</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:29283;left:212">Figure 11.22: The PNN structure used for the classification example.</div>
+<div style="position:absolute;top:29739;left:212">Figure 11.23: The PNN structure used for the classification example.</div>
+<div style="position:absolute;top:30236;left:212">Figure 11.24: The PNN structure used for the classification example.</div>
+<div style="position:absolute;top:30403;left:74"><b>REFERENCES</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:29227;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:29227;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:30473;left:0">24 of 25</div>
+<div style="position:absolute;top:30473;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+
+<div style="position:absolute;top:30487;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_25"><b>Page 25</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:30591;left:74">[1]</div>
+<div style="position:absolute;top:30591;left:162">Duda, R.O., Hart, P.E., and Stork D.G., (2001). <i>Pattern Classification</i>. (2</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:30585;left:684">nd</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:30591;left:703">ed.). New York:</div>
+<div style="position:absolute;top:30613;left:128">Wiley-Interscience Publication.</div>
+<div style="position:absolute;top:30653;left:74">[2]</div>
+<div style="position:absolute;top:30653;left:162"><i>Neural Network Toolbox For Use With MATLAB, </i>User’s Guide, (2003) Mathworks Inc.,</div>
+<div style="position:absolute;top:30676;left:128">ver.4.0</div>
+<div style="position:absolute;top:30715;left:74">[3]</div>
+<div style="position:absolute;top:30715;left:162">Gutierrez-Osuna R., <i>Introduction to Pattern Analysis, </i>Course Notes, Department of Computer</div>
+<div style="position:absolute;top:30738;left:128">Science, A&amp;M University, Texas</div>
+<div style="position:absolute;top:30778;left:74">[4]</div>
+<div style="position:absolute;top:30778;left:162">Sima J. (1998). <i>Introduction to Neural Networks, </i>Technical Report No. V 755, Institute of</div>
+<div style="position:absolute;top:30800;left:128">Computer Science, Academy of Sciences of the Czech Republic</div>
+<div style="position:absolute;top:30845;left:74">[5]</div>
+<div style="position:absolute;top:30845;left:162">Kröse B., and van der Smagt P. (1996). <i>An Introduction to Neural Networks</i>. (8</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:30840;left:727">th</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:30845;left:743">ed.)</div>
+<div style="position:absolute;top:30867;left:128">University of Amsterdam Press, University of Amsterdam.</div>
+<div style="position:absolute;top:30912;left:74">[6]</div>
+<div style="position:absolute;top:30912;left:162">Gurney K. (1997). <i>An Introduction to Neural Networks</i>. (1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:30907;left:579">st</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:30912;left:594">ed.) UCL Press, London EC4A</div>
+<div style="position:absolute;top:30935;left:128">3DE, UK.</div>
+<div style="position:absolute;top:30975;left:74">[7]</div>
+<div style="position:absolute;top:30975;left:162">Paplinski A.P. <i>Neural Nets</i>. Lecture Notes, Dept. of Computer Sciences, and Software Eng.,</div>
+<div style="position:absolute;top:30997;left:128">Manash University, Clayton-AUSTRALIA</div>
+<div style="position:absolute;top:31037;left:74">[8]</div>
+<div style="position:absolute;top:31037;left:162">Bain J. L, and Engelhardt M. (1991) <i>Introduction to Probability and Mathematical Statistics</i>.</div>
+<div style="position:absolute;top:31064;left:128">(2</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:31059;left:143">nd</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:16px;font-family:Times">
+<div style="position:absolute;top:31064;left:162">ed.), Duxbury Publication, California-USA</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:13px;font-family:Times">
+<div style="position:absolute;top:30490;left:0">Non-Parametric Techniques</div>
+<div style="position:absolute;top:30490;left:493"><a href="https://www.byclb.com/TR/Tutorials/neural_networks/ch11_1.htm" target="_blank">https://www.byclb.com/TR/<wbr>Tutorials/neural_networks/<wbr>ch11_1.htm</a></div>
+<div style="position:absolute;top:31736;left:0">25 of 25</div>
+<div style="position:absolute;top:31736;left:767">8/25/2014 11:59 AM</div>
+</span></font>
+</div>
+
+</div></body></html>

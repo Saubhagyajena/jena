@@ -1,0 +1,2796 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>principal_components.pdf</title><style type="text/css" media="print">
+        .hide{display:none}
+      </style></head><body style="margin:0;padding:0"><div class="hide"><div style="background:#ffffcc;padding:4 8; border-bottom:thin solid #eeeeee;font-family:Arial,sans-serif"><b>If there are images in this attachment, they will not be displayed.</b>&nbsp;&nbsp; <a href="https://mail-attachment.googleusercontent.com/attachment/?view=att&amp;th=14887ab9bb6f0961&amp;attid=0.1&amp;disp=attd&amp;realattid=f_i07s6mnr0&amp;saduie=AG9B_P_ksnjcM_qIDOa1e2TzblwL&amp;zw">Download the original attachment</a></div></div><div style="margin:1ex">
+
+
+
+
+
+<div bgcolor="#ffffff" vlink="blue" link="blue">
+<table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_1"><b>Page 1</b></a></font></td></tr></tbody></table><font face="Times" size="4"><span style="font-size:23px;font-family:Times">
+<div style="position:absolute;top:588;left:226">A tutorial on Principal Components Analysis</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:659;left:401">Lindsay I Smith</div>
+<div style="position:absolute;top:702;left:392">February 26, 2002</div>
+</span></font>
+
+<div style="position:absolute;top:1363;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_2"><b>Page 2</b></a></font></td></tr></tbody></table></div><font face="Times" size="4"><span style="font-size:28px;font-family:Times">
+<div style="position:absolute;top:1581;left:201"><b>Chapter 1</b></div>
+</span></font>
+<font face="Times" size="5"><span style="font-size:35px;font-family:Times">
+<div style="position:absolute;top:1652;left:201"><b>Introduction</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:1745;left:201">This tutorial is designed to give the reader an understanding of Principal Components</div>
+<div style="position:absolute;top:1763;left:201">Analysis (PCA). PCA is a useful statistical technique that has found application in</div>
+<div style="position:absolute;top:1781;left:201">fields such as face recognition and image compression, and is a common technique for</div>
+<div style="position:absolute;top:1798;left:201">finding patterns in data of high dimension.</div>
+<div style="position:absolute;top:1816;left:223">Before getting to a description of PCA, this tutorial first introduces mathematical</div>
+<div style="position:absolute;top:1834;left:201">concepts that will be used in PCA. It covers standard deviation, covariance, eigenvec-</div>
+<div style="position:absolute;top:1852;left:201">tors and eigenvalues. This background knowledge is meant to make the PCA section</div>
+<div style="position:absolute;top:1870;left:201">very straightforward, but can be skipped if the concepts are already familiar.</div>
+<div style="position:absolute;top:1888;left:223">There are examples all the way through this tutorial that are meant to illustrate the</div>
+<div style="position:absolute;top:1906;left:201">concepts being discussed. If further information is required, the mathematics textbook</div>
+<div style="position:absolute;top:1924;left:201">“Elementary Linear Algebra 5e” by Howard Anton, Publisher John Wiley &amp; Sons Inc,</div>
+<div style="position:absolute;top:1942;left:201">ISBN 0-471-85223-6 is a good source of information regarding the mathematical back-</div>
+<div style="position:absolute;top:1960;left:201">ground.</div>
+<div style="position:absolute;top:2332;left:455">1</div>
+</span></font>
+
+<div style="position:absolute;top:2551;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_3"><b>Page 3</b></a></font></td></tr></tbody></table></div><font face="Times" size="4"><span style="font-size:28px;font-family:Times">
+<div style="position:absolute;top:2769;left:201"><b>Chapter 2</b></div>
+</span></font>
+<font face="Times" size="5"><span style="font-size:35px;font-family:Times">
+<div style="position:absolute;top:2840;left:201"><b>Background Mathematics</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:2933;left:201">This section will attempt to give some elementary background mathematical skills that</div>
+<div style="position:absolute;top:2951;left:201">will be required to understand the process of Principal Components Analysis. The</div>
+<div style="position:absolute;top:2969;left:201">topics are covered independently of each other, and examples given. It is less important</div>
+<div style="position:absolute;top:2986;left:201">to remember the exact mechanics of a mathematical technique than it is to understand</div>
+<div style="position:absolute;top:3004;left:201">the reason why such a technique may be used, and what the result of the operation tells</div>
+<div style="position:absolute;top:3022;left:201">us about our data. Not all of these techniques are used in PCA, but the ones that are not</div>
+<div style="position:absolute;top:3040;left:201">explicitly required do provide the grounding on which the most important techniques</div>
+<div style="position:absolute;top:3058;left:201">are based.</div>
+<div style="position:absolute;top:3076;left:223">I have included a section on Statistics which looks at distribution measurements,</div>
+<div style="position:absolute;top:3094;left:201">or, how the data is spread out. The other section is on Matrix Algebra and looks at</div>
+<div style="position:absolute;top:3112;left:201">eigenvectors and eigenvalues, important properties of matrices that are fundamental to</div>
+<div style="position:absolute;top:3130;left:201">PCA.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:19px;font-family:Times">
+<div style="position:absolute;top:3176;left:201"><b>2.1 Statistics</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3214;left:201">The entire subject of statistics is based around the idea that you have this big set of data,</div>
+<div style="position:absolute;top:3232;left:201">and you want to analyse that set in terms of the relationships between the individual</div>
+<div style="position:absolute;top:3249;left:201">points in that data set. I am going to look at a few of the measures you can do on a set</div>
+<div style="position:absolute;top:3267;left:201">of data, and what they tell you about the data itself.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:3308;left:201"><b>2.1.1 Standard Deviation</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3338;left:201">To understand standard deviation, we need a data set. Statisticians are usually con-</div>
+<div style="position:absolute;top:3356;left:201">cerned with taking a <i>sample </i>of a <i>population</i>. To use election polls as an example, the</div>
+<div style="position:absolute;top:3374;left:201">population is all the people in the country, whereas a sample is a subset of the pop-</div>
+<div style="position:absolute;top:3392;left:201">ulation that the statisticians measure. The great thing about statistics is that by only</div>
+<div style="position:absolute;top:3410;left:201">measuring (in this case by doing a phone survey or similar) a sample of the population,</div>
+<div style="position:absolute;top:3428;left:201">you can work out what is most likely to be the measurement if you used the entire pop-</div>
+<div style="position:absolute;top:3446;left:201">ulation. In this statistics section, I am going to assume that our data sets are samples</div>
+<div style="position:absolute;top:3520;left:455">2</div>
+</span></font>
+
+<div style="position:absolute;top:3739;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_4"><b>Page 4</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3856;left:201">of some bigger population. There is a reference later in this section pointing to more</div>
+<div style="position:absolute;top:3874;left:201">information about samples and populations.</div>
+<div style="position:absolute;top:3892;left:223">Here’s an example set:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:3922;left:338">&nbsp;¢¡¤£¦¥¨§©¥§¥§©<wbr>! "#$</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3959;left:201">I could simply use the symbol</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:3954;left:391">&nbsp;</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3959;left:411">to refer to this entire set of numbers. If I want to</div>
+<div style="position:absolute;top:3977;left:201">refer to an individual number in this data set, I will use subscripts on the symbol</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:3972;left:686">&nbsp;</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3977;left:705">to</div>
+<div style="position:absolute;top:3995;left:201">indicate a specific number. Eg.</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:3990;left:391">&nbsp;&amp;%</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3995;left:414">refers to the 3rd number in</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:3990;left:579">&nbsp;</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:3995;left:593">, namely the number</div>
+<div style="position:absolute;top:4013;left:201">4. Note that</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4008;left:277">&nbsp;('</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4013;left:301">is the first number in the sequence, not</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4008;left:539">&nbsp;&amp;)</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4013;left:563">like you may see in some</div>
+<div style="position:absolute;top:4031;left:201">textbooks. Also, the symbol</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4036;left:377">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4031;left:391">will be used to refer to the number of elements in the</div>
+<div style="position:absolute;top:4049;left:201">set</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4044;left:221">&nbsp;</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4067;left:223">There are a number of things that we can calculate about a data set. For example,</div>
+<div style="position:absolute;top:4085;left:201">we can calculate the mean of the sample. I assume that the reader understands what the</div>
+<div style="position:absolute;top:4103;left:201">mean of a sample is, and will only give the formula:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4136;left:417">1</div>
+<div style="position:absolute;top:4139;left:411">&nbsp;2¡</div>
+<div style="position:absolute;top:4139;left:463">3465</div>
+<div style="position:absolute;top:4130;left:477">'</div>
+<div style="position:absolute;top:4128;left:485">&nbsp;</div>
+<div style="position:absolute;top:4137;left:498">4</div>
+<div style="position:absolute;top:4159;left:470">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4182;left:201">Notice the symbol</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4174;left:318">1</div>
+<div style="position:absolute;top:4177;left:313">&nbsp;</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4182;left:330">(said “X bar”) to indicate the mean of the set</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4177;left:599">&nbsp;</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4182;left:613">. All this formula</div>
+<div style="position:absolute;top:4200;left:201">says is “Add up all the numbers and then divide by how many there are”.</div>
+<div style="position:absolute;top:4218;left:223">Unfortunately, the mean doesn’t tell us a lot about the data except for a sort of</div>
+<div style="position:absolute;top:4236;left:201">middle point. For example, these two data sets have exactly the same mean (10), but</div>
+<div style="position:absolute;top:4254;left:201">are obviously quite different:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4284;left:372">£879¥8§§7$!@</div>
+<div style="position:absolute;top:4294;left:453">0BA</div>
+<div style="position:absolute;top:4284;left:475">£C#D¥¥¥§$</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4322;left:201">So what is different about these two sets? It is the <i>spread </i>of the data that is different.</div>
+<div style="position:absolute;top:4340;left:201">The Standard Deviation (SD) of a data set is a measure of how spread out the data is.</div>
+<div style="position:absolute;top:4358;left:223">How do we calculate it? The English definition of the SD is: “The average distance</div>
+<div style="position:absolute;top:4376;left:201">from the mean of the data set to a point”. The way to calculate it is to compute the</div>
+<div style="position:absolute;top:4393;left:201">squares of the distance from each data point to the mean of the set, add them all up,</div>
+<div style="position:absolute;top:4411;left:201">divide by</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4416;left:260">0FE</div>
+<div style="position:absolute;top:4406;left:288">¥</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4411;left:295">, and take the positive square root. As a formula:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4457;left:385">G</div>
+<div style="position:absolute;top:4453;left:396">¡</div>
+<div style="position:absolute;top:4453;left:444">3465</div>
+<div style="position:absolute;top:4445;left:458">'IH</div>
+<div style="position:absolute;top:4443;left:469">&nbsp;</div>
+<div style="position:absolute;top:4451;left:482">4</div>
+<div style="position:absolute;top:4453;left:491">E</div>
+<div style="position:absolute;top:4441;left:510">1</div>
+<div style="position:absolute;top:4443;left:504">&nbsp;QPSR</div>
+<div style="position:absolute;top:4466;left:457">H</div>
+<div style="position:absolute;top:4474;left:461">0(E</div>
+<div style="position:absolute;top:4464;left:490">¥P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4502;left:201">Where</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4500;left:244">G</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4502;left:253">is the usual symbol for standard deviation of a sample. I hear you asking “Why</div>
+<div style="position:absolute;top:4520;left:201">are you using</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4516;left:284">H</div>
+<div style="position:absolute;top:4524;left:289">0TE</div>
+<div style="position:absolute;top:4514;left:314">¥P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4520;left:330">and not</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4524;left:376">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4520;left:386">?”. Well, the answer is a bit complicated, but in general,</div>
+<div style="position:absolute;top:4538;left:201">if your data set is a <i>sample </i>data set, ie. you have taken a subset of the real-world (like</div>
+<div style="position:absolute;top:4555;left:201">surveying 500 people about the election) then you must use</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4552;left:556">H</div>
+<div style="position:absolute;top:4560;left:560">0UE</div>
+<div style="position:absolute;top:4550;left:586">¥P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4555;left:602">because it turns out</div>
+<div style="position:absolute;top:4573;left:201">that this gives you an answer that is closer to the standard deviation that would result</div>
+<div style="position:absolute;top:4591;left:201">if you had used the <i>entire </i>population, than if you’d used</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4596;left:549">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4591;left:559">. If, however, you are not</div>
+<div style="position:absolute;top:4609;left:201">calculating the standard deviation for a sample, but for an entire population, then you</div>
+<div style="position:absolute;top:4627;left:201">should divide by</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4632;left:304">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4627;left:318">instead of</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:4624;left:381">H</div>
+<div style="position:absolute;top:4632;left:386">0VE</div>
+<div style="position:absolute;top:4621;left:415">¥P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:4627;left:427">. For further reading on this topic, the web page</div>
+<div style="position:absolute;top:4645;left:201"><i><a href="http://mathcentral.uregina.ca/RR/database/RR.09.95/weston2.html" target="_blank">http://mathcentral.uregina.ca/<wbr>RR/database/RR.09.95/weston2.<wbr>html</a> </i>describes standard</div>
+<div style="position:absolute;top:4663;left:201">deviation in a similar way, and also provides an example experiment that shows the</div>
+<div style="position:absolute;top:4708;left:455">3</div>
+</span></font>
+
+<div style="position:absolute;top:4927;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_5"><b>Page 5</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:5039;left:201">Set 1:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:5076;left:330">&nbsp;</div>
+<div style="position:absolute;top:5079;left:449">H</div>
+<div style="position:absolute;top:5076;left:453">&nbsp;</div>
+<div style="position:absolute;top:5087;left:472">E</div>
+<div style="position:absolute;top:5074;left:491">1</div>
+<div style="position:absolute;top:5076;left:485">&nbsp;QP</div>
+<div style="position:absolute;top:5079;left:524">H</div>
+<div style="position:absolute;top:5076;left:528">&nbsp;</div>
+<div style="position:absolute;top:5087;left:546">E</div>
+<div style="position:absolute;top:5074;left:566">1</div>
+<div style="position:absolute;top:5076;left:560">&nbsp;QP R</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:5101;left:330">0</div>
+<div style="position:absolute;top:5101;left:485">-10</div>
+<div style="position:absolute;top:5101;left:564">100</div>
+<div style="position:absolute;top:5118;left:330">8</div>
+<div style="position:absolute;top:5118;left:493">-2</div>
+<div style="position:absolute;top:5118;left:579">4</div>
+<div style="position:absolute;top:5136;left:330">12</div>
+<div style="position:absolute;top:5136;left:498">2</div>
+<div style="position:absolute;top:5136;left:579">4</div>
+<div style="position:absolute;top:5154;left:330">20</div>
+<div style="position:absolute;top:5154;left:490">10</div>
+<div style="position:absolute;top:5154;left:564">100</div>
+<div style="position:absolute;top:5173;left:330">Total</div>
+<div style="position:absolute;top:5173;left:564">208</div>
+<div style="position:absolute;top:5191;left:330">Divided by (n-1)</div>
+<div style="position:absolute;top:5191;left:546">69.333</div>
+<div style="position:absolute;top:5210;left:330">Square Root</div>
+<div style="position:absolute;top:5210;left:546">8.3266</div>
+<div style="position:absolute;top:5256;left:201">Set 2:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:5296;left:326">&nbsp;</div>
+<div style="position:absolute;top:5304;left:339">4</div>
+<div style="position:absolute;top:5298;left:445">H</div>
+<div style="position:absolute;top:5296;left:449">&nbsp;</div>
+<div style="position:absolute;top:5304;left:462">4</div>
+<div style="position:absolute;top:5306;left:472">E</div>
+<div style="position:absolute;top:5294;left:491">1</div>
+<div style="position:absolute;top:5296;left:485">&nbsp;QP</div>
+<div style="position:absolute;top:5298;left:524">H</div>
+<div style="position:absolute;top:5296;left:528">&nbsp;</div>
+<div style="position:absolute;top:5304;left:541">4</div>
+<div style="position:absolute;top:5306;left:550">E</div>
+<div style="position:absolute;top:5294;left:570">1</div>
+<div style="position:absolute;top:5296;left:564">&nbsp;QP R</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:5320;left:326">8</div>
+<div style="position:absolute;top:5320;left:493">-2</div>
+<div style="position:absolute;top:5320;left:583">4</div>
+<div style="position:absolute;top:5338;left:326">9</div>
+<div style="position:absolute;top:5338;left:493">-1</div>
+<div style="position:absolute;top:5338;left:583">1</div>
+<div style="position:absolute;top:5356;left:326">11</div>
+<div style="position:absolute;top:5356;left:498">1</div>
+<div style="position:absolute;top:5356;left:583">1</div>
+<div style="position:absolute;top:5374;left:326">12</div>
+<div style="position:absolute;top:5374;left:498">2</div>
+<div style="position:absolute;top:5374;left:583">4</div>
+<div style="position:absolute;top:5392;left:326">Total</div>
+<div style="position:absolute;top:5392;left:576">10</div>
+<div style="position:absolute;top:5411;left:326">Divided by (n-1)</div>
+<div style="position:absolute;top:5411;left:557">3.333</div>
+<div style="position:absolute;top:5429;left:326">Square Root</div>
+<div style="position:absolute;top:5429;left:550">1.8257</div>
+<div style="position:absolute;top:5494;left:327">Table 2.1: Calculation of standard deviation</div>
+<div style="position:absolute;top:5539;left:201">difference between each of the denominators. It also discusses the difference between</div>
+<div style="position:absolute;top:5557;left:201">samples and populations.</div>
+<div style="position:absolute;top:5574;left:223">So, for our two data sets above, the calculations of standard deviation are in Ta-</div>
+<div style="position:absolute;top:5592;left:201">ble 2.1.</div>
+<div style="position:absolute;top:5610;left:223">And so, as expected, the first set has a much larger standard deviation due to the</div>
+<div style="position:absolute;top:5628;left:201">fact that the data is much more spread out from the mean. Just as another example, the</div>
+<div style="position:absolute;top:5646;left:201">data set:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:5658;left:416">£¦¥7¥7¥87¥87$</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:5691;left:201">also has a mean of 10, but its standard deviation is 0, because all the numbers are the</div>
+<div style="position:absolute;top:5709;left:201">same. None of them deviate from the mean.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:5750;left:201"><b>2.1.2 Variance</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:5780;left:201">Variance is another measure of the spread of data in a data set. In fact it is almost</div>
+<div style="position:absolute;top:5798;left:201">identical to the standard deviation. The formula is this:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:5835;left:389">G</div>
+<div style="position:absolute;top:5829;left:395">R</div>
+<div style="position:absolute;top:5831;left:407">¡</div>
+<div style="position:absolute;top:5831;left:439">34W5</div>
+<div style="position:absolute;top:5823;left:454">'</div>
+<div style="position:absolute;top:5823;left:460">H</div>
+<div style="position:absolute;top:5821;left:465">&nbsp;</div>
+<div style="position:absolute;top:5829;left:478">4</div>
+<div style="position:absolute;top:5831;left:487">E</div>
+<div style="position:absolute;top:5818;left:506">1</div>
+<div style="position:absolute;top:5821;left:500">&nbsp;QP R</div>
+<div style="position:absolute;top:5844;left:453">H</div>
+<div style="position:absolute;top:5852;left:457">0XE</div>
+<div style="position:absolute;top:5841;left:486">¥P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:5896;left:455">4</div>
+</span></font>
+
+<div style="position:absolute;top:6115;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_6"><b>Page 6</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6232;left:201">You will notice that this is simply the standard deviation squared, in both the symbol</div>
+<div style="position:absolute;top:6250;left:201">(</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6248;left:206">G</div>
+<div style="position:absolute;top:6243;left:212">R</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6250;left:219">) and the formula (there is no square root in the formula for variance).</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6248;left:665">G</div>
+<div style="position:absolute;top:6243;left:671">R</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6250;left:683">is the</div>
+<div style="position:absolute;top:6268;left:201">usual symbol for variance of a sample. Both these measurements are measures of the</div>
+<div style="position:absolute;top:6286;left:201">spread of the data. Standard deviation is the most common measure, but variance is</div>
+<div style="position:absolute;top:6304;left:201">also used. The reason why I have introduced variance in addition to standard deviation</div>
+<div style="position:absolute;top:6322;left:201">is to provide a solid platform from which the next section, covariance, can launch from.</div>
+<div style="position:absolute;top:6362;left:201"><b>Exercises</b></div>
+<div style="position:absolute;top:6390;left:201">Find the mean, standard deviation, and variance for each of these data sets.</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6417;left:224">Y</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6419;left:238">[12 23 34 44 59 70 98]</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6447;left:224">Y</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6449;left:238">[12 15 25 27 32 88 99]</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6477;left:224">Y</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6479;left:238">[15 35 78 82 90 95 97]</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:6520;left:201"><b>2.1.3 Covariance</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6550;left:201">The last two measures we have looked at are purely 1-dimensional. Data sets like this</div>
+<div style="position:absolute;top:6568;left:201">could be: heights of all the people in the room, marks for the last COMP101 exam etc.</div>
+<div style="position:absolute;top:6586;left:201">However many data sets have more than one dimension, and the aim of the statistical</div>
+<div style="position:absolute;top:6604;left:201">analysis of these data sets is usually to see if there is any relationship between the</div>
+<div style="position:absolute;top:6622;left:201">dimensions. For example, we might have as our data set both the height of all the</div>
+<div style="position:absolute;top:6640;left:201">students in a class, and the mark they received for that paper. We could then perform</div>
+<div style="position:absolute;top:6658;left:201">statistical analysis to see if the height of a student has any effect on their mark.</div>
+<div style="position:absolute;top:6676;left:223">Standard deviation and variance only operate on 1 dimension, so that you could</div>
+<div style="position:absolute;top:6693;left:201">only calculate the standard deviation for each dimension of the data set <i>independently</i></div>
+<div style="position:absolute;top:6711;left:201">of the other dimensions. However, it is useful to have a similar measure to find out how</div>
+<div style="position:absolute;top:6729;left:201">much the dimensions vary from the mean <i>with respect to each other</i>.</div>
+<div style="position:absolute;top:6747;left:223">Covariance is such a measure. Covariance is always measured <i>between </i>2 dimen-</div>
+<div style="position:absolute;top:6765;left:201">sions. If you calculate the covariance between one dimension and <i>itself</i>, you get the</div>
+<div style="position:absolute;top:6783;left:201">variance. So, if you had a 3-dimensional data set (</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6788;left:500">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6783;left:509">,</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6788;left:516">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6783;left:524">,</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6788;left:532">b</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6783;left:539">), then you could measure the</div>
+<div style="position:absolute;top:6801;left:201">covariance between the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6806;left:345">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6801;left:359">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6806;left:384">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6801;left:397">dimensions, the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6806;left:495">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6801;left:508">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6806;left:535">b</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6801;left:546">dimensions, and the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6806;left:670">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6801;left:683">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6806;left:709">b</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6819;left:201">dimensions. Measuring the covariance between</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6824;left:489">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6819;left:502">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6824;left:527">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6819;left:536">, or</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6824;left:560">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6819;left:573">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6824;left:598">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6819;left:606">, or</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6824;left:631">b</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6819;left:642">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6824;left:668">b</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6819;left:679">would</div>
+<div style="position:absolute;top:6837;left:201">give you the variance of the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6841;left:369">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6837;left:378">,</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6841;left:385">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6837;left:397">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6841;left:423">b</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6837;left:434">dimensions respectively.</div>
+<div style="position:absolute;top:6855;left:223">The formula for covariance is very similar to the formula for variance. The formula</div>
+<div style="position:absolute;top:6873;left:201">for variance could also be written like this:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:6910;left:343">c</div>
+<div style="position:absolute;top:6906;left:352">@Cd</div>
+<div style="position:absolute;top:6908;left:368">H</div>
+<div style="position:absolute;top:6906;left:372">&nbsp;eP¡</div>
+<div style="position:absolute;top:6906;left:429">34W5</div>
+<div style="position:absolute;top:6898;left:444">'</div>
+<div style="position:absolute;top:6898;left:450">H</div>
+<div style="position:absolute;top:6896;left:455">&nbsp;</div>
+<div style="position:absolute;top:6904;left:468">4</div>
+<div style="position:absolute;top:6906;left:477">E</div>
+<div style="position:absolute;top:6894;left:496">1</div>
+<div style="position:absolute;top:6896;left:491">&nbsp;QP</div>
+<div style="position:absolute;top:6898;left:511">H</div>
+<div style="position:absolute;top:6896;left:515">&nbsp;</div>
+<div style="position:absolute;top:6904;left:528">4</div>
+<div style="position:absolute;top:6906;left:537">E</div>
+<div style="position:absolute;top:6894;left:557">1</div>
+<div style="position:absolute;top:6896;left:551">&nbsp;eP</div>
+<div style="position:absolute;top:6919;left:470">H</div>
+<div style="position:absolute;top:6927;left:474">0XE</div>
+<div style="position:absolute;top:6916;left:503">¥P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:6953;left:201">where I have simply expanded the square term to show both parts. So given that knowl-</div>
+<div style="position:absolute;top:6971;left:201">edge, here is the formula for covariance:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7011;left:339">f8ghc</div>
+<div style="position:absolute;top:7009;left:361">H</div>
+<div style="position:absolute;top:7007;left:365">&nbsp;ViCpPq¡</div>
+<div style="position:absolute;top:7007;left:440">34W5</div>
+<div style="position:absolute;top:6999;left:455">'</div>
+<div style="position:absolute;top:6999;left:461">H</div>
+<div style="position:absolute;top:6997;left:466">&nbsp;</div>
+<div style="position:absolute;top:7005;left:479">4</div>
+<div style="position:absolute;top:7007;left:488">E</div>
+<div style="position:absolute;top:6994;left:507">1</div>
+<div style="position:absolute;top:6997;left:501">&nbsp;QP</div>
+<div style="position:absolute;top:6999;left:522">H</div>
+<div style="position:absolute;top:6997;left:527">p</div>
+<div style="position:absolute;top:7005;left:536">4</div>
+<div style="position:absolute;top:7007;left:545">E</div>
+<div style="position:absolute;top:6994;left:562">1</div>
+<div style="position:absolute;top:6997;left:560">pP</div>
+<div style="position:absolute;top:7019;left:479">H</div>
+<div style="position:absolute;top:7027;left:483">0FE</div>
+<div style="position:absolute;top:7017;left:511">¥P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7084;left:455">5</div>
+</span></font>
+
+<div style="position:absolute;top:7303;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_7"><b>Page 7</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7415;left:201">includegraphicscovPlot.ps</div>
+<div style="position:absolute;top:7448;left:201">Figure 2.1: A plot of the covariance data showing positive relationship between the</div>
+<div style="position:absolute;top:7466;left:201">number of hours studied against the mark received</div>
+<div style="position:absolute;top:7514;left:201">It is exactly the same except that in the second set of brackets, the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7509;left:597">&nbsp;</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7514;left:611">’s are replaced by</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7527;left:201">p</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7532;left:213">’s. This says, in English, “For each data item, multiply the difference between the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7537;left:707">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7550;left:201">value and the mean of</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7555;left:336">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7550;left:345">, by the the difference between the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7555;left:556">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7550;left:568">value and the mean of</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7555;left:704">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7550;left:713">.</div>
+<div style="position:absolute;top:7568;left:201">Add all these up, and divide by</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7564;left:391">H</div>
+<div style="position:absolute;top:7573;left:396">0FE</div>
+<div style="position:absolute;top:7562;left:424">¥P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7568;left:437">”.</div>
+<div style="position:absolute;top:7586;left:223">How does this work? Lets use some example data. Imagine we have gone into the</div>
+<div style="position:absolute;top:7604;left:201">world and collected some 2-dimensional data, say, we have asked a bunch of students</div>
+<div style="position:absolute;top:7622;left:201">how many hours in total that they spent studying COSC241, and the mark that they</div>
+<div style="position:absolute;top:7640;left:201">received. So we have two dimensions, the first is the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7644;left:522">r</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7640;left:539">dimension, the hours studied,</div>
+<div style="position:absolute;top:7658;left:201">and the second is the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7662;left:329">s</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7658;left:348">dimension, the mark received. Figure 2.2 holds my imaginary</div>
+<div style="position:absolute;top:7676;left:201">data, and the calculation of</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7674;left:375">f8ghc</div>
+<div style="position:absolute;top:7672;left:397">H</div>
+<div style="position:absolute;top:7680;left:402">r</div>
+<div style="position:absolute;top:7670;left:415">i</div>
+<div style="position:absolute;top:7680;left:422">s</div>
+<div style="position:absolute;top:7670;left:438">P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7676;left:443">, the covariance between the Hours of study</div>
+<div style="position:absolute;top:7694;left:201">done and the Mark received.</div>
+<div style="position:absolute;top:7712;left:223">So what does it tell us? The exact value is not as important as it’s sign (ie. positive</div>
+<div style="position:absolute;top:7729;left:201">or negative). If the value is positive, as it is here, then that indicates that both di-</div>
+<div style="position:absolute;top:7747;left:201">mensions <i>increase together</i>, meaning that, in general, as the number of hours of study</div>
+<div style="position:absolute;top:7765;left:201">increased, so did the final mark.</div>
+<div style="position:absolute;top:7783;left:223">If the value is negative, then as one dimension increases, the other decreases. If we</div>
+<div style="position:absolute;top:7801;left:201">had ended up with a negative covariance here, then that would have said the opposite,</div>
+<div style="position:absolute;top:7819;left:201">that as the number of hours of study increased the the final mark <i>decreased</i>.</div>
+<div style="position:absolute;top:7837;left:223">In the last case, if the covariance is zero, it indicates that the two dimensions are</div>
+<div style="position:absolute;top:7855;left:201">independent of each other.</div>
+<div style="position:absolute;top:7873;left:223">The result that mark given increases as the number of hours studied increases can</div>
+<div style="position:absolute;top:7891;left:201">be easily seen by drawing a graph of the data, as in Figure 2.1.3. However, the luxury</div>
+<div style="position:absolute;top:7909;left:201">of being able to visualize data is only available at 2 and 3 dimensions. Since the co-</div>
+<div style="position:absolute;top:7927;left:201">variance value can be calculated between any 2 dimensions in a data set, this technique</div>
+<div style="position:absolute;top:7945;left:201">is often used to find relationships between dimensions in high-dimensional data sets</div>
+<div style="position:absolute;top:7963;left:201">where visualisation is difficult.</div>
+<div style="position:absolute;top:7980;left:223">You might ask “is</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7978;left:337">fIghc</div>
+<div style="position:absolute;top:7977;left:358">H</div>
+<div style="position:absolute;top:7975;left:363">&nbsp;ViIpDP</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7980;left:405">equal to</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:7978;left:458">f8ghc</div>
+<div style="position:absolute;top:7977;left:480">H</div>
+<div style="position:absolute;top:7975;left:486">ptiu&nbsp;eP</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:7980;left:521">”? Well, a quick look at the for-</div>
+<div style="position:absolute;top:7998;left:201">mula for covariance tells us that yes, they are exactly the same since the only dif-</div>
+<div style="position:absolute;top:8016;left:201">ference between</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:8014;left:304">fIghc</div>
+<div style="position:absolute;top:8013;left:326">H</div>
+<div style="position:absolute;top:8011;left:330">&nbsp;ViIpDP</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8016;left:373">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:8014;left:399">f8ghc</div>
+<div style="position:absolute;top:8013;left:421">H</div>
+<div style="position:absolute;top:8011;left:427">pviw&nbsp;xP</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8016;left:466">is that</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:8013;left:509">H</div>
+<div style="position:absolute;top:8011;left:513">&nbsp;</div>
+<div style="position:absolute;top:8019;left:526">4</div>
+<div style="position:absolute;top:8021;left:536">E</div>
+<div style="position:absolute;top:8008;left:556">1</div>
+<div style="position:absolute;top:8011;left:550">&nbsp;eP</div>
+<div style="position:absolute;top:8013;left:571">H</div>
+<div style="position:absolute;top:8011;left:576">p</div>
+<div style="position:absolute;top:8019;left:584">4</div>
+<div style="position:absolute;top:8021;left:594">E</div>
+<div style="position:absolute;top:8008;left:612">1</div>
+<div style="position:absolute;top:8011;left:610">pUP</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8016;left:631">is replaced by</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:8031;left:202">H</div>
+<div style="position:absolute;top:8029;left:207">p</div>
+<div style="position:absolute;top:8037;left:215">4</div>
+<div style="position:absolute;top:8039;left:225">E</div>
+<div style="position:absolute;top:8026;left:244">1</div>
+<div style="position:absolute;top:8029;left:242">pP</div>
+<div style="position:absolute;top:8031;left:260">H</div>
+<div style="position:absolute;top:8029;left:264">&nbsp;</div>
+<div style="position:absolute;top:8037;left:277">4</div>
+<div style="position:absolute;top:8039;left:287">E</div>
+<div style="position:absolute;top:8026;left:308">1</div>
+<div style="position:absolute;top:8029;left:302">&nbsp;eP</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8034;left:322">. And since multiplication is commutative, which means that it</div>
+<div style="position:absolute;top:8052;left:201">doesn’t matter which way around I multiply two numbers, I always get the same num-</div>
+<div style="position:absolute;top:8070;left:201">ber, these two equations give the same answer.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:8111;left:201"><b>2.1.4 The covariance Matrix</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8141;left:201">Recall that covariance is always measured between 2 dimensions. If we have a data set</div>
+<div style="position:absolute;top:8159;left:201">with more than 2 dimensions, there is more than one covariance measurement that can</div>
+<div style="position:absolute;top:8177;left:201">be calculated. For example, from a 3 dimensional data set (dimensions</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:8181;left:641">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8177;left:651">,</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:8181;left:659">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8177;left:667">,</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:8181;left:677">b</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8177;left:684">) you</div>
+<div style="position:absolute;top:8195;left:201">could calculate</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:8193;left:295">f8ghc</div>
+<div style="position:absolute;top:8191;left:317">H</div>
+<div style="position:absolute;top:8199;left:321">`</div>
+<div style="position:absolute;top:8189;left:331">i</div>
+<div style="position:absolute;top:8199;left:336">a</div>
+<div style="position:absolute;top:8189;left:345">P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8195;left:350">,</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:8191;left:359">H f8ghc</div>
+<div style="position:absolute;top:8191;left:386">H</div>
+<div style="position:absolute;top:8199;left:390">`</div>
+<div style="position:absolute;top:8189;left:400">i</div>
+<div style="position:absolute;top:8199;left:407">b</div>
+<div style="position:absolute;top:8189;left:415">P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8195;left:419">, and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:8193;left:453">f8ghc</div>
+<div style="position:absolute;top:8191;left:475">H</div>
+<div style="position:absolute;top:8199;left:479">a</div>
+<div style="position:absolute;top:8189;left:488">i</div>
+<div style="position:absolute;top:8199;left:495">b</div>
+<div style="position:absolute;top:8189;left:503">P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8195;left:508">. In fact, for an</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:8199;left:600">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8195;left:610">-dimensional data</div>
+<div style="position:absolute;top:8213;left:201">set, you can calculate</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:8219;left:353">3y</div>
+<div style="position:absolute;top:8215;left:335"></div>
+<div style="position:absolute;top:8230;left:339">3</div>
+<div style="position:absolute;top:8217;left:355">Rh</div>
+<div style="position:absolute;top:8230;left:367">y </div>
+<div style="position:absolute;top:8217;left:375">R</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8213;left:387">different covariance values.</div>
+<div style="position:absolute;top:8272;left:455">6</div>
+</span></font>
+
+<div style="position:absolute;top:8491;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_8"><b>Page 8</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:8687;left:430"><i>Hours(H) Mark(M)</i></div>
+<div style="position:absolute;top:8705;left:357">Data</div>
+<div style="position:absolute;top:8705;left:455">9</div>
+<div style="position:absolute;top:8705;left:525">39</div>
+<div style="position:absolute;top:8723;left:451">15</div>
+<div style="position:absolute;top:8723;left:525">56</div>
+<div style="position:absolute;top:8741;left:451">25</div>
+<div style="position:absolute;top:8741;left:525">93</div>
+<div style="position:absolute;top:8759;left:451">14</div>
+<div style="position:absolute;top:8759;left:525">61</div>
+<div style="position:absolute;top:8777;left:451">10</div>
+<div style="position:absolute;top:8777;left:525">50</div>
+<div style="position:absolute;top:8795;left:451">18</div>
+<div style="position:absolute;top:8795;left:525">75</div>
+<div style="position:absolute;top:8813;left:455">0</div>
+<div style="position:absolute;top:8813;left:525">32</div>
+<div style="position:absolute;top:8831;left:451">16</div>
+<div style="position:absolute;top:8831;left:525">85</div>
+<div style="position:absolute;top:8849;left:455">5</div>
+<div style="position:absolute;top:8849;left:525">42</div>
+<div style="position:absolute;top:8867;left:451">19</div>
+<div style="position:absolute;top:8867;left:525">70</div>
+<div style="position:absolute;top:8884;left:451">16</div>
+<div style="position:absolute;top:8884;left:525">66</div>
+<div style="position:absolute;top:8902;left:451">20</div>
+<div style="position:absolute;top:8902;left:525">80</div>
+<div style="position:absolute;top:8921;left:357">Totals</div>
+<div style="position:absolute;top:8921;left:447">167</div>
+<div style="position:absolute;top:8921;left:522">749</div>
+<div style="position:absolute;top:8939;left:357">Averages</div>
+<div style="position:absolute;top:8939;left:442">13.92</div>
+<div style="position:absolute;top:8939;left:516">62.42</div>
+<div style="position:absolute;top:8988;left:201">Covariance:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:9039;left:282">r</div>
+<div style="position:absolute;top:9039;left:331">s</div>
+<div style="position:absolute;top:9031;left:366">H</div>
+<div style="position:absolute;top:9039;left:371">r</div>
+<div style="position:absolute;top:9037;left:383">4</div>
+<div style="position:absolute;top:9039;left:392">E</div>
+<div style="position:absolute;top:9026;left:411">1</div>
+<div style="position:absolute;top:9039;left:407">r</div>
+<div style="position:absolute;top:9028;left:421">P</div>
+<div style="position:absolute;top:9031;left:444">H</div>
+<div style="position:absolute;top:9039;left:450">s</div>
+<div style="position:absolute;top:9037;left:464">4</div>
+<div style="position:absolute;top:9039;left:473">E</div>
+<div style="position:absolute;top:9026;left:494">1</div>
+<div style="position:absolute;top:9039;left:488">s</div>
+<div style="position:absolute;top:9028;left:504">P</div>
+<div style="position:absolute;top:9031;left:528">H</div>
+<div style="position:absolute;top:9039;left:533">r</div>
+<div style="position:absolute;top:9037;left:545">4</div>
+<div style="position:absolute;top:9039;left:554">E</div>
+<div style="position:absolute;top:9026;left:573">1</div>
+<div style="position:absolute;top:9039;left:569">r</div>
+<div style="position:absolute;top:9028;left:583">P</div>
+<div style="position:absolute;top:9031;left:589">H</div>
+<div style="position:absolute;top:9039;left:594">s</div>
+<div style="position:absolute;top:9037;left:608">4</div>
+<div style="position:absolute;top:9039;left:617">E</div>
+<div style="position:absolute;top:9026;left:638">1</div>
+<div style="position:absolute;top:9039;left:632">s</div>
+<div style="position:absolute;top:9028;left:649">P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9053;left:284">9</div>
+<div style="position:absolute;top:9053;left:331">39</div>
+<div style="position:absolute;top:9053;left:380">-4.92</div>
+<div style="position:absolute;top:9053;left:457">-23.42</div>
+<div style="position:absolute;top:9053;left:570">115.23</div>
+<div style="position:absolute;top:9071;left:281">15</div>
+<div style="position:absolute;top:9071;left:331">56</div>
+<div style="position:absolute;top:9071;left:382">1.08</div>
+<div style="position:absolute;top:9071;left:461">-6.42</div>
+<div style="position:absolute;top:9071;left:575">-6.93</div>
+<div style="position:absolute;top:9089;left:281">25</div>
+<div style="position:absolute;top:9089;left:331">93</div>
+<div style="position:absolute;top:9089;left:378">11.08</div>
+<div style="position:absolute;top:9089;left:460">30.58</div>
+<div style="position:absolute;top:9089;left:570">338.83</div>
+<div style="position:absolute;top:9107;left:281">14</div>
+<div style="position:absolute;top:9107;left:331">61</div>
+<div style="position:absolute;top:9107;left:382">0.08</div>
+<div style="position:absolute;top:9107;left:461">-1.42</div>
+<div style="position:absolute;top:9107;left:575">-0.11</div>
+<div style="position:absolute;top:9124;left:281">10</div>
+<div style="position:absolute;top:9124;left:331">50</div>
+<div style="position:absolute;top:9124;left:380">-3.92</div>
+<div style="position:absolute;top:9124;left:457">-12.42</div>
+<div style="position:absolute;top:9124;left:573">48.69</div>
+<div style="position:absolute;top:9142;left:281">18</div>
+<div style="position:absolute;top:9142;left:331">75</div>
+<div style="position:absolute;top:9142;left:382">4.08</div>
+<div style="position:absolute;top:9142;left:460">12.58</div>
+<div style="position:absolute;top:9142;left:573">51.33</div>
+<div style="position:absolute;top:9160;left:284">0</div>
+<div style="position:absolute;top:9160;left:331">32</div>
+<div style="position:absolute;top:9160;left:376">-13.92</div>
+<div style="position:absolute;top:9160;left:457">-30.42</div>
+<div style="position:absolute;top:9160;left:570">423.45</div>
+<div style="position:absolute;top:9178;left:281">16</div>
+<div style="position:absolute;top:9178;left:331">85</div>
+<div style="position:absolute;top:9178;left:382">2.08</div>
+<div style="position:absolute;top:9178;left:460">22.58</div>
+<div style="position:absolute;top:9178;left:573">46.97</div>
+<div style="position:absolute;top:9196;left:284">5</div>
+<div style="position:absolute;top:9196;left:331">42</div>
+<div style="position:absolute;top:9196;left:380">-8.92</div>
+<div style="position:absolute;top:9196;left:457">-20.42</div>
+<div style="position:absolute;top:9196;left:570">182.15</div>
+<div style="position:absolute;top:9214;left:281">19</div>
+<div style="position:absolute;top:9214;left:331">70</div>
+<div style="position:absolute;top:9214;left:382">5.08</div>
+<div style="position:absolute;top:9214;left:463">7.58</div>
+<div style="position:absolute;top:9214;left:573">38.51</div>
+<div style="position:absolute;top:9232;left:281">16</div>
+<div style="position:absolute;top:9232;left:331">66</div>
+<div style="position:absolute;top:9232;left:382">2.08</div>
+<div style="position:absolute;top:9232;left:463">3.58</div>
+<div style="position:absolute;top:9232;left:577">7.45</div>
+<div style="position:absolute;top:9250;left:281">20</div>
+<div style="position:absolute;top:9250;left:331">80</div>
+<div style="position:absolute;top:9250;left:382">6.08</div>
+<div style="position:absolute;top:9250;left:460">17.58</div>
+<div style="position:absolute;top:9250;left:570">106.89</div>
+<div style="position:absolute;top:9269;left:273">Total</div>
+<div style="position:absolute;top:9269;left:566">1149.89</div>
+<div style="position:absolute;top:9287;left:264">Average</div>
+<div style="position:absolute;top:9287;left:570">104.54</div>
+<div style="position:absolute;top:9334;left:278">Table 2.2: 2-dimensional data set and covariance calculation</div>
+<div style="position:absolute;top:9460;left:455">7</div>
+</span></font>
+
+<div style="position:absolute;top:9679;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_9"><b>Page 9</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9796;left:223">A useful way to get all the possible covariance values between all the different</div>
+<div style="position:absolute;top:9814;left:201">dimensions is to calculate them all and put them in a matrix. I assume in this tutorial</div>
+<div style="position:absolute;top:9832;left:201">that you are familiar with matrices, and how they can be defined. So, the definition for</div>
+<div style="position:absolute;top:9850;left:201">the covariance matrix for a set of data with</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:9854;left:460">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9850;left:473">dimensions is:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:9877;left:331"></div>
+<div style="position:absolute;top:9889;left:342">33</div>
+<div style="position:absolute;top:9877;left:372">¡</div>
+<div style="position:absolute;top:9879;left:388">H f</div>
+<div style="position:absolute;top:9886;left:399">4w </div>
+<div style="position:absolute;top:9877;left:414">i</div>
+<div style="position:absolute;top:9881;left:424">f</div>
+<div style="position:absolute;top:9886;left:430">4 </div>
+<div style="position:absolute;top:9877;left:449">¡</div>
+<div style="position:absolute;top:9881;left:464">f8ghc</div>
+<div style="position:absolute;top:9879;left:486">Hw</div>
+<div style="position:absolute;top:9886;left:522">4</div>
+<div style="position:absolute;top:9877;left:528">i</div>
+<div style="position:absolute;top:9879;left:534"></div>
+<div style="position:absolute;top:9886;left:565"></div>
+<div style="position:absolute;top:9877;left:572">PPwi</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9916;left:201">where</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:9910;left:242"></div>
+<div style="position:absolute;top:9923;left:253">33</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9916;left:282">is a matrix with</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:9920;left:379">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9916;left:393">rows and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:9920;left:450">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9916;left:463">columns, and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:9912;left:548">(</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9916;left:590">is the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:9920;left:626">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9916;left:635">th dimension.</div>
+<div style="position:absolute;top:9934;left:201">All that this ugly looking formula says is that if you have an</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:9938;left:574">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9934;left:584">-dimensional data set,</div>
+<div style="position:absolute;top:9952;left:201">then the matrix has</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:9956;left:320">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:9952;left:334">rows and columns (so is square) and each entry in the matrix is</div>
+<div style="position:absolute;top:9970;left:201">the result of calculating the covariance between two separate dimensions. Eg. the entry</div>
+<div style="position:absolute;top:9988;left:201">on row 2, column 3, is the covariance value calculated between the 2nd dimension and</div>
+<div style="position:absolute;top:10006;left:201">the 3rd dimension.</div>
+<div style="position:absolute;top:10023;left:223">An example. We’ll make up the covariance matrix for an imaginary 3 dimensional</div>
+<div style="position:absolute;top:10041;left:201">data set, using the usual dimensions</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10046;left:416">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10041;left:425">,</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10046;left:431">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10041;left:443">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10046;left:469">b</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10041;left:476">. Then, the covariance matrix has 3 rows</div>
+<div style="position:absolute;top:10059;left:201">and 3 columns, and the values are this:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10103;left:323"></div>
+<div style="position:absolute;top:10103;left:339">¡</div>
+<div style="position:absolute;top:10088;left:376">f8ghc</div>
+<div style="position:absolute;top:10087;left:397">H</div>
+<div style="position:absolute;top:10095;left:402">`</div>
+<div style="position:absolute;top:10085;left:411">i</div>
+<div style="position:absolute;top:10095;left:417">`</div>
+<div style="position:absolute;top:10085;left:427">P</div>
+<div style="position:absolute;top:10088;left:447">f8ghc</div>
+<div style="position:absolute;top:10087;left:469">H</div>
+<div style="position:absolute;top:10095;left:473">`</div>
+<div style="position:absolute;top:10085;left:483">i</div>
+<div style="position:absolute;top:10095;left:488">a</div>
+<div style="position:absolute;top:10085;left:498">P</div>
+<div style="position:absolute;top:10088;left:518">f8ghc</div>
+<div style="position:absolute;top:10087;left:540">H</div>
+<div style="position:absolute;top:10095;left:544">`</div>
+<div style="position:absolute;top:10085;left:554">i</div>
+<div style="position:absolute;top:10095;left:561">b</div>
+<div style="position:absolute;top:10085;left:569">P</div>
+<div style="position:absolute;top:10106;left:376">f8ghc</div>
+<div style="position:absolute;top:10105;left:398">H</div>
+<div style="position:absolute;top:10113;left:402">a</div>
+<div style="position:absolute;top:10103;left:411">i</div>
+<div style="position:absolute;top:10113;left:416">`</div>
+<div style="position:absolute;top:10103;left:426">P</div>
+<div style="position:absolute;top:10106;left:448">f8ghc</div>
+<div style="position:absolute;top:10105;left:469">H</div>
+<div style="position:absolute;top:10113;left:474">a</div>
+<div style="position:absolute;top:10103;left:483">i</div>
+<div style="position:absolute;top:10113;left:488">a</div>
+<div style="position:absolute;top:10103;left:498">P</div>
+<div style="position:absolute;top:10106;left:519">f8ghc</div>
+<div style="position:absolute;top:10105;left:540">H</div>
+<div style="position:absolute;top:10113;left:545">a</div>
+<div style="position:absolute;top:10103;left:554">i</div>
+<div style="position:absolute;top:10113;left:560">b</div>
+<div style="position:absolute;top:10103;left:569">P</div>
+<div style="position:absolute;top:10124;left:376">f8ghc</div>
+<div style="position:absolute;top:10123;left:398">H</div>
+<div style="position:absolute;top:10131;left:403">b</div>
+<div style="position:absolute;top:10120;left:411">i</div>
+<div style="position:absolute;top:10131;left:416">`</div>
+<div style="position:absolute;top:10120;left:426">P</div>
+<div style="position:absolute;top:10124;left:448">f8ghc</div>
+<div style="position:absolute;top:10123;left:470">H</div>
+<div style="position:absolute;top:10131;left:475">b</div>
+<div style="position:absolute;top:10120;left:483">i</div>
+<div style="position:absolute;top:10131;left:488">a</div>
+<div style="position:absolute;top:10120;left:498">P</div>
+<div style="position:absolute;top:10124;left:519">f8ghc</div>
+<div style="position:absolute;top:10123;left:541">H</div>
+<div style="position:absolute;top:10131;left:546">b</div>
+<div style="position:absolute;top:10120;left:554">i</div>
+<div style="position:absolute;top:10131;left:560">b</div>
+<div style="position:absolute;top:10120;left:569">P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10158;left:223">Some points to note: Down the main diagonal, you see that the covariance value is</div>
+<div style="position:absolute;top:10176;left:201">between one of the dimensions and itself. These are the variances for that dimension.</div>
+<div style="position:absolute;top:10194;left:201">The other point is that since</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10192;left:371">f8ghc</div>
+<div style="position:absolute;top:10191;left:392">H</div>
+<div style="position:absolute;top:10188;left:398">@¦iCCP¡</div>
+<div style="position:absolute;top:10192;left:445">fIghc</div>
+<div style="position:absolute;top:10191;left:466">H</div>
+<div style="position:absolute;top:10188;left:472">8iI@P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10194;left:498">, the matrix is symmetrical about the</div>
+<div style="position:absolute;top:10212;left:201">main diagonal.</div>
+<div style="position:absolute;top:10252;left:201"><b>Exercises</b></div>
+<div style="position:absolute;top:10280;left:201">Work out the covariance between the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10284;left:432">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10280;left:446">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10284;left:473">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10280;left:486">dimensions in the following 2 dimen-</div>
+<div style="position:absolute;top:10298;left:201">sional data set, and describe what the result indicates about the data.</div>
+<div style="position:absolute;top:10331;left:232">Item Number:</div>
+<div style="position:absolute;top:10331;left:338">1</div>
+<div style="position:absolute;top:10331;left:371">2</div>
+<div style="position:absolute;top:10331;left:404">3</div>
+<div style="position:absolute;top:10331;left:437">4</div>
+<div style="position:absolute;top:10331;left:469">5</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10353;left:269">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10349;left:334">10 39 19 23 28</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10371;left:270">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10367;left:334">43 13 32 21 20</div>
+<div style="position:absolute;top:10401;left:201">Calculate the covariance matrix for this 3 dimensional set of data.</div>
+<div style="position:absolute;top:10432;left:232">Item Number: 1</div>
+<div style="position:absolute;top:10432;left:362">2</div>
+<div style="position:absolute;top:10432;left:393">3</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10455;left:269">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10450;left:334">1 -1</div>
+<div style="position:absolute;top:10450;left:393">4</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10473;left:270">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10468;left:334">2</div>
+<div style="position:absolute;top:10468;left:362">1</div>
+<div style="position:absolute;top:10468;left:393">3</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10491;left:271">b</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10486;left:334">1</div>
+<div style="position:absolute;top:10486;left:362">3</div>
+<div style="position:absolute;top:10486;left:390">-1</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:19px;font-family:Times">
+<div style="position:absolute;top:10527;left:201"><b>2.2 Matrix Algebra</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:10565;left:201">This section serves to provide a background for the matrix algebra required in PCA.</div>
+<div style="position:absolute;top:10583;left:201">Specifically I will be looking at eigenvectors and eigenvalues of a given matrix. Again,</div>
+<div style="position:absolute;top:10601;left:201">I assume a basic knowledge of matrices.</div>
+<div style="position:absolute;top:10648;left:455">8</div>
+</span></font>
+
+<div style="position:absolute;top:10867;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_10"><b>Page 10</b></a></font></td></tr></tbody></table></div><font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:10992;left:376">§ed</div>
+<div style="position:absolute;top:11010;left:376">§</div>
+<div style="position:absolute;top:11010;left:400">¥</div>
+<div style="position:absolute;top:11010;left:430">f</div>
+<div style="position:absolute;top:10992;left:462">¥</div>
+<div style="position:absolute;top:11010;left:461">d</div>
+<div style="position:absolute;top:11002;left:492">¡</div>
+<div style="position:absolute;top:10992;left:527">¥¥</div>
+<div style="position:absolute;top:11010;left:529"></div>
+<div style="position:absolute;top:11060;left:331">§ed</div>
+<div style="position:absolute;top:11078;left:331">§</div>
+<div style="position:absolute;top:11078;left:355">¥</div>
+<div style="position:absolute;top:11078;left:385">f</div>
+<div style="position:absolute;top:11060;left:416">d</div>
+<div style="position:absolute;top:11078;left:416">§</div>
+<div style="position:absolute;top:11069;left:447">¡</div>
+<div style="position:absolute;top:11060;left:482">¥§</div>
+<div style="position:absolute;top:11078;left:484"></div>
+<div style="position:absolute;top:11069;left:519">¡g©</div>
+<div style="position:absolute;top:11078;left:547">f</div>
+<div style="position:absolute;top:11060;left:578">d</div>
+<div style="position:absolute;top:11078;left:578">§</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11130;left:264">Figure 2.2: Example of one non-eigenvector and one eigenvector</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:11184;left:391">§</div>
+<div style="position:absolute;top:11193;left:404">f</div>
+<div style="position:absolute;top:11175;left:435">d</div>
+<div style="position:absolute;top:11193;left:435">§</div>
+<div style="position:absolute;top:11184;left:466">¡</div>
+<div style="position:absolute;top:11175;left:499"></div>
+<div style="position:absolute;top:11193;left:499">©</div>
+<div style="position:absolute;top:11242;left:331">§ed</div>
+<div style="position:absolute;top:11260;left:331">§</div>
+<div style="position:absolute;top:11260;left:355">¥</div>
+<div style="position:absolute;top:11260;left:385">f</div>
+<div style="position:absolute;top:11242;left:416"></div>
+<div style="position:absolute;top:11260;left:416">©</div>
+<div style="position:absolute;top:11251;left:447">¡</div>
+<div style="position:absolute;top:11242;left:480">§©</div>
+<div style="position:absolute;top:11260;left:482">¥</div>
+<div style="position:absolute;top:11251;left:519">¡g©</div>
+<div style="position:absolute;top:11260;left:547">f</div>
+<div style="position:absolute;top:11242;left:578"></div>
+<div style="position:absolute;top:11260;left:578">©</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11313;left:243">Figure 2.3: Example of how a scaled eigenvector is still and eigenvector</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:11359;left:201"><b>2.2.1 Eigenvectors</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11389;left:201">As you know, you can multiply two matrices together, provided they are compatible</div>
+<div style="position:absolute;top:11407;left:201">sizes. Eigenvectors are a special case of this. Consider the two multiplications between</div>
+<div style="position:absolute;top:11425;left:201">a matrix and a vector in Figure 2.2.</div>
+<div style="position:absolute;top:11442;left:223">In the first example, the resulting vector is not an integer multiple of the original</div>
+<div style="position:absolute;top:11460;left:201">vector, whereas in the second example, the example is exactly 4 times the vector we</div>
+<div style="position:absolute;top:11478;left:201">began with. Why is this? Well, the vector is a vector in 2 dimensional space. The</div>
+<div style="position:absolute;top:11505;left:201">vector</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:11490;left:260">d</div>
+<div style="position:absolute;top:11508;left:260">§</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11505;left:291">(from the second example multiplication) represents an arrow pointing</div>
+<div style="position:absolute;top:11532;left:201">from the origin,</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:11528;left:304">H</div>
+<div style="position:absolute;top:11526;left:308">7ih7!P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11532;left:336">, to the point</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:11528;left:422">H</div>
+<div style="position:absolute;top:11526;left:426">dih§!P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11532;left:454">. The other matrix, the square one, can be</div>
+<div style="position:absolute;top:11549;left:201">thought of as a transformation matrix. If you multiply this matrix on the left of a</div>
+<div style="position:absolute;top:11567;left:201">vector, the answer is another vector that is transformed from it’s original position.</div>
+<div style="position:absolute;top:11585;left:223">It is the nature of the transformation that the eigenvectors arise from. Imagine a</div>
+<div style="position:absolute;top:11603;left:201">transformation matrix that, when multiplied on the left, reflected vectors in the line</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:11626;left:200">a</div>
+<div style="position:absolute;top:11616;left:216">¡</div>
+<div style="position:absolute;top:11626;left:232">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11621;left:241">. Then you can see that if there were a vector that lay <i>on </i>the line</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:11626;left:648">a</div>
+<div style="position:absolute;top:11616;left:664">¡</div>
+<div style="position:absolute;top:11626;left:680">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11621;left:689">, it’s</div>
+<div style="position:absolute;top:11639;left:201">reflection it <i>itself</i>. This vector (and all multiples of it, because it wouldn’t matter how</div>
+<div style="position:absolute;top:11657;left:201">long the vector was), would be an eigenvector of that transformation matrix.</div>
+<div style="position:absolute;top:11675;left:223">What properties do these eigenvectors have? You should first know that eigenvec-</div>
+<div style="position:absolute;top:11693;left:201">tors can only be found for <i>square </i>matrices. And, not every square matrix has eigen-</div>
+<div style="position:absolute;top:11711;left:201">vectors. And, given an</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:11715;left:341">0</div>
+<div style="position:absolute;top:11714;left:356">f</div>
+<div style="position:absolute;top:11715;left:368">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11711;left:382">matrix that does have eigenvectors, there are</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:11715;left:653">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11711;left:666">of them.</div>
+<div style="position:absolute;top:11729;left:201">Given a</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:11723;left:251">d</div>
+<div style="position:absolute;top:11732;left:264">f</div>
+<div style="position:absolute;top:11723;left:276">d</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:11729;left:288">matrix, there are 3 eigenvectors.</div>
+<div style="position:absolute;top:11747;left:223">Another property of eigenvectors is that even if I scale the vector by some amount</div>
+<div style="position:absolute;top:11765;left:201">before I multiply it, I still get the same multiple of it as a result, as in Figure 2.3. This</div>
+<div style="position:absolute;top:11783;left:201">is because if you scale a vector by some amount, all you are doing is making it longer,</div>
+<div style="position:absolute;top:11836;left:455">9</div>
+</span></font>
+
+<div style="position:absolute;top:12055;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_11"><b>Page 11</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:12172;left:201">not changing it’s direction. Lastly, all the eigenvectors of a matrix are <i>perpendicular</i>,</div>
+<div style="position:absolute;top:12190;left:201">ie. at right angles to each other, no matter how many dimensions you have. By the way,</div>
+<div style="position:absolute;top:12208;left:201">another word for perpendicular, in maths talk, is <i>orthogonal</i>. This is important because</div>
+<div style="position:absolute;top:12226;left:201">it means that you can express the data in terms of these perpendicular eigenvectors,</div>
+<div style="position:absolute;top:12244;left:201">instead of expressing them in terms of the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:12248;left:456">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:12244;left:469">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:12248;left:494">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:12244;left:506">axes. We will be doing this later in</div>
+<div style="position:absolute;top:12262;left:201">the section on PCA.</div>
+<div style="position:absolute;top:12280;left:223">Another important thing to know is that when mathematicians find eigenvectors,</div>
+<div style="position:absolute;top:12298;left:201">they like to find the eigenvectors whose length is exactly one. This is because, as you</div>
+<div style="position:absolute;top:12316;left:201">know, the length of a vector doesn’t affect whether it’s an eigenvector or not, whereas</div>
+<div style="position:absolute;top:12334;left:201">the direction does. So, in order to keep eigenvectors standard, whenever we find an</div>
+<div style="position:absolute;top:12351;left:201">eigenvector we usually scale it to make it have a length of 1, so that all eigenvectors</div>
+<div style="position:absolute;top:12369;left:201">have the same length. Here’s a demonstration from our example above.</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:12396;left:454">d</div>
+<div style="position:absolute;top:12414;left:454">§</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:12451;left:201">is an eigenvector, and the length of that vector is</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:12484;left:414">H</div>
+<div style="position:absolute;top:12482;left:419">d</div>
+<div style="position:absolute;top:12480;left:426">Ri</div>
+<div style="position:absolute;top:12482;left:451">§</div>
+<div style="position:absolute;top:12480;left:459">R</div>
+<div style="position:absolute;top:12482;left:466">P¡kj</div>
+<div style="position:absolute;top:12482;left:505">¥ld</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:12521;left:201">so we divide the original vector by this much to make it have a length of 1.</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:12548;left:382">d</div>
+<div style="position:absolute;top:12566;left:382">§</div>
+<div style="position:absolute;top:12566;left:412">m</div>
+<div style="position:absolute;top:12557;left:427">j</div>
+<div style="position:absolute;top:12557;left:440">¥dn¡</div>
+<div style="position:absolute;top:12548;left:492">do</div>
+<div style="position:absolute;top:12549;left:508">j</div>
+<div style="position:absolute;top:12548;left:521">¥8d</div>
+<div style="position:absolute;top:12567;left:492">§o</div>
+<div style="position:absolute;top:12568;left:508">j</div>
+<div style="position:absolute;top:12567;left:521">¥8d</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:12605;left:223">How does one go about finding these mystical eigenvectors? Unfortunately, it’s</div>
+<div style="position:absolute;top:12623;left:201">only easy(ish) if you have a rather small matrix, like no bigger than about</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:12617;left:643">d</div>
+<div style="position:absolute;top:12626;left:656">f</div>
+<div style="position:absolute;top:12617;left:669">d</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:12623;left:676">. After</div>
+<div style="position:absolute;top:12641;left:201">that, the usual way to find the eigenvectors is by some complicated iterative method</div>
+<div style="position:absolute;top:12658;left:201">which is beyond the scope of this tutorial (and this author). If you ever need to find the</div>
+<div style="position:absolute;top:12676;left:201">eigenvectors of a matrix in a program, just find a maths library that does it all for you.</div>
+<div style="position:absolute;top:12694;left:201">A useful maths package, called newmat, is available at <i><a href="http://webnz.com/robert/" target="_blank">http://webnz.com/robert/</a> </i>.</div>
+<div style="position:absolute;top:12712;left:223">Further information about eigenvectors in general, how to find them, and orthogo-</div>
+<div style="position:absolute;top:12730;left:201">nality, can be found in the textbook “Elementary Linear Algebra 5e” by Howard Anton,</div>
+<div style="position:absolute;top:12748;left:201">Publisher John Wiley &amp; Sons Inc, ISBN 0-471-85223-6.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:12789;left:201"><b>2.2.2 Eigenvalues</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:12819;left:201">Eigenvalues are closely related to eigenvectors, in fact, we saw an eigenvalue in Fig-</div>
+<div style="position:absolute;top:12837;left:201">ure 2.2. Notice how, in both those examples, the amount by which the original vector</div>
+<div style="position:absolute;top:12855;left:201">was scaled after multiplication by the square matrix was the same? In that example,</div>
+<div style="position:absolute;top:12873;left:201">the value was 4. 4 is the <i>eigenvalue </i>associated with that eigenvector. No matter what</div>
+<div style="position:absolute;top:12891;left:201">multiple of the eigenvector we took before we multiplied it by the square matrix, we</div>
+<div style="position:absolute;top:12909;left:201">would always get 4 times the scaled vector as our result (as in Figure 2.3).</div>
+<div style="position:absolute;top:12926;left:223">So you can see that eigenvectors and eigenvalues always come in pairs. When you</div>
+<div style="position:absolute;top:12944;left:201">get a fancy programming library to calculate your eigenvectors for you, you usually get</div>
+<div style="position:absolute;top:12962;left:201">the eigenvalues as well.</div>
+<div style="position:absolute;top:13024;left:451">10</div>
+</span></font>
+
+<div style="position:absolute;top:13243;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_12"><b>Page 12</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:13360;left:201"><b>Exercises</b></div>
+<div style="position:absolute;top:13388;left:201">For the following square matrix:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:13415;left:426">d</div>
+<div style="position:absolute;top:13415;left:454">7</div>
+<div style="position:absolute;top:13415;left:484">¥</div>
+<div style="position:absolute;top:13443;left:421">E</div>
+<div style="position:absolute;top:13432;left:432">©</div>
+<div style="position:absolute;top:13432;left:456">¥</div>
+<div style="position:absolute;top:13432;left:483">§</div>
+<div style="position:absolute;top:13461;left:421">E</div>
+<div style="position:absolute;top:13450;left:432">p7</div>
+<div style="position:absolute;top:13461;left:478">E</div>
+<div style="position:absolute;top:13450;left:489">§</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:13488;left:223">Decide which, if any, of the following vectors are eigenvectors of that matrix and</div>
+<div style="position:absolute;top:13506;left:201">give the corresponding eigenvalue.</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:13533;left:341">§</div>
+<div style="position:absolute;top:13551;left:341">§</div>
+<div style="position:absolute;top:13579;left:336">E</div>
+<div style="position:absolute;top:13569;left:348">¥</div>
+<div style="position:absolute;top:13543;left:399">E</div>
+<div style="position:absolute;top:13533;left:410">¥</div>
+<div style="position:absolute;top:13551;left:403">7</div>
+<div style="position:absolute;top:13569;left:403">§</div>
+<div style="position:absolute;top:13543;left:461">E</div>
+<div style="position:absolute;top:13533;left:473">¥</div>
+<div style="position:absolute;top:13551;left:467">¥</div>
+<div style="position:absolute;top:13569;left:466">d</div>
+<div style="position:absolute;top:13533;left:523">7</div>
+<div style="position:absolute;top:13551;left:524">¥</div>
+<div style="position:absolute;top:13569;left:523">7</div>
+<div style="position:absolute;top:13533;left:574">d</div>
+<div style="position:absolute;top:13551;left:574">§</div>
+<div style="position:absolute;top:13569;left:575">¥</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:14212;left:451">11</div>
+</span></font>
+
+<div style="position:absolute;top:14431;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_13"><b>Page 13</b></a></font></td></tr></tbody></table></div><font face="Times" size="4"><span style="font-size:28px;font-family:Times">
+<div style="position:absolute;top:14649;left:201"><b>Chapter 3</b></div>
+</span></font>
+<font face="Times" size="5"><span style="font-size:35px;font-family:Times">
+<div style="position:absolute;top:14720;left:201"><b>Principal Components Analysis</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:14813;left:201">Finally we come to Principal Components Analysis (PCA). What is it? It is a way</div>
+<div style="position:absolute;top:14831;left:201">of identifying patterns in data, and expressing the data in such a way as to highlight</div>
+<div style="position:absolute;top:14849;left:201">their similarities and differences. Since patterns in data can be hard to find in data of</div>
+<div style="position:absolute;top:14866;left:201">high dimension, where the luxury of graphical representation is not available, PCA is</div>
+<div style="position:absolute;top:14884;left:201">a powerful tool for analysing data.</div>
+<div style="position:absolute;top:14902;left:223">The other main advantage of PCA is that once you have found these patterns in the</div>
+<div style="position:absolute;top:14920;left:201">data, and you compress the data, ie. by reducing the number of dimensions, without</div>
+<div style="position:absolute;top:14938;left:201">much loss of information. This technique used in image compression, as we will see</div>
+<div style="position:absolute;top:14956;left:201">in a later section.</div>
+<div style="position:absolute;top:14974;left:223">This chapter will take you through the steps you needed to perform a Principal</div>
+<div style="position:absolute;top:14992;left:201">Components Analysis on a set of data. I am not going to describe exactly <i>why </i>the</div>
+<div style="position:absolute;top:15010;left:201">technique works, but I will try to provide an explanation of what is happening at each</div>
+<div style="position:absolute;top:15028;left:201">point so that you can make informed decisions when you try to use this technique</div>
+<div style="position:absolute;top:15046;left:201">yourself.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:19px;font-family:Times">
+<div style="position:absolute;top:15092;left:201"><b>3.1 Method</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:15131;left:201"><b>Step 1: Get some data</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15161;left:201">In my simple example, I am going to use my own made-up data set. It’s only got 2</div>
+<div style="position:absolute;top:15178;left:201">dimensions, and the reason why I have chosen this is so that I can provide plots of the</div>
+<div style="position:absolute;top:15196;left:201">data to show what the PCA analysis is doing at each step.</div>
+<div style="position:absolute;top:15214;left:223">The data I have used is found in Figure 3.1, along with a plot of that data.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:15255;left:201"><b>Step 2: Subtract the mean</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15285;left:201">For PCA to work properly, you have to subtract the mean from each of the data dimen-</div>
+<div style="position:absolute;top:15303;left:201">sions. The mean subtracted is the average across each dimension. So, all the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:15308;left:665">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15303;left:678">values</div>
+<div style="position:absolute;top:15321;left:201">have</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:15317;left:234">1</div>
+<div style="position:absolute;top:15325;left:232">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15321;left:245">(the mean of the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:15325;left:346">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15321;left:359">values of all the data points) subtracted, and all the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:15325;left:666">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15321;left:678">values</div>
+<div style="position:absolute;top:15339;left:201">have</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:15335;left:234">1</div>
+<div style="position:absolute;top:15343;left:231">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15339;left:244">subtracted from them. This produces a data set whose mean is zero.</div>
+<div style="position:absolute;top:15400;left:451">12</div>
+</span></font>
+
+<div style="position:absolute;top:15619;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_14"><b>Page 14</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:15912;left:284">Data =</div>
+<div style="position:absolute;top:15821;left:343"><i>x</i></div>
+<div style="position:absolute;top:15821;left:379"><i>y</i></div>
+<div style="position:absolute;top:15840;left:337">2.5</div>
+<div style="position:absolute;top:15840;left:374">2.4</div>
+<div style="position:absolute;top:15858;left:337">0.5</div>
+<div style="position:absolute;top:15858;left:374">0.7</div>
+<div style="position:absolute;top:15876;left:337">2.2</div>
+<div style="position:absolute;top:15876;left:374">2.9</div>
+<div style="position:absolute;top:15894;left:337">1.9</div>
+<div style="position:absolute;top:15894;left:374">2.2</div>
+<div style="position:absolute;top:15912;left:337">3.1</div>
+<div style="position:absolute;top:15912;left:374">3.0</div>
+<div style="position:absolute;top:15930;left:337">2.3</div>
+<div style="position:absolute;top:15930;left:374">2.7</div>
+<div style="position:absolute;top:15948;left:342">2</div>
+<div style="position:absolute;top:15948;left:374">1.6</div>
+<div style="position:absolute;top:15966;left:342">1</div>
+<div style="position:absolute;top:15966;left:374">1.1</div>
+<div style="position:absolute;top:15983;left:337">1.5</div>
+<div style="position:absolute;top:15983;left:374">1.6</div>
+<div style="position:absolute;top:16001;left:337">1.1</div>
+<div style="position:absolute;top:16001;left:374">0.9</div>
+<div style="position:absolute;top:15912;left:451">DataAdjust =</div>
+<div style="position:absolute;top:15821;left:556"><i>x</i></div>
+<div style="position:absolute;top:15821;left:605"><i>y</i></div>
+<div style="position:absolute;top:15840;left:550">.69</div>
+<div style="position:absolute;top:15840;left:599">.49</div>
+<div style="position:absolute;top:15858;left:544">-1.31</div>
+<div style="position:absolute;top:15858;left:593">-1.21</div>
+<div style="position:absolute;top:15876;left:550">.39</div>
+<div style="position:absolute;top:15876;left:599">.99</div>
+<div style="position:absolute;top:15894;left:550">.09</div>
+<div style="position:absolute;top:15894;left:599">.29</div>
+<div style="position:absolute;top:15912;left:546">1.29</div>
+<div style="position:absolute;top:15912;left:596">1.09</div>
+<div style="position:absolute;top:15930;left:550">.49</div>
+<div style="position:absolute;top:15930;left:599">.79</div>
+<div style="position:absolute;top:15948;left:550">.19</div>
+<div style="position:absolute;top:15948;left:597">-.31</div>
+<div style="position:absolute;top:15966;left:548">-.81</div>
+<div style="position:absolute;top:15966;left:597">-.81</div>
+<div style="position:absolute;top:15983;left:548">-.31</div>
+<div style="position:absolute;top:15983;left:597">-.31</div>
+<div style="position:absolute;top:16001;left:548">-.71</div>
+<div style="position:absolute;top:16001;left:593">-1.01</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:8px;font-family:Times">
+<div style="position:absolute;top:16386;left:216">-1</div>
+<div style="position:absolute;top:16321;left:219">0</div>
+<div style="position:absolute;top:16256;left:219">1</div>
+<div style="position:absolute;top:16191;left:219">2</div>
+<div style="position:absolute;top:16126;left:219">3</div>
+<div style="position:absolute;top:16061;left:219">4</div>
+<div style="position:absolute;top:16397;left:226">-1</div>
+<div style="position:absolute;top:16397;left:293">0</div>
+<div style="position:absolute;top:16397;left:358">1</div>
+<div style="position:absolute;top:16397;left:424">2</div>
+<div style="position:absolute;top:16397;left:489">3</div>
+<div style="position:absolute;top:16397;left:554">4</div>
+<div style="position:absolute;top:16045;left:352">Original PCA data</div>
+<div style="position:absolute;top:16071;left:435">"./PCAdata.dat"</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:16434;left:201">Figure 3.1: PCA example data, original data on the left, data with the means subtracted</div>
+<div style="position:absolute;top:16452;left:201">on the right, and a plot of the data</div>
+<div style="position:absolute;top:16588;left:451">13</div>
+</span></font>
+
+<div style="position:absolute;top:16807;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_15"><b>Page 15</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:16922;left:201"><b>Step 3: Calculate the covariance matrix</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:16952;left:201">This is done in exactly the same way as was discussed in section 2.1.4. Since the data</div>
+<div style="position:absolute;top:16970;left:201">is 2 dimensional, the covariance matrix will be</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:16964;left:483">§</div>
+<div style="position:absolute;top:16973;left:496">f</div>
+<div style="position:absolute;top:16964;left:509">§</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:16970;left:517">. There are no surprises here, so I</div>
+<div style="position:absolute;top:16988;left:201">will just give you the result:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:17026;left:341">f8ghc</div>
+<div style="position:absolute;top:17022;left:367">¡</div>
+<div style="position:absolute;top:17022;left:401">q</div>
+<div style="position:absolute;top:17013;left:404">r¥</div>
+<div style="position:absolute;top:17022;left:487">q</div>
+<div style="position:absolute;top:17013;left:490">r¥©©©©©©</div>
+<div style="position:absolute;top:17040;left:401">q</div>
+<div style="position:absolute;top:17031;left:404">r¥©©©©©©</div>
+<div style="position:absolute;top:17040;left:487">q</div>
+<div style="position:absolute;top:17031;left:492">¥</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17067;left:201">So, since the non-diagonal elements in this covariance matrix are positive, we should</div>
+<div style="position:absolute;top:17085;left:201">expect that both the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:17089;left:321">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17085;left:334">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:17089;left:359">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17085;left:371">variable increase together.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:17125;left:201"><b>Step 4: Calculate the eigenvectors and eigenvalues of the covariance</b></div>
+<div style="position:absolute;top:17147;left:201"><b>matrix</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17176;left:201">Since the covariance matrix is square, we can calculate the eigenvectors and eigenval-</div>
+<div style="position:absolute;top:17194;left:201">ues for this matrix. These are rather important, as they tell us useful information about</div>
+<div style="position:absolute;top:17212;left:201">our data. I will show you why soon. In the meantime, here are the eigenvectors and</div>
+<div style="position:absolute;top:17230;left:201">eigenvalues:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:17268;left:352">s t</div>
+<div style="position:absolute;top:17268;left:372">s</div>
+<div style="position:absolute;top:17275;left:378">0</div>
+<div style="position:absolute;top:17268;left:387">c</div>
+<div style="position:absolute;top:17264;left:396">@¦uwv</div>
+<div style="position:absolute;top:17268;left:417">sxG</div>
+<div style="position:absolute;top:17264;left:435">¡</div>
+<div style="position:absolute;top:17264;left:469">q</div>
+<div style="position:absolute;top:17255;left:472">7©#7dd##</div>
+<div style="position:absolute;top:17273;left:473">¥</div>
+<div style="position:absolute;top:17282;left:480">q</div>
+<div style="position:absolute;top:17273;left:483">§©7§!  ¥</div>
+<div style="position:absolute;top:17332;left:298">s t</div>
+<div style="position:absolute;top:17332;left:318">s</div>
+<div style="position:absolute;top:17339;left:324">0</div>
+<div style="position:absolute;top:17332;left:333">crsyfzIg</div>
+<div style="position:absolute;top:17329;left:367">d</div>
+<div style="position:absolute;top:17332;left:375">G</div>
+<div style="position:absolute;top:17329;left:386">¡</div>
+<div style="position:absolute;top:17330;left:420">E</div>
+<div style="position:absolute;top:17328;left:432">q</div>
+<div style="position:absolute;top:17319;left:437">d!¥ </div>
+<div style="position:absolute;top:17330;left:518">E</div>
+<div style="position:absolute;top:17328;left:530">q</div>
+<div style="position:absolute;top:17319;left:533">!  ! 8dd##</div>
+<div style="position:absolute;top:17346;left:426">q</div>
+<div style="position:absolute;top:17337;left:429">r  8! dd##</div>
+<div style="position:absolute;top:17348;left:518">E</div>
+<div style="position:absolute;top:17346;left:530">q</div>
+<div style="position:absolute;top:17337;left:534">d!¥ 8</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17374;left:201">It is important to notice that these eigenvectors are both <i>unit </i>eigenvectors ie. their</div>
+<div style="position:absolute;top:17392;left:201">lengths are both 1. This is very important for PCA, but luckily, most maths packages,</div>
+<div style="position:absolute;top:17410;left:201">when asked for eigenvectors, will give you unit eigenvectors.</div>
+<div style="position:absolute;top:17427;left:223">So what do they mean? If you look at the plot of the data in Figure 3.2 then you can</div>
+<div style="position:absolute;top:17445;left:201">see how the data has quite a strong pattern. As expected from the covariance matrix,</div>
+<div style="position:absolute;top:17463;left:201">they two variables do indeed increase together. On top of the data I have plotted both</div>
+<div style="position:absolute;top:17481;left:201">the eigenvectors as well. They appear as diagonal dotted lines on the plot. As stated</div>
+<div style="position:absolute;top:17499;left:201">in the eigenvector section, they are perpendicular to each other. But, more importantly,</div>
+<div style="position:absolute;top:17517;left:201">they provide us with information about the patterns in the data. See how one of the</div>
+<div style="position:absolute;top:17535;left:201">eigenvectors goes through the middle of the points, like drawing a line of best fit? That</div>
+<div style="position:absolute;top:17553;left:201">eigenvector is showing us how these two data sets are related along that line. The</div>
+<div style="position:absolute;top:17571;left:201">second eigenvector gives us the other, less important, pattern in the data, that all the</div>
+<div style="position:absolute;top:17589;left:201">points follow the main line, but are off to the side of the main line by some amount.</div>
+<div style="position:absolute;top:17607;left:223">So, by this process of taking the eigenvectors of the covariance matrix, we have</div>
+<div style="position:absolute;top:17625;left:201">been able to extract lines that characterise the data. The rest of the steps involve trans-</div>
+<div style="position:absolute;top:17643;left:201">forming the data so that it is expressed in terms of them lines.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:17683;left:201"><b>Step 5: Choosing components and forming a feature vector</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:17713;left:201">Here is where the notion of data compression and reduced dimensionality comes into</div>
+<div style="position:absolute;top:17731;left:201">it. If you look at the eigenvectors and eigenvalues from the previous section, you</div>
+<div style="position:absolute;top:17776;left:451">14</div>
+</span></font>
+
+<div style="position:absolute;top:17995;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_16"><b>Page 16</b></a></font></td></tr></tbody></table></div><font face="Times" size="2"><span style="font-size:8px;font-family:Times">
+<div style="position:absolute;top:18649;left:228">-2</div>
+<div style="position:absolute;top:18608;left:219">-1.5</div>
+<div style="position:absolute;top:18567;left:228">-1</div>
+<div style="position:absolute;top:18526;left:219">-0.5</div>
+<div style="position:absolute;top:18486;left:232">0</div>
+<div style="position:absolute;top:18445;left:223">0.5</div>
+<div style="position:absolute;top:18404;left:232">1</div>
+<div style="position:absolute;top:18364;left:223">1.5</div>
+<div style="position:absolute;top:18323;left:232">2</div>
+<div style="position:absolute;top:18659;left:239">-2</div>
+<div style="position:absolute;top:18659;left:275">-1.5</div>
+<div style="position:absolute;top:18659;left:320">-1</div>
+<div style="position:absolute;top:18659;left:357">-0.5</div>
+<div style="position:absolute;top:18659;left:404">0</div>
+<div style="position:absolute;top:18659;left:440">0.5</div>
+<div style="position:absolute;top:18659;left:485">1</div>
+<div style="position:absolute;top:18659;left:521">1.5</div>
+<div style="position:absolute;top:18659;left:566">2</div>
+<div style="position:absolute;top:18307;left:294">Mean adjusted data with eigenvectors overlayed</div>
+<div style="position:absolute;top:18333;left:425">"PCAdataadjust.dat"</div>
+<div style="position:absolute;top:18344;left:387">(-.740682469/.671855252)*x</div>
+<div style="position:absolute;top:18354;left:383">(-.671855252/-.740682469)*x</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:18696;left:201">Figure 3.2: A plot of the normalised data (mean subtracted) with the eigenvectors of</div>
+<div style="position:absolute;top:18714;left:201">the covariance matrix overlayed on top.</div>
+<div style="position:absolute;top:18964;left:451">15</div>
+</span></font>
+
+<div style="position:absolute;top:19183;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_17"><b>Page 17</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19300;left:201">will notice that the eigenvalues are quite different values. In fact, it turns out that</div>
+<div style="position:absolute;top:19318;left:201">the eigenvector with the <i>highest </i>eigenvalue is the <i>principle component </i>of the data set.</div>
+<div style="position:absolute;top:19336;left:201">In our example, the eigenvector with the larges eigenvalue was the one that pointed</div>
+<div style="position:absolute;top:19354;left:201">down the middle of the data. It is the most significant relationship between the data</div>
+<div style="position:absolute;top:19372;left:201">dimensions.</div>
+<div style="position:absolute;top:19390;left:223">In general, once eigenvectors are found from the covariance matrix, the next step</div>
+<div style="position:absolute;top:19408;left:201">is to order them by eigenvalue, highest to lowest. This gives you the components in</div>
+<div style="position:absolute;top:19426;left:201">order of significance. Now, if you like, you can decide to <i>ignore </i>the components of</div>
+<div style="position:absolute;top:19444;left:201">lesser significance. You do lose some information, but if the eigenvalues are small, you</div>
+<div style="position:absolute;top:19462;left:201">don’t lose much. If you leave out some components, the final data set will have less</div>
+<div style="position:absolute;top:19479;left:201">dimensions than the original. To be precise, if you originally have</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:19484;left:617">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19479;left:631">dimensions in</div>
+<div style="position:absolute;top:19497;left:201">your data, and so you calculate</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:19502;left:394">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19497;left:408">eigenvectors and eigenvalues, and then you choose</div>
+<div style="position:absolute;top:19515;left:201">only the first</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:19520;left:279">{</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19515;left:291">eigenvectors, then the final data set has only</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:19520;left:557">{</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19515;left:569">dimensions.</div>
+<div style="position:absolute;top:19533;left:223">What needs to be done now is you need to form a <i>feature vector</i>, which is just</div>
+<div style="position:absolute;top:19551;left:201">a fancy name for a matrix of vectors. This is constructed by taking the eigenvectors</div>
+<div style="position:absolute;top:19569;left:201">that you want to keep from the list of eigenvectors, and forming a matrix with these</div>
+<div style="position:absolute;top:19587;left:201">eigenvectors in the columns.</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:19618;left:325">|</div>
+<div style="position:absolute;top:19621;left:337">s</div>
+<div style="position:absolute;top:19618;left:344">@</div>
+<div style="position:absolute;top:19621;left:350">z</div>
+<div style="position:absolute;top:19618;left:356">v!d</div>
+<div style="position:absolute;top:19621;left:373">sy}syfzIg</div>
+<div style="position:absolute;top:19618;left:416">dn¡</div>
+<div style="position:absolute;top:19620;left:445">H s t</div>
+<div style="position:absolute;top:19617;left:470">'</div>
+<div style="position:absolute;top:19621;left:480">s t</div>
+<div style="position:absolute;top:19624;left:499">R</div>
+<div style="position:absolute;top:19621;left:510">s t</div>
+<div style="position:absolute;top:19617;left:529">%</div>
+<div style="position:absolute;top:19627;left:540">qqqq</div>
+<div style="position:absolute;top:19621;left:560">s t</div>
+<div style="position:absolute;top:19638;left:579">3</div>
+<div style="position:absolute;top:19618;left:588">P</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19656;left:223">Given our example set of data, and the fact that we have 2 eigenvectors, we have</div>
+<div style="position:absolute;top:19674;left:201">two choices. We can either form a feature vector with both of the eigenvectors:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:19711;left:369">E</div>
+<div style="position:absolute;top:19710;left:380">q</div>
+<div style="position:absolute;top:19701;left:383">r  8! dd##</div>
+<div style="position:absolute;top:19711;left:467">E</div>
+<div style="position:absolute;top:19710;left:478">q</div>
+<div style="position:absolute;top:19701;left:483">8d!¥ </div>
+<div style="position:absolute;top:19729;left:369">E</div>
+<div style="position:absolute;top:19728;left:380">q</div>
+<div style="position:absolute;top:19719;left:385">8dr¥ </div>
+<div style="position:absolute;top:19728;left:472">q</div>
+<div style="position:absolute;top:19719;left:476">!  ! 8dd##</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19756;left:201">or, we can choose to leave out the smaller, less significant component and only have a</div>
+<div style="position:absolute;top:19774;left:201">single column:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:19796;left:418">E</div>
+<div style="position:absolute;top:19795;left:429">q</div>
+<div style="position:absolute;top:19786;left:432">!  ! 8dd##</div>
+<div style="position:absolute;top:19814;left:418">E</div>
+<div style="position:absolute;top:19813;left:429">q</div>
+<div style="position:absolute;top:19804;left:434">d!¥ 8</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19835;left:223">We shall see the result of each of these in the next section.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:19876;left:201"><b>Step 5: Deriving the new data set</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:19906;left:201">This the final step in PCA, and is also the easiest. Once we have chosen the components</div>
+<div style="position:absolute;top:19924;left:201">(eigenvectors) that we wish to keep in our data and formed a feature vector, we simply</div>
+<div style="position:absolute;top:19942;left:201">take the transpose of the vector and multiply it on the left of the original data set,</div>
+<div style="position:absolute;top:19960;left:201">transposed.</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:19990;left:282">|</div>
+<div style="position:absolute;top:19992;left:293"></div>
+<div style="position:absolute;top:20001;left:298">0</div>
+<div style="position:absolute;top:19990;left:308">@¦u</div>
+<div style="position:absolute;top:19992;left:321"></div>
+<div style="position:absolute;top:19990;left:334">@</div>
+<div style="position:absolute;top:19994;left:341">z</div>
+<div style="position:absolute;top:19990;left:347">@T¡k</div>
+<div style="position:absolute;top:19994;left:386">gh</div>
+<div style="position:absolute;top:19990;left:404">|</div>
+<div style="position:absolute;top:19994;left:416">s</div>
+<div style="position:absolute;top:19990;left:423">@</div>
+<div style="position:absolute;top:19994;left:430">z</div>
+<div style="position:absolute;top:19990;left:435">v!d</div>
+<div style="position:absolute;top:19994;left:452">sx}UsyfzIg</div>
+<div style="position:absolute;top:19990;left:496">d</div>
+<div style="position:absolute;top:19999;left:509">f</div>
+<div style="position:absolute;top:19990;left:523"></div>
+<div style="position:absolute;top:19994;left:534">gh</div>
+<div style="position:absolute;top:19992;left:552"></div>
+<div style="position:absolute;top:19990;left:565">@</div>
+<div style="position:absolute;top:19994;left:572">z</div>
+<div style="position:absolute;top:19990;left:578">@¦</div>
+<div style="position:absolute;top:20001;left:597">A</div>
+<div style="position:absolute;top:19990;left:609">v</div>
+<div style="position:absolute;top:19994;left:619">Ghz</div>
+<div style="position:absolute;top:19990;left:632">i</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20029;left:201">where</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:20023;left:242"></div>
+<div style="position:absolute;top:20027;left:254">gh</div>
+<div style="position:absolute;top:20023;left:272">|</div>
+<div style="position:absolute;top:20027;left:283">s</div>
+<div style="position:absolute;top:20023;left:290">@</div>
+<div style="position:absolute;top:20027;left:297">z</div>
+<div style="position:absolute;top:20023;left:303">vd</div>
+<div style="position:absolute;top:20027;left:319">sy}TsyfzIg</div>
+<div style="position:absolute;top:20023;left:363">d</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20029;left:375">is the matrix with the eigenvectors in the columns <i>trans-</i></div>
+<div style="position:absolute;top:20047;left:201"><i>posed </i>so that the eigenvectors are now in the rows, with the most significant eigenvec-</div>
+<div style="position:absolute;top:20065;left:201">tor at the top, and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:20059;left:310"></div>
+<div style="position:absolute;top:20063;left:322">gh</div>
+<div style="position:absolute;top:20061;left:340"></div>
+<div style="position:absolute;top:20059;left:353">@</div>
+<div style="position:absolute;top:20063;left:359">z</div>
+<div style="position:absolute;top:20059;left:366">@¦</div>
+<div style="position:absolute;top:20069;left:385">A</div>
+<div style="position:absolute;top:20059;left:397">v</div>
+<div style="position:absolute;top:20063;left:407">Ghz</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20065;left:422">is the mean-adjusted data <i>transposed</i>, ie. the data</div>
+<div style="position:absolute;top:20083;left:201">items are in each column, with each row holding a separate dimension. I’m sorry if</div>
+<div style="position:absolute;top:20101;left:201">this sudden transpose of all our data confuses you, but the equations from here on are</div>
+<div style="position:absolute;top:20152;left:451">16</div>
+</span></font>
+
+<div style="position:absolute;top:20371;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_18"><b>Page 18</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20488;left:201">easier if we take the transpose of the feature vector and the data first, rather that having</div>
+<div style="position:absolute;top:20506;left:201">a little T symbol above their names from now on.</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:20500;left:497">|</div>
+<div style="position:absolute;top:20503;left:508"></div>
+<div style="position:absolute;top:20511;left:513">0</div>
+<div style="position:absolute;top:20500;left:523">@¦u</div>
+<div style="position:absolute;top:20503;left:536"></div>
+<div style="position:absolute;top:20500;left:549">@</div>
+<div style="position:absolute;top:20504;left:556">z</div>
+<div style="position:absolute;top:20500;left:562">@</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20506;left:573">is the final data set, with</div>
+<div style="position:absolute;top:20524;left:201">data items in columns, and dimensions along rows.</div>
+<div style="position:absolute;top:20542;left:223">What will this give us? It will give us the original data <i>solely in terms of the vectors</i></div>
+<div style="position:absolute;top:20560;left:201"><i>we chose</i>. Our original data set had two axes,</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:20564;left:489">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20560;left:503">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:20564;left:530">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20560;left:538">, so our data was in terms of</div>
+<div style="position:absolute;top:20578;left:201">them. It is possible to express data in terms of any two axes that you like. If these</div>
+<div style="position:absolute;top:20596;left:201">axes are perpendicular, then the expression is the most efficient. This was why it was</div>
+<div style="position:absolute;top:20614;left:201">important that eigenvectors are always perpendicular to each other. We have changed</div>
+<div style="position:absolute;top:20632;left:201">our data from being in terms of the axes</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:20636;left:449">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20632;left:463">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:20636;left:488">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20632;left:497">, and now they are in terms of our 2</div>
+<div style="position:absolute;top:20650;left:201">eigenvectors. In the case of when the new data set has reduced dimensionality, ie. we</div>
+<div style="position:absolute;top:20667;left:201">have left some of the eigenvectors out, the new data is only in terms of the vectors that</div>
+<div style="position:absolute;top:20685;left:201">we decided to keep.</div>
+<div style="position:absolute;top:20703;left:223">To show this on our data, I have done the final transformation with each of the</div>
+<div style="position:absolute;top:20721;left:201">possible feature vectors. I have taken the transpose of the result in each case to bring</div>
+<div style="position:absolute;top:20739;left:201">the data back to the nice table-like format. I have also plotted the final points to show</div>
+<div style="position:absolute;top:20757;left:201">how they relate to the components.</div>
+<div style="position:absolute;top:20775;left:223">In the case of keeping both eigenvectors for the transformation, we get the data and</div>
+<div style="position:absolute;top:20793;left:201">the plot found in Figure 3.3. This plot is basically the original data, rotated so that the</div>
+<div style="position:absolute;top:20811;left:201">eigenvectors are the axes. This is understandable since we have lost no information in</div>
+<div style="position:absolute;top:20829;left:201">this decomposition.</div>
+<div style="position:absolute;top:20847;left:223">The other transformation we can make is by taking only the eigenvector with the</div>
+<div style="position:absolute;top:20865;left:201">largest eigenvalue. The table of data resulting from that is found in Figure 3.4. As</div>
+<div style="position:absolute;top:20883;left:201">expected, it only has a single dimension. If you compare this data set with the one</div>
+<div style="position:absolute;top:20900;left:201">resulting from using both eigenvectors, you will notice that this data set is exactly the</div>
+<div style="position:absolute;top:20918;left:201">first column of the other. So, if you were to plot this data, it would be 1 dimensional,</div>
+<div style="position:absolute;top:20936;left:201">and would be points on a line in exactly the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:20941;left:479">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:20936;left:493">positions of the points in the plot in</div>
+<div style="position:absolute;top:20954;left:201">Figure 3.3. We have effectively thrown away the whole other axis, which is the other</div>
+<div style="position:absolute;top:20972;left:201">eigenvector.</div>
+<div style="position:absolute;top:20990;left:223">So what have we done here? Basically we have transformed our data so that is</div>
+<div style="position:absolute;top:21008;left:201">expressed in terms of the patterns between them, where the patterns are the lines that</div>
+<div style="position:absolute;top:21026;left:201">most closely describe the relationships between the data. This is helpful because we</div>
+<div style="position:absolute;top:21044;left:201">have now classified our data point as a combination of the contributions from each of</div>
+<div style="position:absolute;top:21062;left:201">those lines. Initially we had the simple</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:21066;left:448">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21062;left:463">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:21066;left:489">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21062;left:503">axes. This is fine, but the</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:21066;left:667">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21062;left:681">and</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:21066;left:708">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21080;left:201">values of each data point don’t really tell us exactly how that point relates to the rest of</div>
+<div style="position:absolute;top:21098;left:201">the data. Now, the values of the data points tell us exactly where (ie. above/below) the</div>
+<div style="position:absolute;top:21116;left:201">trend lines the data point sits. In the case of the transformation using <i>both </i>eigenvectors,</div>
+<div style="position:absolute;top:21134;left:201">we have simply altered the data so that it is in terms of those eigenvectors instead of</div>
+<div style="position:absolute;top:21152;left:201">the usual axes. But the single-eigenvector decomposition has removed the contribution</div>
+<div style="position:absolute;top:21170;left:201">due to the smaller eigenvector and left us with data that is only in terms of the other.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:21210;left:201"><b>3.1.1 Getting the old data back</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21240;left:201">Wanting to get the original data back is obviously of great concern if you are using</div>
+<div style="position:absolute;top:21258;left:201">the PCA transform for data compression (an example of which to will see in the next</div>
+<div style="position:absolute;top:21276;left:201">section). This content is taken from</div>
+<div style="position:absolute;top:21294;left:201"><a href="http://www.vision.auc.dk/" target="_blank">http://www.vision.auc.dk/</a> sig/Teaching/Flerdim/Current/<wbr>hotelling/hotelling.html</div>
+<div style="position:absolute;top:21340;left:451">17</div>
+</span></font>
+
+<div style="position:absolute;top:21559;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_19"><b>Page 19</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21859;left:201">Transformed Data=</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:21774;left:365">`</div>
+<div style="position:absolute;top:21774;left:461">a</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:21788;left:332">-.827970186</div>
+<div style="position:absolute;top:21788;left:428">-.175115307</div>
+<div style="position:absolute;top:21806;left:334">1.77758033</div>
+<div style="position:absolute;top:21806;left:431">.142857227</div>
+<div style="position:absolute;top:21823;left:332">-.992197494</div>
+<div style="position:absolute;top:21823;left:431">.384374989</div>
+<div style="position:absolute;top:21841;left:332">-.274210416</div>
+<div style="position:absolute;top:21841;left:431">.130417207</div>
+<div style="position:absolute;top:21859;left:332">-1.67580142</div>
+<div style="position:absolute;top:21859;left:428">-.209498461</div>
+<div style="position:absolute;top:21877;left:332">-.912949103</div>
+<div style="position:absolute;top:21877;left:431">.175282444</div>
+<div style="position:absolute;top:21895;left:330">.0991094375</div>
+<div style="position:absolute;top:21895;left:428">-.349824698</div>
+<div style="position:absolute;top:21913;left:334">1.14457216</div>
+<div style="position:absolute;top:21913;left:427">.0464172582</div>
+<div style="position:absolute;top:21931;left:334">.438046137</div>
+<div style="position:absolute;top:21931;left:427">.0177646297</div>
+<div style="position:absolute;top:21949;left:334">1.22382056</div>
+<div style="position:absolute;top:21949;left:428">-.162675287</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:8px;font-family:Times">
+<div style="position:absolute;top:22319;left:228">-2</div>
+<div style="position:absolute;top:22278;left:219">-1.5</div>
+<div style="position:absolute;top:22238;left:228">-1</div>
+<div style="position:absolute;top:22197;left:219">-0.5</div>
+<div style="position:absolute;top:22156;left:232">0</div>
+<div style="position:absolute;top:22115;left:223">0.5</div>
+<div style="position:absolute;top:22075;left:232">1</div>
+<div style="position:absolute;top:22034;left:223">1.5</div>
+<div style="position:absolute;top:21993;left:232">2</div>
+<div style="position:absolute;top:22329;left:239">-2</div>
+<div style="position:absolute;top:22329;left:275">-1.5</div>
+<div style="position:absolute;top:22329;left:320">-1</div>
+<div style="position:absolute;top:22329;left:357">-0.5</div>
+<div style="position:absolute;top:22329;left:404">0</div>
+<div style="position:absolute;top:22329;left:440">0.5</div>
+<div style="position:absolute;top:22329;left:485">1</div>
+<div style="position:absolute;top:22329;left:521">1.5</div>
+<div style="position:absolute;top:22329;left:566">2</div>
+<div style="position:absolute;top:21978;left:320">Data transformed with 2 eigenvectors</div>
+<div style="position:absolute;top:22003;left:423">"./doublevecfinal.dat"</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:22367;left:201">Figure 3.3: The table of data by applying the PCA analysis using both eigenvectors,</div>
+<div style="position:absolute;top:22385;left:201">and a plot of the new data points.</div>
+<div style="position:absolute;top:22528;left:451">18</div>
+</span></font>
+
+<div style="position:absolute;top:22747;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_20"><b>Page 20</b></a></font></td></tr></tbody></table></div><font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:22859;left:342">Transformed Data (Single eigenvector)</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:22881;left:454">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:22895;left:420">-.827970186</div>
+<div style="position:absolute;top:22913;left:423">1.77758033</div>
+<div style="position:absolute;top:22931;left:420">-.992197494</div>
+<div style="position:absolute;top:22949;left:420">-.274210416</div>
+<div style="position:absolute;top:22967;left:420">-1.67580142</div>
+<div style="position:absolute;top:22985;left:420">-.912949103</div>
+<div style="position:absolute;top:23003;left:419">.0991094375</div>
+<div style="position:absolute;top:23021;left:423">1.14457216</div>
+<div style="position:absolute;top:23039;left:423">.438046137</div>
+<div style="position:absolute;top:23057;left:423">1.22382056</div>
+<div style="position:absolute;top:23103;left:212">Figure 3.4: The data after transforming using only the most significant eigenvector</div>
+<div style="position:absolute;top:23151;left:201">So, how do we get the original data back? Before we do that, remember that only if</div>
+<div style="position:absolute;top:23169;left:201">we took <i>all </i>the eigenvectors in our transformation will we get <i>exactly </i>the original data</div>
+<div style="position:absolute;top:23187;left:201">back. If we have reduced the number of eigenvectors in the final transformation, then</div>
+<div style="position:absolute;top:23205;left:201">the retrieved data has lost some information.</div>
+<div style="position:absolute;top:23223;left:223">Recall that the final transform is this:</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:23250;left:282">|</div>
+<div style="position:absolute;top:23252;left:293"></div>
+<div style="position:absolute;top:23260;left:298">0</div>
+<div style="position:absolute;top:23250;left:308">@¦u</div>
+<div style="position:absolute;top:23252;left:321"></div>
+<div style="position:absolute;top:23250;left:334">@</div>
+<div style="position:absolute;top:23253;left:341">z</div>
+<div style="position:absolute;top:23250;left:347">@T¡k</div>
+<div style="position:absolute;top:23253;left:386">gh</div>
+<div style="position:absolute;top:23250;left:404">|</div>
+<div style="position:absolute;top:23253;left:416">s</div>
+<div style="position:absolute;top:23250;left:423">@</div>
+<div style="position:absolute;top:23253;left:430">z</div>
+<div style="position:absolute;top:23250;left:435">v!d</div>
+<div style="position:absolute;top:23253;left:452">sx}UsyfzIg</div>
+<div style="position:absolute;top:23250;left:496">d</div>
+<div style="position:absolute;top:23259;left:509">f</div>
+<div style="position:absolute;top:23250;left:523"></div>
+<div style="position:absolute;top:23253;left:534">gh</div>
+<div style="position:absolute;top:23252;left:552"></div>
+<div style="position:absolute;top:23250;left:565">@</div>
+<div style="position:absolute;top:23253;left:572">z</div>
+<div style="position:absolute;top:23250;left:578">@¦</div>
+<div style="position:absolute;top:23260;left:597">A</div>
+<div style="position:absolute;top:23250;left:609">v</div>
+<div style="position:absolute;top:23253;left:619">Ghz</div>
+<div style="position:absolute;top:23250;left:632">i</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:23288;left:201">which can be turned around so that, to get the original data back,</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:23318;left:276"></div>
+<div style="position:absolute;top:23321;left:288">gh</div>
+<div style="position:absolute;top:23320;left:306"></div>
+<div style="position:absolute;top:23318;left:319">@</div>
+<div style="position:absolute;top:23321;left:326">z</div>
+<div style="position:absolute;top:23318;left:332">@¦</div>
+<div style="position:absolute;top:23328;left:351">A</div>
+<div style="position:absolute;top:23318;left:363">v</div>
+<div style="position:absolute;top:23321;left:373">Ghz</div>
+<div style="position:absolute;top:23318;left:390">¡</div>
+<div style="position:absolute;top:23321;left:417">gh</div>
+<div style="position:absolute;top:23318;left:435">|</div>
+<div style="position:absolute;top:23321;left:447">s</div>
+<div style="position:absolute;top:23318;left:454">@</div>
+<div style="position:absolute;top:23321;left:460">z</div>
+<div style="position:absolute;top:23318;left:466">v!d</div>
+<div style="position:absolute;top:23321;left:483">sx}UsyfzIg</div>
+<div style="position:absolute;top:23318;left:527">d</div>
+<div style="position:absolute;top:23329;left:535"></div>
+<div style="position:absolute;top:23309;left:545">'</div>
+<div style="position:absolute;top:23327;left:556">f</div>
+<div style="position:absolute;top:23318;left:569">|</div>
+<div style="position:absolute;top:23320;left:580"></div>
+<div style="position:absolute;top:23328;left:585">0</div>
+<div style="position:absolute;top:23318;left:595">@¦u</div>
+<div style="position:absolute;top:23320;left:608"></div>
+<div style="position:absolute;top:23318;left:621">@</div>
+<div style="position:absolute;top:23321;left:628">z</div>
+<div style="position:absolute;top:23318;left:634">@</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:23356;left:201">where</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:23350;left:241"></div>
+<div style="position:absolute;top:23354;left:253">gh</div>
+<div style="position:absolute;top:23350;left:271">|</div>
+<div style="position:absolute;top:23354;left:282">s</div>
+<div style="position:absolute;top:23350;left:290">@</div>
+<div style="position:absolute;top:23354;left:296">z</div>
+<div style="position:absolute;top:23350;left:302">vd</div>
+<div style="position:absolute;top:23354;left:318">sy}TsyfzIg</div>
+<div style="position:absolute;top:23350;left:362">d</div>
+<div style="position:absolute;top:23363;left:371"></div>
+<div style="position:absolute;top:23343;left:380">'</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:23356;left:390">is the inverse of</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:23350;left:486"></div>
+<div style="position:absolute;top:23354;left:498">gh</div>
+<div style="position:absolute;top:23350;left:516">|</div>
+<div style="position:absolute;top:23354;left:528">s</div>
+<div style="position:absolute;top:23350;left:535">@</div>
+<div style="position:absolute;top:23354;left:541">z</div>
+<div style="position:absolute;top:23350;left:547">v!d</div>
+<div style="position:absolute;top:23354;left:564">sx}UsyfzIg</div>
+<div style="position:absolute;top:23350;left:608">d</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:23356;left:615">. However, when</div>
+<div style="position:absolute;top:23374;left:201">we take <i>all </i>the eigenvectors in our feature vector, it turns out that the inverse of our</div>
+<div style="position:absolute;top:23392;left:201">feature vector is actually equal to the transpose of our feature vector. This is only true</div>
+<div style="position:absolute;top:23410;left:201">because the elements of the matrix are all the unit eigenvectors of our data set. This</div>
+<div style="position:absolute;top:23427;left:201">makes the return trip to our data easier, because the equation becomes</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:23457;left:280"></div>
+<div style="position:absolute;top:23461;left:291">gh</div>
+<div style="position:absolute;top:23460;left:309"></div>
+<div style="position:absolute;top:23457;left:322">@</div>
+<div style="position:absolute;top:23461;left:329">z</div>
+<div style="position:absolute;top:23457;left:335">@¦</div>
+<div style="position:absolute;top:23468;left:354">A</div>
+<div style="position:absolute;top:23457;left:366">v</div>
+<div style="position:absolute;top:23461;left:376">Ghz</div>
+<div style="position:absolute;top:23457;left:393">¡</div>
+<div style="position:absolute;top:23461;left:420">gh</div>
+<div style="position:absolute;top:23457;left:438">|</div>
+<div style="position:absolute;top:23461;left:450">s</div>
+<div style="position:absolute;top:23457;left:457">@</div>
+<div style="position:absolute;top:23461;left:464">z</div>
+<div style="position:absolute;top:23457;left:469">v!d</div>
+<div style="position:absolute;top:23461;left:486">sy}UsxfwzIg</div>
+<div style="position:absolute;top:23457;left:530">d</div>
+<div style="position:absolute;top:23466;left:552">f</div>
+<div style="position:absolute;top:23457;left:566">|</div>
+<div style="position:absolute;top:23460;left:576"></div>
+<div style="position:absolute;top:23468;left:582">0</div>
+<div style="position:absolute;top:23457;left:592">@¦u</div>
+<div style="position:absolute;top:23460;left:605"></div>
+<div style="position:absolute;top:23457;left:617">@</div>
+<div style="position:absolute;top:23461;left:624">z</div>
+<div style="position:absolute;top:23457;left:631">@</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:23496;left:201">But, to get the actual original data back, we need to add on the mean of that original</div>
+<div style="position:absolute;top:23513;left:201">data (remember we subtracted it right at the start). So, for completeness,</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:23543;left:209"></div>
+<div style="position:absolute;top:23547;left:220">ghU</div>
+<div style="position:absolute;top:23543;left:249">d</div>
+<div style="position:absolute;top:23545;left:256">t</div>
+<div style="position:absolute;top:23554;left:274">0</div>
+<div style="position:absolute;top:23543;left:284">@¦u</div>
+<div style="position:absolute;top:23545;left:297"></div>
+<div style="position:absolute;top:23543;left:310">@</div>
+<div style="position:absolute;top:23547;left:317">z</div>
+<div style="position:absolute;top:23543;left:323">@U¡</div>
+<div style="position:absolute;top:23545;left:351">H</div>
+<div style="position:absolute;top:23543;left:357"></div>
+<div style="position:absolute;top:23547;left:368">gh</div>
+<div style="position:absolute;top:23543;left:387">|</div>
+<div style="position:absolute;top:23547;left:398">s</div>
+<div style="position:absolute;top:23543;left:405">@</div>
+<div style="position:absolute;top:23547;left:412">z</div>
+<div style="position:absolute;top:23543;left:417">v!d</div>
+<div style="position:absolute;top:23547;left:434">sy}TsyfzIg</div>
+<div style="position:absolute;top:23543;left:478">d</div>
+<div style="position:absolute;top:23552;left:501">f</div>
+<div style="position:absolute;top:23543;left:514">|</div>
+<div style="position:absolute;top:23545;left:525"></div>
+<div style="position:absolute;top:23554;left:530">0</div>
+<div style="position:absolute;top:23543;left:540">@u</div>
+<div style="position:absolute;top:23545;left:553"></div>
+<div style="position:absolute;top:23543;left:566">@</div>
+<div style="position:absolute;top:23547;left:573">z</div>
+<div style="position:absolute;top:23543;left:579">@P</div>
+<div style="position:absolute;top:23542;left:596">i</div>
+<div style="position:absolute;top:23547;left:611"></div>
+<div style="position:absolute;top:23543;left:621">d</div>
+<div style="position:absolute;top:23545;left:628">t</div>
+<div style="position:absolute;top:23554;left:647">0</div>
+<div style="position:absolute;top:23543;left:657">@¦u</div>
+<div style="position:absolute;top:23554;left:669">s</div>
+<div style="position:absolute;top:23547;left:686">s</div>
+<div style="position:absolute;top:23543;left:693">@</div>
+<div style="position:absolute;top:23554;left:699">0</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:23581;left:201">This formula also applies to when you do not have all the eigenvectors in the feature</div>
+<div style="position:absolute;top:23599;left:201">vector. So even when you leave out some eigenvectors, the above equation still makes</div>
+<div style="position:absolute;top:23617;left:201">the correct transform.</div>
+<div style="position:absolute;top:23635;left:223">I will not perform the data re-creation using the <i>complete </i>feature vector, because the</div>
+<div style="position:absolute;top:23653;left:201">result is exactly the data we started with. However, I will do it with the reduced feature</div>
+<div style="position:absolute;top:23671;left:201">vector to show you how information has been lost. Figure 3.5 show this plot. Compare</div>
+<div style="position:absolute;top:23716;left:451">19</div>
+</span></font>
+
+<div style="position:absolute;top:23935;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_21"><b>Page 21</b></a></font></td></tr></tbody></table></div><font face="Times" size="2"><span style="font-size:8px;font-family:Times">
+<div style="position:absolute;top:24400;left:216">-1</div>
+<div style="position:absolute;top:24335;left:219">0</div>
+<div style="position:absolute;top:24270;left:219">1</div>
+<div style="position:absolute;top:24205;left:219">2</div>
+<div style="position:absolute;top:24140;left:219">3</div>
+<div style="position:absolute;top:24075;left:219">4</div>
+<div style="position:absolute;top:24411;left:226">-1</div>
+<div style="position:absolute;top:24411;left:293">0</div>
+<div style="position:absolute;top:24411;left:358">1</div>
+<div style="position:absolute;top:24411;left:424">2</div>
+<div style="position:absolute;top:24411;left:489">3</div>
+<div style="position:absolute;top:24411;left:554">4</div>
+<div style="position:absolute;top:24059;left:270">Original data restored using only a single eigenvector</div>
+<div style="position:absolute;top:24085;left:408">"./lossyplusmean.dat"</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:24448;left:201">Figure 3.5: The reconstruction from the data that was derived using only a single eigen-</div>
+<div style="position:absolute;top:24466;left:201">vector</div>
+<div style="position:absolute;top:24511;left:201">it to the original data plot in Figure 3.1 and you will notice how, while the variation</div>
+<div style="position:absolute;top:24529;left:201">along the principle eigenvector (see Figure 3.2 for the eigenvector overlayed on top of</div>
+<div style="position:absolute;top:24547;left:201">the mean-adjusted data) has been kept, the variation along the other component (the</div>
+<div style="position:absolute;top:24565;left:201">other eigenvector that we left out) has gone.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:15px;font-family:Times">
+<div style="position:absolute;top:24606;left:201"><b>Exercises</b></div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:24634;left:224">Y</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:24636;left:238">What do the eigenvectors of the covariance matrix give us?</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:24663;left:224">Y</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:24666;left:238">At what point in the PCA process can we decide to compress the data? What</div>
+<div style="position:absolute;top:24683;left:238">effect does this have?</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:24711;left:224">Y</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:24713;left:238">For an example of PCA and a graphical representation of the principal eigenvec-</div>
+<div style="position:absolute;top:24731;left:238">tors, research the topic ’Eigenfaces’, which uses PCA to do facial recognition</div>
+<div style="position:absolute;top:24904;left:451">20</div>
+</span></font>
+
+<div style="position:absolute;top:25123;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_22"><b>Page 22</b></a></font></td></tr></tbody></table></div><font face="Times" size="4"><span style="font-size:28px;font-family:Times">
+<div style="position:absolute;top:25341;left:201"><b>Chapter 4</b></div>
+</span></font>
+<font face="Times" size="5"><span style="font-size:35px;font-family:Times">
+<div style="position:absolute;top:25412;left:201"><b>Application to Computer Vision</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:25505;left:201">This chapter will outline the way that PCA is used in computer vision, first showing</div>
+<div style="position:absolute;top:25523;left:201">how images are usually represented, and then showing what PCA can allow us to do</div>
+<div style="position:absolute;top:25541;left:201">with those images. The information in this section regarding facial recognition comes</div>
+<div style="position:absolute;top:25558;left:201">from “Face Recognition: Eigenface, Elastic Matching, and Neural Nets”, Jun Zhang et</div>
+<div style="position:absolute;top:25576;left:201">al. Proceedings of the IEEE, Vol. 85, No. 9, September 1997. The representation infor-</div>
+<div style="position:absolute;top:25594;left:201">mation, is taken from “Digital Image Processing” Rafael C. Gonzalez and Paul Wintz,</div>
+<div style="position:absolute;top:25612;left:201">Addison-Wesley Publishing Company, 1987. It is also an excellent reference for further</div>
+<div style="position:absolute;top:25630;left:201">information on the K-L transform in general. The image compression information is</div>
+<div style="position:absolute;top:25648;left:201">taken from <i><a href="http://www.vision.auc.dk/" target="_blank">http://www.vision.auc.dk/</a> sig/Teaching/Flerdim/Current/<wbr>hotelling/hotelling.html</i>,</div>
+<div style="position:absolute;top:25666;left:201">which also provides examples of image reconstruction using a varying amount of eigen-</div>
+<div style="position:absolute;top:25684;left:201">vectors.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:19px;font-family:Times">
+<div style="position:absolute;top:25730;left:201"><b>4.1 Representation</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:25768;left:201">When using these sort of matrix techniques in computer vision, we must consider repre-</div>
+<div style="position:absolute;top:25786;left:201">sentation of images. A square,</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:25790;left:387"></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:25786;left:403">by</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:25790;left:423"></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:25786;left:439">image can be expressed as an</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:25790;left:618"></div>
+<div style="position:absolute;top:25779;left:631">R</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:25786;left:638">-dimensional</div>
+<div style="position:absolute;top:25804;left:201">vector</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:25831;left:350">&nbsp;¡</div>
+<div style="position:absolute;top:25841;left:397">`</div>
+<div style="position:absolute;top:25831;left:407">'</div>
+<div style="position:absolute;top:25841;left:428">`</div>
+<div style="position:absolute;top:25837;left:436">R</div>
+<div style="position:absolute;top:25841;left:458">`</div>
+<div style="position:absolute;top:25831;left:467">%</div>
+<div style="position:absolute;top:25840;left:489">q2q</div>
+<div style="position:absolute;top:25841;left:526">`</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:25870;left:201">where the rows of pixels in the image are placed one after the other to form a one-</div>
+<div style="position:absolute;top:25888;left:201">dimensional image. E.g. The first</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:25892;left:415"></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:25888;left:433">elements (</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:25892;left:495">`</div>
+<div style="position:absolute;top:25882;left:505">'</div>
+<div style="position:absolute;top:25892;left:516">Eg`</div>
+<div style="position:absolute;top:25891;left:539"></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:25888;left:555">will be the first row of the</div>
+<div style="position:absolute;top:25906;left:201">image, the next</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:25910;left:299"></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:25906;left:316">elements are the next row, and so on. The values in the vector are</div>
+<div style="position:absolute;top:25923;left:201">the intensity values of the image, possibly a single greyscale value.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:19px;font-family:Times">
+<div style="position:absolute;top:25969;left:201"><b>4.2 PCA to find patterns</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26007;left:201">Say we have 20 images. Each image is</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:26012;left:451"></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26007;left:469">pixels high by</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:26012;left:563"></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26007;left:581">pixels wide. For each</div>
+<div style="position:absolute;top:26025;left:201">image we can create an image vector as described in the representation section. We</div>
+<div style="position:absolute;top:26043;left:201">can then put all the images together in one big image-matrix like this:</div>
+<div style="position:absolute;top:26092;left:451">21</div>
+</span></font>
+
+<div style="position:absolute;top:26311;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_23"><b>Page 23</b></a></font></td></tr></tbody></table></div><font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:26487;left:335"></div>
+<div style="position:absolute;top:26490;left:343"></div>
+<div style="position:absolute;top:26487;left:357">@</div>
+<div style="position:absolute;top:26490;left:364">t</div>
+<div style="position:absolute;top:26491;left:373">sxG</div>
+<div style="position:absolute;top:26498;left:387">s</div>
+<div style="position:absolute;top:26487;left:403">@</div>
+<div style="position:absolute;top:26491;left:410">z</div>
+<div style="position:absolute;top:26487;left:415">d</div>
+<div style="position:absolute;top:26490;left:422"></div>
+<div style="position:absolute;top:26498;left:428">`</div>
+<div style="position:absolute;top:26487;left:441">¡</div>
+<div style="position:absolute;top:26451;left:480"></div>
+<div style="position:absolute;top:26454;left:488"></div>
+<div style="position:absolute;top:26451;left:502">@</div>
+<div style="position:absolute;top:26454;left:509">t</div>
+<div style="position:absolute;top:26455;left:518">sx}Tsxf</div>
+<div style="position:absolute;top:26451;left:551">¥</div>
+<div style="position:absolute;top:26469;left:480"></div>
+<div style="position:absolute;top:26472;left:488"></div>
+<div style="position:absolute;top:26469;left:502">@</div>
+<div style="position:absolute;top:26472;left:509">t</div>
+<div style="position:absolute;top:26473;left:518">sx}Tsxf</div>
+<div style="position:absolute;top:26469;left:549">§</div>
+<div style="position:absolute;top:26496;left:517">q</div>
+<div style="position:absolute;top:26514;left:517">q</div>
+<div style="position:absolute;top:26523;left:476"></div>
+<div style="position:absolute;top:26525;left:484"></div>
+<div style="position:absolute;top:26523;left:498">@</div>
+<div style="position:absolute;top:26525;left:505">t</div>
+<div style="position:absolute;top:26527;left:514">sy}syf</div>
+<div style="position:absolute;top:26523;left:545">§7</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26561;left:201">which gives us a starting point for our PCA analysis. Once we have performed PCA,</div>
+<div style="position:absolute;top:26579;left:201">we have our original data in terms of the eigenvectors we found from the covariance</div>
+<div style="position:absolute;top:26597;left:201">matrix. Why is this useful? Say we want to do facial recognition, and so our original</div>
+<div style="position:absolute;top:26615;left:201">images were of peoples faces. Then, the problem is, given a new image, whose face</div>
+<div style="position:absolute;top:26633;left:201">from the original set is it? (Note that the new image is not one of the 20 we started</div>
+<div style="position:absolute;top:26651;left:201">with.) The way this is done is computer vision is to measure the difference between</div>
+<div style="position:absolute;top:26668;left:201">the new image and the original images, but not along the original axes, along the new</div>
+<div style="position:absolute;top:26686;left:201">axes derived from the PCA analysis.</div>
+<div style="position:absolute;top:26704;left:223">It turns out that these axes works much better for recognising faces, because the</div>
+<div style="position:absolute;top:26722;left:201">PCA analysis has given us the original images <i>in terms of the differences and simi-</i></div>
+<div style="position:absolute;top:26740;left:201"><i>larities between them</i>. The PCA analysis has identified the statistical patterns in the</div>
+<div style="position:absolute;top:26758;left:201">data.</div>
+<div style="position:absolute;top:26776;left:223">Since all the vectors are</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:26781;left:369"></div>
+<div style="position:absolute;top:26769;left:382">R</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26776;left:392">dimensional, we will get</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:26781;left:543"></div>
+<div style="position:absolute;top:26769;left:556">R</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26776;left:566">eigenvectors. In practice,</div>
+<div style="position:absolute;top:26794;left:201">we are able to leave out some of the less significant eigenvectors, and the recognition</div>
+<div style="position:absolute;top:26812;left:201">still performs well.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:19px;font-family:Times">
+<div style="position:absolute;top:26858;left:201"><b>4.3 PCA for image compression</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26896;left:201">Using PCA for image compression also know as the Hotelling, or Karhunen and Leove</div>
+<div style="position:absolute;top:26914;left:201">(KL), transform. If we have 20 images, each with</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:26918;left:501"></div>
+<div style="position:absolute;top:26907;left:514">R</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26914;left:524">pixels, we can form</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:26918;left:646"></div>
+<div style="position:absolute;top:26907;left:659">R</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:26914;left:670">vectors,</div>
+<div style="position:absolute;top:26932;left:201">each with 20 dimensions. Each vector consists of all the intensity values from the <i>same</i></div>
+<div style="position:absolute;top:26950;left:201">pixel from each picture. This is different from the previous example because before we</div>
+<div style="position:absolute;top:26967;left:201">had a vector for <i>image</i>, and each item in that vector was a different pixel, whereas now</div>
+<div style="position:absolute;top:26985;left:201">we have a vector for each <i>pixel</i>, and each item in the vector is from a different image.</div>
+<div style="position:absolute;top:27003;left:223">Now we perform the PCA on this set of data. We will get 20 eigenvectors because</div>
+<div style="position:absolute;top:27021;left:201">each vector is 20-dimensional. To compress the data, we can then choose to transform</div>
+<div style="position:absolute;top:27039;left:201">the data only using, say 15 of the eigenvectors. This gives us a final data set with</div>
+<div style="position:absolute;top:27057;left:201">only 15 dimensions, which has saved us</div>
+</span></font>
+<font face="Times" size="2"><span style="font-size:4px;font-family:Times">
+<div style="position:absolute;top:27052;left:445">¥oI©</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:27057;left:470">of the space. However, when the original</div>
+<div style="position:absolute;top:27075;left:201">data is reproduced, the images have lost some of the information. This compression</div>
+<div style="position:absolute;top:27093;left:201">technique is said to be <i>lossy </i>because the decompressed image is not exactly the same</div>
+<div style="position:absolute;top:27111;left:201">as the original, generally worse.</div>
+<div style="position:absolute;top:27280;left:451">22</div>
+</span></font>
+
+<div style="position:absolute;top:27499;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_24"><b>Page 24</b></a></font></td></tr></tbody></table></div><font face="Times" size="4"><span style="font-size:28px;font-family:Times">
+<div style="position:absolute;top:27717;left:201"><b>Appendix A</b></div>
+</span></font>
+<font face="Times" size="5"><span style="font-size:35px;font-family:Times">
+<div style="position:absolute;top:27788;left:201"><b>Implementation Code</b></div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:27881;left:201">This is code for use in Scilab, a freeware alternative to Matlab. I used this code to</div>
+<div style="position:absolute;top:27899;left:201">generate all the examples in the text. Apart from the first macro, all the rest were</div>
+<div style="position:absolute;top:27917;left:201">written by me.</div>
+</span></font>
+<font face="Courier" size="3"><span style="font-size:12px;font-family:Courier">
+<div style="position:absolute;top:27968;left:201">// This macro taken from</div>
+<div style="position:absolute;top:27986;left:201">// <a href="http://www.cs.montana.edu/" target="_blank">http://www.cs.montana.edu/</a>˜<wbr>harkin/courses/cs530/scilab/<wbr>macros/cov.sci</div>
+<div style="position:absolute;top:28004;left:201">// No alterations made</div>
+<div style="position:absolute;top:28040;left:201">// Return the covariance matrix of the data in x, where each column of x</div>
+<div style="position:absolute;top:28058;left:201">// is one dimension of an n-dimensional data set. That is, x has x columns</div>
+<div style="position:absolute;top:28076;left:201">// and m rows, and each row is one sample.</div>
+<div style="position:absolute;top:28094;left:201">//</div>
+<div style="position:absolute;top:28112;left:201">// For example, if x is three dimensional and there are 4 samples.</div>
+<div style="position:absolute;top:28130;left:201">//</div>
+<div style="position:absolute;top:28130;left:246">x = [1 2 3;4 5 6;7 8 9;10 11 12]</div>
+<div style="position:absolute;top:28147;left:201">//</div>
+<div style="position:absolute;top:28147;left:246">c = cov (x)</div>
+<div style="position:absolute;top:28183;left:201">function [c]=cov (x)</div>
+<div style="position:absolute;top:28201;left:201">// Get the size of the array</div>
+<div style="position:absolute;top:28219;left:201">sizex=size(x);</div>
+<div style="position:absolute;top:28237;left:201">// Get the mean of each column</div>
+<div style="position:absolute;top:28255;left:201">meanx = mean (x, "r");</div>
+<div style="position:absolute;top:28273;left:201">// For each pair of variables, x1, x2, calculate</div>
+<div style="position:absolute;top:28291;left:201">// sum ((x1 - meanx1)(x2-meanx2))/(m-1)</div>
+<div style="position:absolute;top:28309;left:201">for var = 1:sizex(2),</div>
+<div style="position:absolute;top:28327;left:272">x1 = x(:,var);</div>
+<div style="position:absolute;top:28345;left:272">mx1 = meanx (var);</div>
+<div style="position:absolute;top:28363;left:272">for ct = var:sizex (2),</div>
+<div style="position:absolute;top:28380;left:344">x2 = x(:,ct);</div>
+<div style="position:absolute;top:28398;left:344">mx2 = meanx (ct);</div>
+<div style="position:absolute;top:28416;left:344">v = ((x1 - mx1)’ * (x2 - mx2))/(sizex(1) - 1);</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:28468;left:451">23</div>
+</span></font>
+
+<div style="position:absolute;top:28687;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_25"><b>Page 25</b></a></font></td></tr></tbody></table></div><font face="Courier" size="3"><span style="font-size:12px;font-family:Courier">
+<div style="position:absolute;top:28805;left:344">cv(var,ct) = v;</div>
+<div style="position:absolute;top:28823;left:344">cv(ct,var) = v;</div>
+<div style="position:absolute;top:28841;left:344">// do the lower part of c also.</div>
+<div style="position:absolute;top:28859;left:272">end,</div>
+<div style="position:absolute;top:28877;left:201">end,</div>
+<div style="position:absolute;top:28895;left:201">c=cv;</div>
+<div style="position:absolute;top:28948;left:201">// This a simple wrapper function to get just the eigenvectors</div>
+<div style="position:absolute;top:28966;left:201">// since the system call returns 3 matrices</div>
+<div style="position:absolute;top:28984;left:201">function [x]=justeigs (x)</div>
+<div style="position:absolute;top:29002;left:201">// This just returns the eigenvectors of the matrix</div>
+<div style="position:absolute;top:29038;left:201">[a, eig, b] = bdiag(x);</div>
+<div style="position:absolute;top:29074;left:201">x= eig;</div>
+<div style="position:absolute;top:29146;left:201">// this function makes the transformation to the eigenspace for PCA</div>
+<div style="position:absolute;top:29164;left:201">// parameters:</div>
+<div style="position:absolute;top:29181;left:201">// adjusteddata = mean-adjusted data set</div>
+<div style="position:absolute;top:29199;left:201">// eigenvectors = SORTED eigenvectors (by eigenvalue)</div>
+<div style="position:absolute;top:29217;left:201">// dimensions = how many eigenvectors you wish to keep</div>
+<div style="position:absolute;top:29235;left:201">//</div>
+<div style="position:absolute;top:29253;left:201">// The first two parameters can come from the result of calling</div>
+<div style="position:absolute;top:29271;left:201">// PCAprepare on your data.</div>
+<div style="position:absolute;top:29289;left:201">// The last is up to you.</div>
+<div style="position:absolute;top:29325;left:201">function [finaldata] = PCAtransform(adjusteddata,<wbr>eigenvectors,dimensions)</div>
+<div style="position:absolute;top:29343;left:201">finaleigs = eigenvectors(:,1:dimensions);</div>
+<div style="position:absolute;top:29361;left:201">prefinaldata = finaleigs’*adjusteddata’;</div>
+<div style="position:absolute;top:29379;left:201">finaldata = prefinaldata’;</div>
+<div style="position:absolute;top:29451;left:201">// This function does the preparation for PCA analysis</div>
+<div style="position:absolute;top:29468;left:201">// It adjusts the data to subtract the mean, finds the covariance matrix,</div>
+<div style="position:absolute;top:29486;left:201">// and finds normal eigenvectors of that covariance matrix.</div>
+<div style="position:absolute;top:29504;left:201">// It returns 4 matrices</div>
+<div style="position:absolute;top:29522;left:201">// meanadjust = the mean-adjust data set</div>
+<div style="position:absolute;top:29540;left:201">// covmat = the covariance matrix of the data</div>
+<div style="position:absolute;top:29558;left:201">// eigvalues = the eigenvalues of the covariance matrix, IN SORTED ORDER</div>
+<div style="position:absolute;top:29576;left:201">// normaleigs = the normalised eigenvectors of the covariance matrix,</div>
+<div style="position:absolute;top:29594;left:201">// IN SORTED ORDER WITH RESPECT TO</div>
+<div style="position:absolute;top:29612;left:201">// THEIR EIGENVALUES, for selection for the feature vector.</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:29656;left:451">24</div>
+</span></font>
+
+<div style="position:absolute;top:29875;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_26"><b>Page 26</b></a></font></td></tr></tbody></table></div><font face="Courier" size="3"><span style="font-size:12px;font-family:Courier">
+<div style="position:absolute;top:29993;left:201">//</div>
+<div style="position:absolute;top:30011;left:201">// NOTE: This function cannot handle data sets that have any eigenvalues</div>
+<div style="position:absolute;top:30029;left:201">// equal to zero. It’s got something to do with the way that scilab treats</div>
+<div style="position:absolute;top:30047;left:201">// the empty matrix and zeros.</div>
+<div style="position:absolute;top:30065;left:201">//</div>
+<div style="position:absolute;top:30083;left:201">function [meanadjusted,covmat,<wbr>sorteigvalues,sortnormaleigs] = PCAprepare (data)</div>
+<div style="position:absolute;top:30101;left:201">// Calculates the mean adjusted matrix, only for 2 dimensional data</div>
+<div style="position:absolute;top:30118;left:201">means = mean(data,"r");</div>
+<div style="position:absolute;top:30136;left:201">meanadjusted = meanadjust(data);</div>
+<div style="position:absolute;top:30154;left:201">covmat = cov(meanadjusted);</div>
+<div style="position:absolute;top:30172;left:201">eigvalues = spec(covmat);</div>
+<div style="position:absolute;top:30190;left:201">normaleigs = justeigs(covmat);</div>
+<div style="position:absolute;top:30208;left:201">sorteigvalues = sorteigvectors(eigvalues’,<wbr>eigvalues’);</div>
+<div style="position:absolute;top:30226;left:201">sortnormaleigs = sorteigvectors(eigvalues’,<wbr>normaleigs);</div>
+<div style="position:absolute;top:30298;left:201">// This removes a specified column from a matrix</div>
+<div style="position:absolute;top:30316;left:201">// A = the matrix</div>
+<div style="position:absolute;top:30334;left:201">// n = the column number you wish to remove</div>
+<div style="position:absolute;top:30352;left:201">function [columnremoved] = removecolumn(A,n)</div>
+<div style="position:absolute;top:30369;left:201">inputsize = size(A);</div>
+<div style="position:absolute;top:30387;left:201">numcols = inputsize(2);</div>
+<div style="position:absolute;top:30405;left:201">temp = A(:,1:(n-1));</div>
+<div style="position:absolute;top:30423;left:201">for var = 1:(numcols - n)</div>
+<div style="position:absolute;top:30441;left:272">temp(:,(n+var)-1) = A(:,(n+var));</div>
+<div style="position:absolute;top:30459;left:201">end,</div>
+<div style="position:absolute;top:30477;left:201">columnremoved = temp;</div>
+<div style="position:absolute;top:30531;left:201">// This finds the column number that has the</div>
+<div style="position:absolute;top:30549;left:201">// highest value in it’s first row.</div>
+<div style="position:absolute;top:30567;left:201">function [column] = highestvalcolumn(A)</div>
+<div style="position:absolute;top:30585;left:201">inputsize = size(A);</div>
+<div style="position:absolute;top:30603;left:201">numcols = inputsize(2);</div>
+<div style="position:absolute;top:30621;left:201">maxval = A(1,1);</div>
+<div style="position:absolute;top:30639;left:201">maxcol = 1;</div>
+<div style="position:absolute;top:30656;left:201">for var = 2:numcols</div>
+<div style="position:absolute;top:30674;left:272">if A(1,var) &gt; maxval</div>
+<div style="position:absolute;top:30692;left:344">maxval = A(1,var);</div>
+<div style="position:absolute;top:30710;left:344">maxcol = var;</div>
+<div style="position:absolute;top:30728;left:272">end,</div>
+<div style="position:absolute;top:30746;left:201">end,</div>
+<div style="position:absolute;top:30764;left:201">column = maxcol</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:30844;left:451">25</div>
+</span></font>
+
+<div style="position:absolute;top:31063;left:0"><hr><table border="0" width="100%"><tbody><tr><td align="right" bgcolor="eeeeee"><font face="arial,sans-serif"><a name="0.1_27"><b>Page 27</b></a></font></td></tr></tbody></table></div><font face="Courier" size="3"><span style="font-size:12px;font-family:Courier">
+<div style="position:absolute;top:31181;left:201">// This sorts a matrix of vectors, based on the values of</div>
+<div style="position:absolute;top:31199;left:201">// another matrix</div>
+<div style="position:absolute;top:31217;left:201">//</div>
+<div style="position:absolute;top:31235;left:201">// values = the list of eigenvalues (1 per column)</div>
+<div style="position:absolute;top:31253;left:201">// vectors = The list of eigenvectors (1 per column)</div>
+<div style="position:absolute;top:31271;left:201">//</div>
+<div style="position:absolute;top:31289;left:201">// NOTE: The values should correspond to the vectors</div>
+<div style="position:absolute;top:31306;left:201">// so that the value in column x corresponds to the vector</div>
+<div style="position:absolute;top:31324;left:201">// in column x.</div>
+<div style="position:absolute;top:31342;left:201">function [sortedvecs] = sorteigvectors(values,vectors)</div>
+<div style="position:absolute;top:31360;left:201">inputsize = size(values);</div>
+<div style="position:absolute;top:31378;left:201">numcols = inputsize(2);</div>
+<div style="position:absolute;top:31396;left:201">highcol = highestvalcolumn(values);</div>
+<div style="position:absolute;top:31414;left:201">sorted = vectors(:,highcol);</div>
+<div style="position:absolute;top:31432;left:201">remainvec = removecolumn(vectors,highcol);</div>
+<div style="position:absolute;top:31450;left:201">remainval = removecolumn(values,highcol);</div>
+<div style="position:absolute;top:31468;left:201">for var = 2:numcols</div>
+<div style="position:absolute;top:31486;left:272">highcol = highestvalcolumn(remainval);</div>
+<div style="position:absolute;top:31504;left:272">sorted(:,var) = remainvec(:,highcol);</div>
+<div style="position:absolute;top:31522;left:272">remainvec = removecolumn(remainvec,<wbr>highcol);</div>
+<div style="position:absolute;top:31540;left:272">remainval = removecolumn(remainval,<wbr>highcol);</div>
+<div style="position:absolute;top:31557;left:201">end,</div>
+<div style="position:absolute;top:31575;left:201">sortedvecs = sorted;</div>
+<div style="position:absolute;top:31629;left:201">// This takes a set of data, and subtracts</div>
+<div style="position:absolute;top:31647;left:201">// the column mean from each column.</div>
+<div style="position:absolute;top:31665;left:201">function [meanadjusted] = meanadjust(Data)</div>
+<div style="position:absolute;top:31683;left:201">inputsize = size(Data);</div>
+<div style="position:absolute;top:31701;left:201">numcols = inputsize(2);</div>
+<div style="position:absolute;top:31719;left:201">means = mean(Data,"r");</div>
+<div style="position:absolute;top:31737;left:201">tmpmeanadjusted = Data(:,1) - means(:,1);</div>
+<div style="position:absolute;top:31755;left:201">for var = 2:numcols</div>
+<div style="position:absolute;top:31773;left:272">tmpmeanadjusted(:,var) = Data(:,var) - means(:,var);</div>
+<div style="position:absolute;top:31791;left:201">end,</div>
+<div style="position:absolute;top:31809;left:201">meanadjusted = tmpmeanadjusted</div>
+</span></font>
+<font face="Times" size="3"><span style="font-size:12px;font-family:Times">
+<div style="position:absolute;top:32032;left:451">26</div>
+</span></font>
+</div>
+
+</div></body></html>

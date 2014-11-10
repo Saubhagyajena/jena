@@ -1,0 +1,88 @@
+What is risk in software testing?
+Posted on January 19, 2012 ·
+
+?
+
+In software testing Risks are the possible problems that might endanger the objectives of the project stakeholders. It is the possibility of a negative or undesirable outcome. A risk is something that has not happened yet and it may never happen; it is a potential problem.
+
+In the future, a risk has some probability between 0% and 100%; it is a possibility, not a certainty.
+
+The chance of a risk becoming an outcome is dependent on the level of risk associated with its possible negative consequences.
+
+For example, most people are expected to catch a cold in the course of their lives, usually more than once. But the healthy individual suffers no serious consequences. Therefore, the overall level of risk associated with colds is low for this person. In other hand the risk of a cold for an elderly person with breathing difficulties would be high. So, in his case the overall level of risk associated with cold is high.
+
+We can classify risks into following categories:
+
+    Product risk (factors relating to what is produced by the work, i.e. the thing we are testing).
+    Project risk (factors relating to the way the work is carried out, i.e. the test project)
+What is Product risk in software testing?
+Posted on January 19, 2012 ·
+
+?
+
+Product risk is the possibility that the system or software might fail to satisfy or fulfill some reasonable expectation of the customer, user, or stakeholder. (Some authors also called the ‘Product risks’ as ‘Quality risks’ as they are risks to the quality of the product.)
+
+The product risks that can put the product or software in danger are:
+
+    If the software skips some key function that the customers specified, the users required or the stakeholders were promised.
+    If the software is unreliable and frequently fails to work.
+    If software fail in ways that cause financial or other damage to a user or the company that user works for.
+    If the software has problems related to a particular quality characteristic, which might not be functionality, but rather security, reliability, usability, maintainability or performance.
+
+Two quick tips about product risk analysis:
+First, remember to consider both likelihood of occurrence of the risk and the impact of the risk. While you may feel proud by finding lots of defects but testing is also about building confidence in key functions. We need to test the things that probably won’t break but would be very bad if they did.
+
+Second, early risk analysis, are often educated guesses. At key project milestones it’s important to ensure that you revisit and follow up on the risk analysis.
+What is Project risk in software testing?
+Posted on January 19, 2012 ·
+
+?
+
+Testing is an activity like the rest of the project and thus it is subject to risks that cause danger to the project.
+
+The project risk that can endanger the project are:
+
+    Risk such as the late delivery of the test items to the test team or availability issues with the test environment.
+    There are also indirect risks such as excessive delays in repairing defects found in testing or problems with getting professional system administration support for the test environment.
+
+ For any risk, project risk or product risk we have four typical actions that we can take:
+
+    Mitigate: Take steps in advance to reduce the possibility and impact of the risk.
+    Contingency: Have a plan in place to reduce the possibility of the risk to become an outcome.
+    Transfer: Convince some other member of the team or project stakeholder to reduce the probability or accept the impact of the risk.
+    Ignore: Ignore the risk, which is usually a good option only when there is little that can be done or when the possibility and impact of that risk are low in the project.
+What is Risk analysis?
+Posted on January 19, 2012 ·
+
+?
+
+There are many techniques to analyze the testing. They are:
+
+    One technique for risk analysis is a close reading of the requirements specification, design specifications, user documentation and other items.
+    Another technique is brainstorming with many of the project stakeholders.
+    Another is a sequence of one-on-one or small-group sessions with the business and technology experts in the company.
+    Some people use all these techniques when they can. To us, a team-based approach that involves the key stakeholders and experts is preferable to a purely document-based approach, as team approaches draw on the knowledge, wisdom and insight of the entire team to determine what to test and how much.
+
+The scales used to rate possibility and impact vary. Some people rate them high, medium and low. Some use a 1-10 scale. The problem with a 1-10 scale is that it’s often difficult to tell a 2 from a 3 or a 7 from an 8, unless the differences between each rating are clearly defined. A five-point scale (very high, high, medium, low and very low) tends to work well.
+
+Let us also discuss some risks which occur usually along with some options for managing them:
+
+    Logistics or product quality problems that block tests: These can be made moderate by careful planning, good defect triage and management, and robust test design.
+    Test items that won’t install in the test environment: These can be mitigated through smoke (or acceptance) testing prior to starting test phases or as part of a nightly build or continuous integration. Having a defined uninstall process is a good contingency plan.
+    Excessive change to the product that invalidates test results or requires updates to test cases, expected results and environments: These can be mitigated through good change-control processes, robust test design and light weight test documentation. When severe incidents occur, transference of the risk by escalation to management is often in order.
+    Insufficient or unrealistic test environments that yield misleading results: One option is to transfer the risks to management by explaining the limits on test results obtained in limited environments. Mitigation – sometimes complete alleviation – can be achieved by outsourcing tests such as performance tests that are particularly sensitive to proper test environments.
+
+Let us also go through some additional risks and perhaps ways to manage them:
+
+    Organizational issues such as shortages of people, skills or training, problems with communicating and responding to test results, bad expectations of what testing can achieve and complexity of the project team or organization.
+    Supplier issues such as problems with underlying platforms or hardware, failure to consider testing issues in the contract or failure to properly respond to the issues when they arise.
+    Technical issues related to ambiguous, conflicting or unprioritized requirements, an excessively large number of requirements given other project constraints, high system complexity and quality problems with the design, the code or the tests.
+
+It is really very important to keep in mind that not all projects are subject to the same risks.
+Finally, we should not forget that even test items can also have risks associated with them.
+For example, there is a risk that the test plan will omit tests for a functional area or that the test cases do not exercise the critical areas of the system.
+
+By using a test plan template like the IEEE 829 template shown earlier, you can remind yourself to consider and manage risks during the planning phase. It is worth repeating at early stage of the project because risks at this point of time are educated guesses. Some of those guesses might be wrong. Make sure that you plan to re-assess and adjust your risks at regular intervals in the project and make appropriate course corrections to the testing or the project itself.
+
+You should manage risks appropriately, based on likelihood and impact. Separate the risks by understanding how much of your overall effort can be spent dealing with them.
+?

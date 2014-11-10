@@ -1,0 +1,47 @@
+What is Prototype model- advantages, disadvantages and when to use it?
+Posted on January 12, 2012 ·
+
+?
+
+The basic idea here is that instead of freezing the requirements before a design or coding can proceed, a throwaway prototype is built to understand the requirements. This prototype is developed based on the currently known requirements. By using this prototype, the client can get an “actual feel” of the system, since the interactions with prototype can enable the client to better understand the requirements of the desired system.  Prototyping is an attractive idea for complicated and large systems for which there is no manual process or existing system to help determining the requirements. The prototype are usually not complete systems and many of the details are not built in the prototype. The goal is to provide a system with overall functionality.
+
+Diagram of Prototype model:
+
+Prototype model
+
+Advantages of Prototype model:
+
+    Users are actively involved in the development
+    Since in this methodology a working model of the system is provided, the users get a better understanding of the system being developed.
+    Errors can be detected much earlier.
+    Quicker user feedback is available leading to better solutions.
+    Missing functionality can be identified easily
+    Confusing or difficult functions can be identified
+    Requirements validation, Quick implementation of, incomplete, but
+    functional, application.
+
+Disadvantages of Prototype model:
+
+    Leads to implementing and then repairing way of building systems.
+    Practically, this methodology may increase the complexity of the system as scope of the system may expand beyond original plans.
+    Incomplete application may cause application not to be used as the
+    full system was designed
+    Incomplete or inadequate problem analysis.
+
+When to use Prototype model:  
+
+    Prototype model should be used when the desired system needs to have a lot of interaction with the end users.
+    Typically, online systems, web interfaces have a very high amount of interaction with end users, are best suited for Prototype model. It might take a while for a system to be built that allows ease of use and needs minimal training for the end user.
+    Prototyping ensures that the end users constantly work with the system and provide a feedback which is incorporated in the prototype to result in a useable system. They are excellent for designing good human computer interface systems.
+
+?
+
+Related Topics -
+
+    What is Usability testing in software and it's benefits to end user?
+    What is Compatibility testing in software testing?
+    What is Incremental model- advantages, disadvantages and when to use it?
+    What is Portability testing in software?
+    What is RAD model- advantages, disadvantages and when to use it?
+
+Filed Under: Testing throughout the testing life cycle · Tagged: advantages, advantages of prototype model, Diagram of Prototype model, disadvantages, disadvantages of prototype model, Prototype model, when to use prototype model

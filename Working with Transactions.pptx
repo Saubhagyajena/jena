@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Working with Transactions.pptx</title><style type="text/css" media="print">
+        .hide{display:none}
+      </style></head><body style="margin:0;padding:0"><div class="hide"><div style="background:#ffffcc;padding:4 8; border-bottom:thin solid #eeeeee;font-family:Arial,sans-serif"><b>If there are images in this attachment, they will not be displayed.</b>&nbsp;&nbsp; <a href="https://mail-attachment.googleusercontent.com/attachment/?view=att&amp;th=14882729797d95af&amp;attid=0.3&amp;disp=attd&amp;realattid=f_i06bxikq2&amp;saduie=AG9B_P_ksnjcM_qIDOa1e2TzblwL&amp;zw">Download the original attachment</a></div></div><div style="margin:1ex">
+
+
+
+
+
+
+<div>
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:right;text-indent:0pt;line-height:60pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:60pt;text-transform:lowercase">Working with Transactions</span></p>
+<p>&nbsp;</p>
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:right;text-indent:0pt;line-height:21pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:21pt;text-transform:lowercase">In Databases</span></p>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Introduction</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">The DBMS manages the database where multiple 
+    users are working.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Hence there may be a loss of data by the 
+    users.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">To overcome this DBMS provides a mechanism 
+    to maintain the data integrity.</span></li>
+    <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Transactions are used to provide data integrity 
+    over multiple users. It also represents the consistent view of the data 
+    during concurrent access to database.</span></li>
+</ul></ul>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">ACID Properties</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">DBMS provides the feature&nbsp; of Atomicity, 
+    Consistency, Isolation and durability for each transaction in&nbsp; 
+    a database.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">These are collectively known as ACID properties.</span></li>
+    <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">These are maintained by the DBMS(transaction 
+    manager) in order to maintain the integrity of the data over the database.</span></li>
+</ul></ul>
+
+
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Atomicity</span></li>
+    <ul style="list-style:disc">
+      <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;text-transform:lowercase">&nbsp;</span><span style="font-family:'Corbel','Arial';font-size:20pt;text-transform:lowercase">This specifies the ability 
+      which guarantees that either all tasks of a transaction are performed 
+      or none of them is performed.</span></li>
+      <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:20pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;text-transform:lowercase">This provides an ability to save(commit) 
+      or cancel(rollback) the transaction at any time and controls all the 
+      statements in a transaction.</span></li>
+      </ul>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Consistency</span></li>
+    <ul style="list-style:disc">
+      <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;text-transform:lowercase">This property guarantees that the data 
+      remains in a consistent state at the beginning and also at the end of 
+      each transaction.</span></li>
+      <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:20pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;text-transform:lowercase">If the data satisfies the above condition 
+      then the data is said to be in legal or consistent state.</span></li>
+</ul></ul></ul>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Isolation</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Its job is to hide the data from being 
+    used by other transactions until the current transaction ends.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">This can be done by implementing locks 
+    on the data.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">The following problem may occur when there 
+    is concurrent operations on the data.</span></li>
+    <ul style="list-style:disc">
+      <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;text-transform:lowercase">Dirty Read- It occurs when a transaction 
+      reads a data that has been modified by another transaction but not yet 
+      committed.</span></li>
+      <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:20pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;text-transform:lowercase">Non Repeatable Read-&nbsp; It happens if 
+      read lock is not implied while performing SELECT operation. If transaction 
+      T1 is reading a data meanwhile the same data is being modified by another 
+      transaction T2, then transaction T1 reads two different values of a 
+      single data.</span></li>
+      <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:20pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;text-transform:lowercase">Phantom Read- If we get different collection 
+      of rows while executing the identical query then it is known as phantom 
+      read.</span></li>
+</ul></ul></ul>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Durability</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">It guarantees that once the user completed 
+    a successful transaction, i.e. if the transaction is committed, the 
+    transaction will persist all the statement in the transaction.</span></li>
+    <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">It means, the system guarantees that&nbsp; 
+    if a transaction succeeds, the system guarantees that its updates will 
+    persist even if the computer crashes immediately after the commit.</span></li>
+</ul></ul>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Performing the Transaction Management in JDBC</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Transaction management is necessary to 
+    maintain the data integrity and security.</span></li>
+    <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">JDBC&nbsp; API allows to use connection 
+    object&nbsp; to perform the following operation manage the transaction.</span></li>
+</ul></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div></body></html>

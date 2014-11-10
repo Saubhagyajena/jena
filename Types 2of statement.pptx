@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Types of statement.pptx</title><style type="text/css" media="print">
+        .hide{display:none}
+      </style></head><body style="margin:0;padding:0"><div class="hide"><div style="background:#ffffcc;padding:4 8; border-bottom:thin solid #eeeeee;font-family:Arial,sans-serif"><b>If there are images in this attachment, they will not be displayed.</b>&nbsp;&nbsp; <a href="https://mail-attachment.googleusercontent.com/attachment/?view=att&amp;th=14831c5c32eeecbd&amp;attid=0.1&amp;disp=attd&amp;realattid=f_hzjy32sy0&amp;saduie=AG9B_P_ksnjcM_qIDOa1e2TzblwL&amp;zw">Download the original attachment</a></div></div><div style="margin:1ex">
+
+
+
+
+
+
+<div>
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:right;text-indent:0pt;line-height:60pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:60pt;text-transform:lowercase">Statement&nbsp;</span></p>
+<p>&nbsp;</p>
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:right;text-indent:0pt;line-height:21pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:21pt;text-transform:lowercase">Types in JDBC</span></p>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">3-Types</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Statements</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Prepared Statement</span></li>
+    <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Callable Statement</span></li>
+</ul></ul>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Statement</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Used for general purpose access to the 
+    databases.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">This is useful when we are using static 
+    SQL statements at run time.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">It can</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">’</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">t accept parameters.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase;color:#ff0000">boolean-execute(String 
+    SQL) </span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Returns a Boolean value true if a Result 
+    Set object is retrieved.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase;color:#ff0000">ResultSet</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase;color:#ff0000">-executeQuery(String 
+    SQL) </span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Returns a result set object.</span></li>
+    <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase;color:#ff0000">int-executeUpdate</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase;color:#ff0000">(String SQL) </span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Returns the numbers of 
+    rows affected by the execution of the SQL statement. Use this method 
+    to execute SQL statements for which you expect to get a number of rows 
+    affected - for example, an INSERT, UPDATE, or DELETE statement.</span></li>
+</ul></ul>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase;color:#00b050">Process of execution of Statement Query</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:5pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">The executeXXX() method is called on Statement 
+    object with SQL statement.</span></li>
+    <li style="margin-top:1pt;margin-bottom:5pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">The Statement object submits the SQL statement 
+    to database.</span></li>
+    <li style="margin-top:1pt;margin-bottom:5pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">The database compiles the given SQL statement.</span></li>
+    <li style="margin-top:1pt;margin-bottom:5pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">An execution plan is prepared&nbsp; by 
+    the database to execute the SQL statements.</span></li>
+    <li style="margin-top:1pt;margin-bottom:5pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">If the SQL statement is a data retrieval 
+    statement then the result of the SQL statement is stored in buffer.</span></li>
+    <li style="margin-top:1pt;margin-bottom:5pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Then the results are sent back to statement 
+    object.</span></li>
+    <li style="margin-top:1pt;margin-bottom:5pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Now the response is sent back to Java Application 
+    in the form of </span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">ResultSet</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">.</span></li>
+</ul></ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Limitations:</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">The Statement interface can not accept 
+    parameters.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">If we have multiple SQL query and we use 
+    Statement object, then each time we will proceed through all the steps 
+    discussed above.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">This will increase the execution time for 
+    multiple SQL statements.</span></li>
+</ul></ul>
+<p>&nbsp;</p>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Prepared Statement</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Prepared Statements are pre-compiled, hence 
+    their execution time is faster than Statement objects.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Prepared Statement is a sub class of Statement 
+    Interface. So it inherits all the features of the Statement interface.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">We need not to compile the SQL statement 
+    and prepare the execution plan for executing a statement multiple times.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">DBMSs are designed to store the execute 
+    plans and executes them multiple times if required.</span></li>
+    <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">The stored execution plan of SQL statements 
+    are known as pre-compiled SQL statements.</span></li>
+</ul></ul>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Process of execution of Prepared Statement</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:4pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:22pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">The prepared statement object submits the 
+    SQL statements to the database.</span></li>
+    <li style="margin-top:0pt;margin-bottom:4pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:22pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">The database compiles the given SQL statement.</span></li>
+    <li style="margin-top:0pt;margin-bottom:4pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:22pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">An execution plan is prepared&nbsp; by 
+    the database to execute the SQL statements.</span></li>
+    <li style="margin-top:0pt;margin-bottom:4pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:22pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">Database stores the execution plan with 
+    a unique ID and returns the identity to the Connection object.</span></li>
+    <li style="margin-top:0pt;margin-bottom:4pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:22pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">Connection object return the reference 
+    of Prepared Statement object along with ID to the java application.</span></li>
+    <li style="margin-top:0pt;margin-bottom:4pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:22pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">The </span><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">setXXX</span><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">() methods of Prepared 
+    Statement object are used to set the parameters of SQL statement.</span></li>
+    <li style="margin-top:0pt;margin-bottom:4pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:22pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">Then executeXXX() method is invoked to 
+    execute the SQL statement with the parameters.</span></li>
+    <li style="margin-top:0pt;margin-bottom:4pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:22pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">Now Prepared Statement object sends the 
+    request to the database. Now Database locates and execute the execution 
+    plan by using the ID.</span></li>
+</ul></ul>
+<p>&nbsp;</p>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Using Prepared Statement</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Create a prepared statement object.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Supply the values of the Prepared Statement 
+    parameters.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Execute the SQL statements.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase;color:#ae2763">Example:</span></li>
+</ul></ul>
+<p style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:36pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">PreparedStatement ps=con . prepareStatement(“insert into student_demo 
+values (?,?,?)”);</span></p>
+<p>&nbsp;</p>
+<p style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Where </span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase;color:#ff0000">con</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase"> is an object of Connection 
+Interface. Now we have to set the values of the question mark placeholders.</span></p>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Continued….</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">ps . setInt(1,1234);</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">ps.setString(2,</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">”</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">name</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">”</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">);</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">ps.setString(3,</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">”</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">email</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">”</span><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">);</span></li>
+    <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">ps.execute();</span></li>
+</ul></ul>
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:right;text-indent:0pt;line-height:12pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:12pt">1</span></p>
+
+
+
+
+
+
+<p>&nbsp;</p>
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:right;text-indent:0pt;line-height:12pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:12pt">2</span></p>
+
+
+
+
+<p>&nbsp;</p>
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:right;text-indent:0pt;line-height:12pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:12pt">3</span></p>
+
+
+
+
+<p>&nbsp;</p>
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:right;text-indent:0pt;line-height:12pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:12pt">4</span></p>
+
+
+
+
+
+
+
+
+
+</div>
+
+</div></body></html>

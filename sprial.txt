@@ -1,0 +1,43 @@
+What is Spiral model- advantages, disadvantages and when to use it?
+Posted on January 13, 2012 ·
+
+?
+
+The spiral model is similar to the incremental model, with more emphasis placed on risk analysis. The spiral model has four phases: Planning, Risk Analysis, Engineering and Evaluation. A software project repeatedly passes through these phases in iterations (called Spirals in this model). The baseline spiral, starting in the planning phase, requirements are gathered and risk is assessed. Each subsequent spirals builds on the baseline spiral.
+
+Planning Phase: Requirements are gathered during the planning phase. Requirements like ‘BRS’ that is ‘Bussiness Requirement Specifications’ and ‘SRS’ that is ‘System Requirement specifications’.
+
+Risk Analysis: In the risk analysis phase, a process is undertaken to identify risk and alternate solutions.  A prototype is produced at the end of the risk analysis phase. If any risk is found during the risk analysis then alternate solutions are suggested and implemented.
+
+Engineering Phase: In this phase software is developed, along with testing at the end of the phase. Hence in this phase the development and testing is done.
+
+Evaluation phase: This phase allows the customer to evaluate the output of the project to date before the project continues to the next spiral.
+
+Diagram of Spiral model:
+
+Spiral model
+
+Advantages of Spiral model:
+
+    High amount of risk analysis hence, avoidance of Risk is enhanced.
+    Good for large and mission-critical projects.
+    Strong approval and documentation control.
+    Additional Functionality can be added at a later date.
+    Software is produced early in the software life cycle.
+
+Disadvantages of Spiral model:
+
+    Can be a costly model to use.
+    Risk analysis requires highly specific expertise.
+    Project’s success is highly dependent on the risk analysis phase.
+    Doesn’t work well for smaller projects.
+
+ When to use Spiral model:
+
+    When costs and risk evaluation is important
+    For medium to high-risk projects
+    Long-term project commitment unwise because of potential changes to economic priorities
+    Users are unsure of their needs
+    Requirements are complex
+    New product line
+    Significant changes are expected (research and exploration)

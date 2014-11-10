@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Enterprise Architecture.pptx</title><style type="text/css" media="print">
+        .hide{display:none}
+      </style></head><body style="margin:0;padding:0"><div class="hide"><div style="background:#ffffcc;padding:4 8; border-bottom:thin solid #eeeeee;font-family:Arial,sans-serif"><b>If there are images in this attachment, they will not be displayed.</b>&nbsp;&nbsp; <a href="https://mail-attachment.googleusercontent.com/attachment/?view=att&amp;th=14882729797d95af&amp;attid=0.1&amp;disp=attd&amp;realattid=f_i06bxie90&amp;saduie=AG9B_P_ksnjcM_qIDOa1e2TzblwL&amp;zw">Download the original attachment</a></div></div><div style="margin:1ex">
+
+
+
+
+
+
+<div>
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:right;text-indent:0pt;line-height:60pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:60pt;text-transform:lowercase">Enterprise Architecture</span></p>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Introduction</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">It defines the structure of an enterprise 
+    application.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">It can be divided into three logical layers</span></li>
+    <ul style="list-style:disc">
+      <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;text-transform:lowercase"> </span><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:bold;text-transform:lowercase">The 
+      User Interface</span><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:normal;text-transform:lowercase">: -&nbsp; It shows 
+      the data to the end user and also collect data from user. It is otherwise 
+      known as presentation layer. It is a part of software that creates and 
+      controls the user interface.</span></li>
+      <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:20pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:bold;text-transform:lowercase">Processing</span><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:normal;text-transform:lowercase">: -&nbsp; Helps an application to work 
+      and handle processing of business logic. It is also called business 
+      layer.</span></li>
+      <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:20pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:normal;text-transform:lowercase"> </span><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:bold;text-transform:lowercase">Data 
+      Storage and Access</span><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:normal;text-transform:lowercase">: 
+      -&nbsp; Helps business applications to read and store data.</span></li>
+</ul></ul></ul>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Enterprise Architecture Types</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Single Tier Architecture</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">2-tier Architecture</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">3-tier Architecture</span></li>
+    <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">n-tier architecture</span></li>
+</ul></ul>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Single Tier Architecture</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:22pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">This architecture contains the presentation, 
+    business rules and the data access layer in a single unit.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:22pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">Hence, it is relatively easy to manage 
+    and implement data consistency (since data is stored in a single location).</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:22pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">The problem here is that, this type of 
+    application is not capable of handling multiple users.</span></li>
+    <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:22pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:22pt;text-transform:lowercase">It cannot provide sharing data across an 
+    enterprise.</span></li>
+</ul></ul>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">2-Tier Architecture</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">This type of architecture separates the 
+    data and business logic.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">The application exists on a local machine 
+    and the database deployed at a specific and secure location.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">This type of architecture is the traditional 
+    method of enterprise development.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">The main objective of 2-tier architecture 
+    is to centralize the data so that multiple users can access the common 
+    database at the same time.</span></li>
+    <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">This architecture is often referred to 
+    as Client-Server architecture.</span></li>
+</ul></ul>
+
+
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Continued…</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">Some users may ignore the immediate changes 
+    to the database, if the applications present in different systems are 
+    different.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">This may result in inconsistency of the 
+    database.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">So in this architecture all application 
+    should be created by using the same programming language and all application 
+    runs on the same platform.</span></li>
+</ul></ul>
+<p>&nbsp;</p>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">3-Tier Architecture</span></p>
+<p>&nbsp;</p>
+<ul><ul style="list-style:disc">
+    <li style="margin-top:0pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">To address the issues in 2-tier architecture 
+    the 3-tier architecture is developed.</span></li>
+    <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:24pt;text-transform:lowercase">The layers in the 3-tier architecture is </span></li>
+    <ul style="list-style:disc">
+      <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:24pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:bold;text-transform:lowercase">First Tier- </span><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:normal;text-transform:lowercase">Refers to the presentation layer, which 
+      consists of a GUI to interact with the user.</span></li>
+      <li style="margin-top:2pt;margin-bottom:6pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:20pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:bold;text-transform:lowercase">Middle Tier- </span><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:normal;text-transform:lowercase">Refers to the business layer, consists 
+      of the application or business logic. It helps the user to call upon 
+      from presentation layer to retrieve data from data layer.</span></li>
+      <li style="margin-top:2pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:left;text-indent:0pt;line-height:20pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:bold;text-transform:lowercase">Third Tier- </span><span style="font-family:'Corbel','Arial';font-size:20pt;font-weight:normal;text-transform:lowercase">Refers to the data layer, which contains 
+      the data access logic needed for the application.</span></li>
+</ul></ul></ul>
+
+
+<p style="margin-top:0pt;margin-bottom:0pt;margin-left:0pt;margin-right:0pt;text-align:center;text-indent:0pt;line-height:40pt" dir="LTR"><span style="font-family:'Corbel','Arial';font-size:40pt;text-transform:lowercase">Diagram</span></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div></body></html>
